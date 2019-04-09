@@ -1,0 +1,21 @@
+{
+    "name": "linwj/bitmex",
+    "type": "library",
+    "description": "Bitmex API Like the official document interface, Support for arbitrary extension.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "linwenjun",
+            "email": "465382251@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lin\\Bitmex\\": "./src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
