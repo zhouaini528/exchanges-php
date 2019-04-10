@@ -5,9 +5,15 @@
 
 namespace Lin\Exchange\Exchanges;
 
-//构思  BaseAccount    BaseMarket
+interface Base
+{
+    /**
+     *  返回原始
+     * */
+    //function platform();
+}
 
-interface BaseOrder
+interface BaseTrader
 {
     /**
      * 
@@ -38,14 +44,18 @@ interface BaseOrder
      *
      * */
     function showAll(array $data);
-    
-    //必须返回原是对象
 }
 
 interface BaseMarket{
-    
+    /**
+     *
+     * */
+    function depth(array $data);
 }
 
 interface BaseAccount{
-    
+    /**
+     *
+     * */
+    function position(array $data);
 }

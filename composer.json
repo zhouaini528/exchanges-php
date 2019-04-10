@@ -1,7 +1,7 @@
 {
-    "name": "linwj/bitmex",
+    "name": "linwj/exchanges",
     "type": "library",
-    "description": "Bitmex API Like the official document interface, Support for arbitrary extension.",
+    "description": "It's a simple integration of the world's top five exchanges",
     "license": "MIT",
     "authors": [
         {
@@ -11,11 +11,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "Lin\\Bitmex\\": "./src/"
+            "Lin\\Exchange\\": "./src/"
         }
     },
     "require": {
         "php": ">=7.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "linwj/bitmex":"dev-master",
+        "linwj/okex":"dev-master",
+        "linwj/huobi":"dev-master",
+        "linwj/binance":"dev-master"
     }
 }
