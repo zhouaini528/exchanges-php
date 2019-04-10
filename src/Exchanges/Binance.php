@@ -5,10 +5,14 @@
 
 namespace Lin\Exchange\Exchanges;
 
+use Lin\Binance\Binance as BinanceApi;
+
 class Base
 {
-    function __construct(string $platform,array $data){
-        
+    protected $platform;
+    
+    function __construct(string $key='',string $secret='',string $host='https://api.binance.com'){
+        $this->platform=new BinanceApi($key,$secret,$host);
     }
 }
 
@@ -38,7 +42,7 @@ class Trader  extends Base  implements BaseTrader
      *
      * */
     function sell(array $data){
-        
+        $this->platform->trade()->postOrder($data);
     }
     
     /**
@@ -79,19 +83,25 @@ class Trader  extends Base  implements BaseTrader
 
 class Binance
 {
-    function __construct(){
-        
+    protected $key;
+    protected $secret;
+    protected $host;
+    
+    function __construct(array $data){
+        $this->key=$data['key'] ?? '';
+        $this->secret=$data['secret'] ?? '';
+        $this->host=$data['host'] ?? '';
     }
     
     function account(){
-        return new Account();
+        return new Account($this->key,$this->secret,$this->host);
     }
     
     function market(){
-        return new Market();
+        return new Market($this->key,$this->secret,$this->host);
     }
     
     function trader(){
-        return new Trader();
+        return new Trader($this->key,$this->secret,$this->host);
     }
 }

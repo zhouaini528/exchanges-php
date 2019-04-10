@@ -7,13 +7,13 @@ namespace Lin\Exchange\Api;
 
 use Lin\Exchange\Exchanges\BaseTrader;
 
-class Trader implements BaseTrader
+class Trader extends Base implements BaseTrader
 {
     /**
      *
      * */
     function sell(array $data){
-        
+        $this->platform->trader()->sell($data);
     }
     
     /**

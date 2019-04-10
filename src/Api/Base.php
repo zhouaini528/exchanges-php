@@ -20,20 +20,19 @@ class Base
     function __construct(string $platform,array $data){
         switch ($platform){
             case 'huobi':{
-                //$this->platform=new Huobi($data->key,$data->secret,$data->extra,$data->host);
-                $this->platform=new Huobi();
+                $this->platform=new Huobi($data);
                 break;
             }
             case 'bitmex':{
-                $this->platform=new Bitmex();
+                $this->platform=new Bitmex($data);
                 break;
             }
             case 'okex':{
-                $this->platform=new Okex();
+                $this->platform=new Okex($data);
                 break;
             }
             case 'binance':{
-                $this->platform=new Binance();
+                $this->platform=new Binance($data);
                 break;
             }
         }
