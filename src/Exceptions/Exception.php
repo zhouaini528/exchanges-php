@@ -1,5 +1,5 @@
 <?php
-namespace Lin\Bitmex\Exceptions;
+namespace Lin\Exchange\Exceptions;
 
 class Exception extends \Exception
 {

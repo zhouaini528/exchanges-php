@@ -3,13 +3,15 @@
  * @author lin <465382251@qq.com>
  * */
 
-namespace Lin\Exchange\Config;
+namespace Lin\Exchange\Interfaces;
 
-
-interface TraderInterface
+/**
+ * 交易接口
+ * */
+interface TraderInterface extends BaseInterface
 {
     /**
-     * 
+     *
      * */
     function sell(array $data);
     
@@ -37,20 +39,4 @@ interface TraderInterface
      *
      * */
     function showAll(array $data);
-}
-
-interface MarketInterface
-{
-    /**
-     *
-     * */
-    function depth(array $data);
-}
-
-interface AccountInterface
-{
-    /**
-     *
-     * */
-    function position(array $data);
 }

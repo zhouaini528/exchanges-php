@@ -16,6 +16,12 @@ $secret='wG3ndMquAPl6c-jHUQNhyBQJKGBwdFenIF2QxcgNKE_g8Kz3';
 $host='https://testnet.bitmex.com';
 
 $exchanges=new Exchanges('huobi',$key,$secret);
+
+$exchanges->trader()->sell([
+    '_symbol'=>'币种',
+    '_number'=>'购买数量',
+]);
+
 $exchanges->trader()->sell([
     '_symbol'=>'币种',
     '_number'=>'购买数量',
@@ -27,9 +33,11 @@ $exchanges->trader()->sell([
     '_price'=>'当前价格    填写参数为：限价交易    不填写为：市价交易',
     '_client_id'=>'自定义ID',
     
-    '原生接口参数'
+    //'原生接口参数'
 ]);
+exit;
+$exchanges->account()->position([]);
+die;
 
-$exchanges->market()->depth();
 
-$exchanges->account()->postion();
+

@@ -8,9 +8,9 @@ namespace Lin\Exchange\Exchanges;
 
 use Lin\Okex\OkexFuture;
 use Lin\Okex\OkexSpot;
-use Lin\Exchange\Config\AccountInterface;
-use Lin\Exchange\Config\MarketInterface;
-use Lin\Exchange\Config\TraderInterface;
+use Lin\Exchange\Interfaces\AccountInterface;
+use Lin\Exchange\Interfaces\MarketInterface;
+use Lin\Exchange\Interfaces\TraderInterface;
 
 class Base
 {
@@ -90,24 +90,14 @@ class Trader extends Base implements TraderInterface
 
 class Okex
 {
-    protected $key;
-    protected $secret;
-    protected $passphrase;
-    protected $host;
-    
     protected $platform_future;
     protected $platform_spot;
     
     
-    function __construct(array $data){
-        $this->key=$data['key'] ?? '';
-        $this->secret=$data['secret'] ?? '';
-        $this->passphrase=$data['passphrase'] ?? '';
-        $this->host=$data['host'] ?? '';
-
-        $this->platform_future=new OkexFuture($this->key,$this->secret,$this->passphrase,$this->host);
+    function __construct($key,$secret,$passphrase,$host){
+        $this->platform_future=new OkexFuture($key,$secret,$passphrase,$host);
         
-        $this->platform_spot=new OkexSpot($this->key,$this->secret,$this->passphrase,$this->host);
+        $this->platform_spot=new OkexSpot($key,$secret,$passphrase,$host);
     }
     
     function account(){

@@ -7,9 +7,9 @@ namespace Lin\Exchange\Exchanges;
 
 use Lin\Huobi\HuobiSpot;
 use Lin\Huobi\HuobiFuture;
-use Lin\Exchange\Config\AccountInterface;
-use Lin\Exchange\Config\MarketInterface;
-use Lin\Exchange\Config\TraderInterface;
+use Lin\Exchange\Interfaces\AccountInterface;
+use Lin\Exchange\Interfaces\MarketInterface;
+use Lin\Exchange\Interfaces\TraderInterface;
 
 class Base
 {
@@ -28,7 +28,8 @@ class Account extends Base implements AccountInterface
      *
      * */
     function position(array $data){
-        
+        print_r($data);
+        echo "huobi position \n";
     }
 }
 
@@ -48,14 +49,16 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function sell(array $data){
-        
+        print_r($data);
+        echo "huobi sell \n";
     }
     
     /**
      *
      * */
     function buy(array $data){
-        
+        print_r($data);
+        echo "huobi sell \n";
     }
     
     /**
@@ -89,21 +92,13 @@ class Trader extends Base implements TraderInterface
 
 class Huobi
 {
-    protected $key;
-    protected $secret;
-    protected $host;
-    
     protected $platform_future;
     protected $platform_spot;
     
-    function __construct(array $data){
-        $this->key=$data['key'] ?? '';
-        $this->secret=$data['secret'] ?? '';
-        $this->host=$data['host'] ?? '';
+    function __construct($key,$secret,$host){
+        $this->platform_future=new HuobiFuture($key,$secret,$host);
         
-        $this->platform_future=new HuobiFuture($this->key,$this->secret,$this->host);
-        
-        $this->platform_spot=new HuobiSpot($this->key,$this->secret,$this->host);
+        $this->platform_spot=new HuobiSpot($key,$secret,$host);
     }
     
     function account(){

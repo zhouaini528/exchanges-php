@@ -6,9 +6,9 @@
 namespace Lin\Exchange\Exchanges;
 
 use Lin\Binance\Binance as BinanceApi;
-use Lin\Exchange\Config\AccountInterface;
-use Lin\Exchange\Config\MarketInterface;
-use Lin\Exchange\Config\TraderInterface;
+use Lin\Exchange\Interfaces\AccountInterface;
+use Lin\Exchange\Interfaces\MarketInterface;
+use Lin\Exchange\Interfaces\TraderInterface;
 
 class Base
 {
@@ -86,18 +86,10 @@ class Trader extends Base implements TraderInterface
 
 class Binance
 {
-    protected $key;
-    protected $secret;
-    protected $host;
-    
     protected $platform;
     
-    function __construct(array $data){
-        $this->key=$data['key'] ?? '';
-        $this->secret=$data['secret'] ?? '';
-        $this->host=$data['host'] ?? '';
-        
-        $this->platform=new BinanceApi($this->key,$this->secret,$this->host);
+    function __construct($key,$secret,$host){
+        $this->platform=new BinanceApi($key,$secret,$host);
     }
     
     function account(){

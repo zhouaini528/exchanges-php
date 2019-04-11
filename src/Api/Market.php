@@ -5,9 +5,9 @@
 
 namespace Lin\Exchange\Api;
 
-use Lin\Exchange\Config\MarketInterface;
+use Lin\Exchange\Interfaces\MarketInterface;
 
-class Market implements MarketInterface
+class Market extends Base implements MarketInterface
 {
     /**
      *
