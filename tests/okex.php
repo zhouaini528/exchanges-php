@@ -11,11 +11,12 @@ use Lin\Exchange\Exchanges;
 
 require __DIR__ .'../../vendor/autoload.php';
 
-$key='eLB_l505a_cuZL8Cmu5uo7EP';
-$secret='wG3ndMquAPl6c-jHUQNhyBQJKGBwdFenIF2QxcgNKE_g8Kz3';
-$host='https://testnet.bitmex.com';
 
-$exchanges=new Exchanges('huobi',$key,$secret);
+$exchanges=new Exchanges('okex',[
+    'key'=>$key,
+    'secret'=>$secret,
+]);
+
 $exchanges->trader()->sell([
     '_symbol'=>'币种',
     '_number'=>'购买数量',
@@ -29,7 +30,3 @@ $exchanges->trader()->sell([
     
     '原生接口参数'
 ]);
-
-$exchanges->market()->depth();
-
-$exchanges->account()->postion();

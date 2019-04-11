@@ -5,9 +5,9 @@
 
 namespace Lin\Exchange\Api;
 
-use Lin\Exchange\Exchanges\BaseAccount;
+use Lin\Exchange\Config\AccountInterface;
 
-class Account extends Base implements BaseAccount
+class Account extends Base implements AccountInterface
 {
     /**
      *

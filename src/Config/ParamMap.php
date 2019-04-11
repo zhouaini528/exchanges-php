@@ -3,11 +3,38 @@
  * @author lin <465382251@qq.com>
  * */
 
-namespace Lin\Exchange\Api;
+namespace Lin\Exchange\Config;
 
-use Lin\Exchange\Config\TraderInterface;
 
-class Trader extends Base implements TraderInterface
+/**
+ * 参数映射
+ * */
+class ParamMap
+{
+    
+}
+
+class ParamMapAccount implements AccountInterface
+{
+    /**
+     *
+     * */
+    function position(array $data){
+        
+    }
+}
+
+class ParamMapMarket implements MarketInterface
+{
+    /**
+     *
+     * */
+    function depth(array $data){
+        
+    }
+}
+
+class ParamMapTrader implements TraderInterface
 {
     /**
      *
@@ -51,3 +78,5 @@ class Trader extends Base implements TraderInterface
         
     }
 }
+
+

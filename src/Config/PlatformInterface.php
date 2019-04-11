@@ -3,17 +3,10 @@
  * @author lin <465382251@qq.com>
  * */
 
-namespace Lin\Exchange\Exchanges;
+namespace Lin\Exchange\Config;
 
-interface Base
-{
-    /**
-     *  返回原始
-     * */
-    //function platform();
-}
 
-interface BaseTrader
+interface TraderInterface
 {
     /**
      * 
@@ -46,14 +39,16 @@ interface BaseTrader
     function showAll(array $data);
 }
 
-interface BaseMarket{
+interface MarketInterface
+{
     /**
      *
      * */
     function depth(array $data);
 }
 
-interface BaseAccount{
+interface AccountInterface
+{
     /**
      *
      * */
