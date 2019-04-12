@@ -103,7 +103,6 @@ class Trader extends Base implements TraderInterface
     function show(array $data){
         try {
             $map=$this->map->request_trader()->show($data);
-            print_r($map);
             $result=$this->platform->trader()->show($map);
             return $this->map->response_trader()->show($result);
         }catch (\Exception $e){

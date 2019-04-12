@@ -148,7 +148,7 @@ switch ($action){
     
     //******************************现货一个订单完整流程
     case 300:{
-        $_client_id=md5(rand(1,999999999));
+        $_client_id=md5(rand(1,999999999));//自定义ID
         
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USDT',
@@ -176,11 +176,31 @@ switch ($action){
     
     //******************************期货一个订单完整流程
     case 350:{
-        $result=$exchanges->trader()->show([
-            '_symbol'=>'BTC-USDT',
-            '_order_id'=>'2643178886798336',
-            //'_client_id'=>'自定义ID',
+        $_client_id=md5(rand(1,999999999));//自定义ID
+        
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_price'=>'2000',
+            '_future'=>true,
+            '_entry'=>true,//开多
+            '_client_id'=>$_client_id,
         ]);
+        print_r($result);
+        sleep(1);
+        
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTC-USD-190628',
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        sleep(1);
+        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTC-USD-190628',
+            '_client_id'=>$_client_id,
+        ]);
+        
         break;
     }
     
