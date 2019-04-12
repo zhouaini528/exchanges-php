@@ -73,7 +73,12 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function cancel(array $data){
-        
+        $instrument=explode('-', $data['instrument_id']);
+        if(count($instrument)>2){
+            return $this->platform_future->order()->postCancel($data);
+        }else{
+            return $this->platform_spot->order()->postCancel($data);
+        }
     }
     
     /**
@@ -87,7 +92,15 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function show(array $data){
-        
+        //BTC-USD-190628
+        //BTC-USD-SWAP
+        //BTC-USD
+        $instrument=explode('-', $data['instrument_id']);
+        if(count($instrument)>2){
+            return $this->platform_future->order()->get($data);
+        }else{
+            return $this->platform_spot->order()->get($data);
+        }
     }
     
     /**

@@ -27,7 +27,7 @@ class RequestTraderMap extends Base implements TraderInterface
             }
             case 'okex':{
                 $map=[];
-                $map['client_oid']=$data['_client_id'] ?? ($map['client_oid'] ?? '');
+                $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
                 
@@ -125,7 +125,7 @@ class RequestTraderMap extends Base implements TraderInterface
             }
             case 'okex':{
                 $map=[];
-                $map['client_oid']=$data['_client_id'] ?? ($map['client_oid'] ?? '');
+                $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
                 
@@ -183,28 +183,76 @@ class RequestTraderMap extends Base implements TraderInterface
      *
      * */
     function cancel(array $data){
+        switch ($this->platform){
+            case 'huobi':{
+                
+                break;
+            }
+            case 'bitmex':{
+                
+                break;
+            }
+            case 'okex':{
+                $map=[];
+                $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
+                $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                $map['order_id']=empty($map['order_id']) ? $map['client_oid'] : $map['order_id'];
+                $map['instrument_id']=$data['_symbol'] ?? ($data['instrument_id'] ?? '');
+                
+                return $map;
+            }
+            case 'binance':{
+                
+                break;
+            }
+        }
         
+        return $data;
     }
     
     /**
      *
      * */
     function update(array $data){
-        
+        return $data;
     }
     
     /**
      *
      * */
     function show(array $data){
+        switch ($this->platform){
+            case 'huobi':{
+                
+                break;
+            }
+            case 'bitmex':{
+                
+                break;
+            }
+            case 'okex':{
+                $map=[];
+                $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
+                $map['order_id']=empty($map['order_id']) ? $map['client_oid'] : $map['order_id'];
+                $map['instrument_id']=$data['_symbol'] ?? ($data['instrument_id'] ?? '');
+                
+                return $map;
+            }
+            case 'binance':{
+                
+                break;
+            }
+        }
         
+        return $data;
     }
     
     /**
      *
      * */
     function showAll(array $data){
-        
+        return $data;
     }
 }
 

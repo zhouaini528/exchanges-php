@@ -30,28 +30,28 @@ class ResponseTraderMap extends Base implements TraderInterface
      *
      * */
     function cancel(array $data){
-        
+        return $data;
     }
     
     /**
      *
      * */
     function update(array $data){
-        
+        return $data;
     }
     
     /**
      *
      * */
     function show(array $data){
-        
+        return $data;
     }
     
     /**
      *
      * */
     function showAll(array $data){
-        
+        return $data;
     }
 }
 

@@ -18,7 +18,7 @@ $extra=$keysecret['ok']['extra'];
 
 $exchanges=new Exchanges('okex',$key,$secret,$extra);
 
-$action=intval($_GET['action']);
+$action=intval($_GET['action'] ?? 0);
 
 switch ($action){
     //******************************现货
@@ -145,10 +145,58 @@ switch ($action){
         ]);
         break;
     }
+    
+    //******************************现货一个订单完整流程
+    case 300:{
+        $_client_id=md5(rand(1,999999999));
+        
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USDT',
+            '_number'=>'0.001',
+            '_price'=>'2000',
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        sleep(1);
+        
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTC-USDT',
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        sleep(1);
+        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTC-USDT',
+            '_client_id'=>$_client_id,
+        ]);
+        
+        break;
+    }
+    
+    //******************************期货一个订单完整流程
+    case 350:{
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTC-USDT',
+            '_order_id'=>'2643178886798336',
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    
+    case 0:{
+        break;
+    }
+    
     default:{
         echo 'nothing';
         exit;
     }
 }
 
+/* $result=$exchanges->trader()->show([
+    '_symbol'=>'BTC-USD-190628',
+    '_order_id'=>'sdfsdfdsf',
+    //'_client_id'=>'自定义ID',
+]); */
 print_r($result);
