@@ -11,22 +11,144 @@ use Lin\Exchange\Exchanges;
 
 require __DIR__ .'../../vendor/autoload.php';
 
+include 'key_secret.php';
+$key=$keysecret['ok']['key'];
+$secret=$keysecret['ok']['secret'];
+$extra=$keysecret['ok']['extra'];
 
-$exchanges=new Exchanges('okex',[
-    'key'=>$key,
-    'secret'=>$secret,
-]);
+$exchanges=new Exchanges('okex',$key,$secret,$extra);
 
-$exchanges->trader()->sell([
-    '_symbol'=>'币种',
-    '_number'=>'购买数量',
-    
-    //期货
-    '_future'=>'是否现货与期货，0：现货   1：期货',
-    '_entryclosed'=>'0:开仓   1:平仓',
-    
-    '_price'=>'当前价格    填写参数为：限价交易    不填写为：市价交易',
-    '_client_id'=>'自定义ID',
-    
-    '原生接口参数'
-]);
+$action=intval($_GET['action']);
+
+switch ($action){
+    //******************************现货
+    //***********现货市价交易
+    case 100:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USDT',
+            '_price'=>'5',
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 101:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USDT',
+            '_number'=>'0.001',
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    //***********现货限价交易
+    case 150:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USDT',
+            '_number'=>'0.001',
+            '_price'=>'2000',
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 151:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USDT',
+            '_number'=>'0.001',
+            '_price'=>'99999',
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    //******************************期货
+    //***********期货市价交易
+    case 200:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_future'=>true,
+            '_entry'=>true,//开多
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 201:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_future'=>true,
+            '_entry'=>false,//开空
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 202:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_future'=>true,
+            '_entry'=>true,//平多
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 203:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_future'=>true,
+            '_entry'=>false,//平空
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    //***********期货限价交易
+    case 250:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_price'=>'2000',
+            '_future'=>true,
+            '_entry'=>true,//开多
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 251:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_price'=>'99999',
+            '_future'=>true,
+            '_entry'=>false,//开空
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 252:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_price'=>'1000',
+            '_future'=>true,
+            '_entry'=>true,//平多
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    case 253:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USD-190628',
+            '_number'=>'1',
+            '_price'=>'1000',
+            '_future'=>true,
+            '_entry'=>false,//平空
+            //'_client_id'=>'自定义ID',
+        ]);
+        break;
+    }
+    default:{
+        echo 'nothing';
+        exit;
+    }
+}
+
+print_r($result);

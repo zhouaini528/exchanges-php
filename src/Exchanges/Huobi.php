@@ -95,7 +95,9 @@ class Huobi
     protected $platform_future;
     protected $platform_spot;
     
-    function __construct($key,$secret,$host){
+    function __construct($key,$secret,$host=''){
+        $host=empty($host) ? 'https://api.huobi.pro' : $host ;
+        
         $this->platform_future=new HuobiFuture($key,$secret,$host);
         
         $this->platform_spot=new HuobiSpot($key,$secret,$host);

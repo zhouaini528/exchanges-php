@@ -49,4 +49,18 @@ class Base
         
         $this->map=new Map($platform);
     }
+    
+    /**
+     *
+     * @param
+     * @param int 错误类型
+     * @return array
+     * */
+    protected function error($msg){
+        $msg=json_decode($msg,true);
+        
+        return [
+            '_error'=>$msg,
+        ];
+    }
 }

@@ -89,7 +89,9 @@ class Bitmex
 {
     protected $platform;
     
-    function __construct($key,$secret,$host){
+    function __construct($key,$secret,$host=''){
+        $host=empty($host) ? 'https://www.bitmex.com' : $host ;
+        
         $this->platform=new BitmexApi($key,$secret,$host);
     }
     

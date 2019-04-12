@@ -30,18 +30,26 @@ class Trader extends Base implements TraderInterface
      * ]  
      * */
     function sell(array $data){
-        $map=$this->map->request_trader()->sell($data);
-        $result=$this->platform->trader()->sell($map);
-        return $this->map->response_trader()->sell($result);
+        try {
+            $map=$this->map->request_trader()->sell($data);
+            $result=$this->platform->trader()->sell($map);
+            return $this->map->response_trader()->sell($result);
+        }catch (\Exception $e){
+            return $this->error($e->getMessage());
+        }
     }
     
     /**
      *
      * */
     function buy(array $data){
-        $map=$this->map->request_trader()->buy($data);
-        $result=$this->platform->trader()->buy($map);
-        return $this->map->response_trader()->buy($result);
+        try {
+            $map=$this->map->request_trader()->buy($data);
+            $result=$this->platform->trader()->buy($map);
+            return $this->map->response_trader()->buy($result);
+        }catch (\Exception $e){
+            return $this->error($e->getMessage());
+        }
     }
     
     /**

@@ -88,7 +88,9 @@ class Binance
 {
     protected $platform;
     
-    function __construct($key,$secret,$host){
+    function __construct($key,$secret,$host=''){
+        $host=empty($host) ? 'https://api.binance.com' : $host ;
+        
         $this->platform=new BinanceApi($key,$secret,$host);
     }
     

@@ -104,7 +104,9 @@ class Okex
     protected $platform_spot;
     
     
-    function __construct($key,$secret,$passphrase,$host){
+    function __construct($key,$secret,$passphrase,$host=''){
+        $host=empty($host) ? 'https://www.okex.com' : $host ;
+        
         $this->platform_future=new OkexFuture($key,$secret,$passphrase,$host);
         
         $this->platform_spot=new OkexSpot($key,$secret,$passphrase,$host);

@@ -45,20 +45,16 @@ class RequestTraderMap extends Base implements TraderInterface
                     交割合约有该参数
                     leverage	Number	是	要设定的杠杆倍数，10或20
                     */
-                    $map['size']=$data['size'] ?? 10;
-                    
-                    if($data['_entry']){//开仓
-                        $map['type']=$data['type'] ?? ($data['_entry']?1:2);
-                    }else{//平仓
-                        $map['type']=$data['type'] ?? ($data['_entry']?4:3);
-                    }
+                    $map['type']=$data['type'] ?? ($data['_entry']?3:4);
                     
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
                         $map['match_price']=0;
-                        $map['price']=$data['_number'] ?? $data['size'];
+                        $map['price']=$data['_price'];
+                        $map['size']=$data['_number'];
                     }else{
                         $map['match_price']=1;
+                        $map['size']=$data['_number'];
                     }
                     
                     //判断是否是交割合约
@@ -135,20 +131,16 @@ class RequestTraderMap extends Base implements TraderInterface
                 
                 //判断是期货还是现货
                 if(isset($data['_future']) && $data['_future']){
-                    $map['size']=$data['size'] ?? 10;
-                    
-                    if($data['_entry']){//开仓
-                        $map['type']=$data['type'] ?? ($data['_entry']?1:2);
-                    }else{//平仓
-                        $map['type']=$data['type'] ?? ($data['_entry']?4:3);
-                    }
+                    $map['type']=$data['type'] ?? ($data['_entry']?1:2);
                     
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
                         $map['match_price']=0;
-                        $map['price']=$data['_number'] ?? $data['size'];
+                        $map['price']=$data['_price'];
+                        $map['size']=$data['_number'];
                     }else{
                         $map['match_price']=1;
+                        $map['size']=$data['_number'];
                     }
                     
                     //判断是否是交割合约
