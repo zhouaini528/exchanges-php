@@ -19,7 +19,7 @@ class Trader extends Base implements TraderInterface
      * _client_id  自定义ID
      * 
      * _future    是否现货与期货，false：现货   true：期货   默认：false
-     * _entryclosed   true:开仓   false:平仓。只有_future有值才有效
+     * _entry   true:开仓   false:平仓。只有_future有值才有效
      * *****************以上参数非必填写
      * @return [
      * _status=>-2,-1,0,1,2   '完成交易'=>1,'挂单中'=>0, '部分完成'=>2,'撤单'=>-1,'系统错误'=>-2,
@@ -30,16 +30,18 @@ class Trader extends Base implements TraderInterface
      * ]  
      * */
     function sell(array $data){
-        $data=$this->map->trader()->sell($data);
-        
-        $this->platform->trader()->sell($data);
+        $map=$this->map->request_trader()->sell($data);
+        $result=$this->platform->trader()->sell($map);
+        return $this->map->response_trader()->sell($result);
     }
     
     /**
      *
      * */
     function buy(array $data){
-        
+        $map=$this->map->request_trader()->buy($data);
+        $result=$this->platform->trader()->buy($map);
+        return $this->map->response_trader()->buy($result);
     }
     
     /**

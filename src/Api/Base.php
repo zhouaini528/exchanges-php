@@ -9,8 +9,9 @@ use Lin\Exchange\Exchanges\Huobi;
 use Lin\Exchange\Exchanges\Bitmex;
 use Lin\Exchange\Exchanges\Okex;
 use Lin\Exchange\Exchanges\Binance;
-use Lin\Exchange\Config\ParamMap;
 use Lin\Exchange\Exceptions\Exception;
+use Lin\Exchange\Map\Map;
+
 
 class Base
 {
@@ -46,6 +47,6 @@ class Base
             }
         }
         
-        $this->map=new ParamMap($platform);
+        $this->map=new Map($platform);
     }
 }
