@@ -51,20 +51,22 @@ class Trader extends Base implements TraderInterface
     function sell(array $data){
         //判断是期货还是现货
         if(isset($data['match_price'])){
-            //return $this->platform_future->order()->post($data);
+            return $this->platform_future->order()->post($data);
         }else{
-            //return $this->platform_spot->order()->post($data);
+            return $this->platform_spot->order()->post($data);
         }
-        return [];
     }
     
     /**
      *
      * */
     function buy(array $data){
-        print_r($data);
-        echo 'okex buy';
-        return [];
+        //判断是期货还是现货
+        if(isset($data['match_price'])){
+            return $this->platform_future->order()->post($data);
+        }else{
+            return $this->platform_spot->order()->post($data);
+        }
     }
     
     /**

@@ -11,22 +11,25 @@ use Lin\Exchange\Exchanges;
 
 require __DIR__ .'../../vendor/autoload.php';
 
-$key='';
-$secret='';
-$host='https://testnet.bitmex.com';
+include 'key_secret.php';
+$key=$keysecret['ok']['key'];
+$secret=$keysecret['ok']['secret'];
+$extra=$keysecret['ok']['extra'];
+$host=$keysecret['ok']['host'];
 
-$exchanges=new Exchanges('okex',$key,$secret,$extra='',$host='');
+$exchanges=new Exchanges('okex',$key,$secret,$extra,$host);
 
 //******************************现货
 //***********市价交易
 //buy时  _symbol  _number 必填参数
-/*$exchanges->trader()->buy([
+$a=$exchanges->trader()->buy([
     '_symbol'=>'币种',
     '_price'=>'购买价格',
     
     //'_client_id'=>'自定义ID',
 ]);
-
+print_r($a);
+die;
 //sell 时  _symbol  _number 必填参数
 $exchanges->trader()->sell([
     '_symbol'=>'币种',
@@ -51,7 +54,7 @@ $exchanges->trader()->sell([
     
     //'_client_id'=>'自定义ID',
 ]);
-*/
+
 //******************************期货
 //***********市价交易
 $exchanges->trader()->buy([
