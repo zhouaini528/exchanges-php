@@ -26,7 +26,7 @@ class Account extends Base implements AccountInterface
      *
      * */
     function position(array $data){
-        
+        return [];
     }
 }
 
@@ -36,7 +36,7 @@ class Market extends Base implements MarketInterface
      *
      * */
     function depth(array $data){
-        
+        return [];
     }
 }
 
@@ -46,42 +46,42 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function sell(array $data){
-        
+        return $this->platform->order()->post($data);
     }
     
     /**
      *
      * */
     function buy(array $data){
-        
+        return $this->platform->order()->post($data);
     }
     
     /**
      *
      * */
     function cancel(array $data){
-        
+        return $this->platform->order()->delete($data);
     }
     
     /**
      *
      * */
     function update(array $data){
-        
+        return [];
     }
     
     /**
      *
      * */
     function show(array $data){
-        
+        return $this->platform->order()->getOne($data);
     }
     
     /**
      *
      * */
     function showAll(array $data){
-        
+        return [];
     }
 }
 

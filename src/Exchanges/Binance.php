@@ -25,7 +25,7 @@ class Account extends Base implements AccountInterface
      *
      * */
     function position(array $data){
-        
+        return [];
     }
 }
 
@@ -35,7 +35,7 @@ class Market extends Base implements MarketInterface
      *
      * */
     function depth(array $data){
-        
+        return [];
     }
 }
 
@@ -45,42 +45,42 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function sell(array $data){
-        
+        return [];
     }
     
     /**
      *
      * */
     function buy(array $data){
-        
+        return [];
     }
     
     /**
      *
      * */
     function cancel(array $data){
-        
+        return [];
     }
     
     /**
      *
      * */
     function update(array $data){
-        
+        return [];
     }
     
     /**
      *
      * */
     function show(array $data){
-        
+        return [];
     }
     
     /**
      *
      * */
     function showAll(array $data){
-        
+        return [];
     }
 }
 

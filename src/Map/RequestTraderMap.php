@@ -16,17 +16,30 @@ class RequestTraderMap extends Base implements TraderInterface
      *  
      * */
     function sell(array $data){
+        $map=[];
+        
         switch ($this->platform){
             case 'huobi':{
                 
                 break;
             }
             case 'bitmex':{
+                $map['clOrdID']=$data['_client_id'] ?? ($data['clOrdID'] ?? '');
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['orderQty']=$data['_number'] ?? $data['orderQty'];
+                $map['side']='Sell';
+                
+                //市价单与限价单的参数映射
+                if(isset($data['_number']) && isset($data['_price'])){
+                    $map['price']=$data['_price'];
+                    $map['ordType']=$data['ordType'] ?? 'Limit';
+                }else{
+                    $map['ordType']=$data['ordType'] ?? 'Market';
+                }
                 
                 break;
             }
             case 'okex':{
-                $map=[];
                 $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
@@ -99,7 +112,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                 }
                 
-                return $map;
+                break;
             }
             case 'binance':{
                 
@@ -107,24 +120,36 @@ class RequestTraderMap extends Base implements TraderInterface
             }
         }
         
-        return $data;
+        return $map;
     }
     
     /**
      *
      * */
     function buy(array $data){
+        $map=[];
+        
         switch ($this->platform){
             case 'huobi':{
                 
                 break;
             }
             case 'bitmex':{
-                
+                $map['clOrdID']=$data['_client_id'] ?? ($data['clOrdID'] ?? '');
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['orderQty']=$data['_number'] ?? $data['orderQty'];
+                $map['side']='Buy';
+
+                //市价单与限价单的参数映射
+                if(isset($data['_number']) && isset($data['_price'])){
+                    $map['price']=$data['_price'];
+                    $map['ordType']=$data['ordType'] ?? 'Limit';
+                }else{
+                    $map['ordType']=$data['ordType'] ?? 'Market';
+                }
                 break;
             }
             case 'okex':{
-                $map=[];
                 $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
@@ -167,8 +192,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                     }
                 }
-                
-                return $map;
+                break;
             }
             case 'binance':{
                 
@@ -176,30 +200,31 @@ class RequestTraderMap extends Base implements TraderInterface
             }
         }
         
-        return $data;
+        return $map;
     }
     
     /**
      *
      * */
     function cancel(array $data){
+        $map=[];
         switch ($this->platform){
             case 'huobi':{
                 
                 break;
             }
             case 'bitmex':{
-                
+                $map['orderID']=$data['_order_id'] ?? ($data['orderID'] ?? '');
+                $map['clOrdID']=$data['_client_id'] ?? ($data['clOrdID'] ?? '');
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 break;
             }
             case 'okex':{
-                $map=[];
                 $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                 $map['order_id']=empty($map['order_id']) ? $map['client_oid'] : $map['order_id'];
                 $map['instrument_id']=$data['_symbol'] ?? ($data['instrument_id'] ?? '');
-                
-                return $map;
+                break;
             }
             case 'binance':{
                 
@@ -207,7 +232,7 @@ class RequestTraderMap extends Base implements TraderInterface
             }
         }
         
-        return $data;
+        return $map;
     }
     
     /**
@@ -221,23 +246,25 @@ class RequestTraderMap extends Base implements TraderInterface
      *
      * */
     function show(array $data){
+        $map=[];
+        
         switch ($this->platform){
             case 'huobi':{
                 
                 break;
             }
             case 'bitmex':{
-                
+                $map['orderID']=$data['_order_id'] ?? ($data['orderID'] ?? '');
+                $map['clOrdID']=$data['_client_id'] ?? ($data['clOrdID'] ?? '');
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 break;
             }
             case 'okex':{
-                $map=[];
                 $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                 $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['order_id']=empty($map['order_id']) ? $map['client_oid'] : $map['order_id'];
                 $map['instrument_id']=$data['_symbol'] ?? ($data['instrument_id'] ?? '');
-                
-                return $map;
+                break;
             }
             case 'binance':{
                 
@@ -245,7 +272,7 @@ class RequestTraderMap extends Base implements TraderInterface
             }
         }
         
-        return $data;
+        return $map;
     }
     
     /**
