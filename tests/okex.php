@@ -14,9 +14,9 @@ require __DIR__ .'../../vendor/autoload.php';
 include 'key_secret.php';
 $key=$keysecret['ok']['key'];
 $secret=$keysecret['ok']['secret'];
-$extra=$keysecret['ok']['extra'];
+$passphrase=$keysecret['ok']['extra'];
 
-$exchanges=new Exchanges('okex',$key,$secret,$extra);
+$exchanges=new Exchanges('okex',$key,$secret,$passphrase);
 
 $action=intval($_GET['action'] ?? 0);
 

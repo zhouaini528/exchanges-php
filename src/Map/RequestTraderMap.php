@@ -20,7 +20,28 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
-                
+                //判断是期货还是现货
+                if(isset($data['_future']) && $data['_future']){
+                    //市价单与限价单的参数映射
+                    if(isset($data['_number']) && isset($data['_price'])){
+                        
+                    }else {
+                        
+                    }
+                }else{
+                    $map['account-id']=$data['account-id'] ?? $this->extra;
+                    $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                    
+                    //市价单与限价单的参数映射
+                    if(isset($data['_number']) && isset($data['_price'])){
+                        $map['price']=$data['_price'];
+                        $map['type']=$data['type'] ?? 'sell-limit';
+                        $map['amount']=$data['_number'] ?? $data['amount'];
+                    }else {
+                        $map['type']=$data['type'] ?? 'sell-market';
+                        $map['amount']=$data['_number'] ?? $data['amount'];//市价卖单时表示卖多少币
+                    }
+                }
                 break;
             }
             case 'bitmex':{
@@ -45,19 +66,6 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['order_type']=$data['order_type'] ?? 0;
                 
                 if(isset($data['_future']) && $data['_future']){
-                    /*
-                    参数名	参数类型	是否必须	描述
-                    client_oid	String	否	由您设置的订单ID来识别您的订单 ,类型为字母（大小写）+数字或者纯字母（大小写）， 1-32位字符
-                    instrument_id	String	是	合约ID，如BTC-USD-180213
-                    type	String	是	1:开多2:开空3:平多4:平空
-                    order_type	string	否	参数填数字，0：普通委托（order type不填或填0都是普通委托） 1：只做Maker（Post only） 2：全部成交或立即取消（FOK） 3：立即成交并取消剩余（IOC）
-                    size	Number	是	买入或卖出合约的数量（以张计数）
-                    match_price	String	否	是否以对手价下单(0:不是 1:是)，默认为0，当取值为1时。price字段无效
-                    price	是	每张合约的价格
-                    
-                    交割合约有该参数
-                    leverage	Number	是	要设定的杠杆倍数，10或20
-                    */
                     $map['type']=$data['type'] ?? ($data['_entry']?3:4);
                     
                     //市价单与限价单的参数映射
@@ -75,23 +83,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['leverage']=$data['leverage'] ?? 10;
                     }
                 }else{
-                    /*
-                     * 参数名	类型	是否必填	描述
-                     client_oid	string	否	由您设置的订单ID来识别您的订单,类型为字母（大小写）+数字或者纯字母（大小写） ，1-32位字符
-                     type	string	否	limit，market(默认是limit)
-                     side	string	是	buy or sell
-                     instrument_id	string	是	币对名称
-                     order_type	string	否	参数填数字，0：普通委托（order type不填或填0都是普通委托） 1：只做Maker（Post only） 2：全部成交或立即取消（FOK） 3：立即成交并取消剩余（IOC）
-                     margin_trading	byte	否	下单类型(当前为币币交易，请求值为1)
-                     限价单特殊参数
-                     参数名	类型	是否必填	描述
-                     price	string	是	价格
-                     size	string	是	买入或卖出的数量
-                     市价单特殊参数
-                     参数名	类型	是否必填	描述
-                     size	string	是	卖出数量，市价卖出时必填size
-                     notional	string	是	买入金额，市价买入是必填notional
-                     * */
                     $map['side']='sell';
                     $map['margin_trading']=1;
                     
@@ -131,7 +122,28 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
-                
+                //判断是期货还是现货
+                if(isset($data['_future']) && $data['_future']){
+                    //市价单与限价单的参数映射
+                    if(isset($data['_number']) && isset($data['_price'])){
+                        
+                    }else {
+                        
+                    }
+                }else{
+                    $map['account-id']=$data['account-id'] ?? $this->extra;
+                    $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                    
+                    //市价单与限价单的参数映射
+                    if(isset($data['_number']) && isset($data['_price'])){
+                        $map['price']=$data['_price'];
+                        $map['type']=$data['type'] ?? 'buy-limit';
+                        $map['amount']=$data['_number'] ?? $data['amount'];
+                    }else {
+                        $map['type']=$data['type'] ?? 'buy-market';
+                        $map['amount']=$data['_price'] ?? $data['amount'];//市价买单时表示买多少钱
+                    }
+                }
                 break;
             }
             case 'bitmex':{
@@ -210,7 +222,7 @@ class RequestTraderMap extends Base implements TraderInterface
         $map=[];
         switch ($this->platform){
             case 'huobi':{
-                
+                $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
                 break;
             }
             case 'bitmex':{
@@ -250,7 +262,7 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
-                
+                $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
                 break;
             }
             case 'bitmex':{

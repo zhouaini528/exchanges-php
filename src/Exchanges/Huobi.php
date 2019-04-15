@@ -48,21 +48,33 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function sell(array $data){
-        return [];
+        if(isset($data['contract_type'])){
+            return $this->platform_future->contract()->postOrder($data);
+        }else{
+            return $this->platform_spot->order()->postPlace($data);
+        }
     }
     
     /**
      *
      * */
     function buy(array $data){
-        return [];
+        if(isset($data['contract_type'])){
+            return $this->platform_future->contract()->postOrder($data);
+        }else{
+            return $this->platform_spot->order()->postPlace($data);
+        }
     }
     
     /**
      *
      * */
     function cancel(array $data){
-        return [];
+        if(isset($data['contract_type'])){
+            return $this->platform_future->contract()->postCancel($data);
+        }else{
+            return $this->platform_spot->order()->postSubmitCancel($data);
+        }
     }
     
     /**
@@ -76,7 +88,11 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function show(array $data){
-        return [];
+        if(isset($data['contract_type'])){
+            return $this->platform_future->contract()->getContractInfo($data);
+        }else{
+            return $this->platform_spot->order()->get($data);
+        }
     }
     
     /**

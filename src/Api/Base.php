@@ -47,7 +47,7 @@ class Base
             }
         }
         
-        $this->map=new Map($platform);
+        $this->map=new Map($platform,$key,$secret,$extra,$host);
     }
     
     /**
