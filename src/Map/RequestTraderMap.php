@@ -106,7 +106,22 @@ class RequestTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['newClientOrderId']=$data['_client_id'] ?? ($data['newClientOrderId'] ?? '');
+                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                $map['side']='SELL';
+                $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                 
+                if(empty($map['newClientOrderId'])) unset($map['newClientOrderId']);
+                
+                //市价单与限价单的参数映射
+                if(isset($data['_number']) && isset($data['_price'])){
+                    $map['timeInForce']=$data['timeInForce'] ?? 'GTC';
+                    $map['price']=$data['_price'] ?? ($data['price'] ?? '');
+                    $map['type']='LIMIT';
+                }else{
+                    $map['type']='MARKET';
+                }
                 break;
             }
         }
@@ -207,6 +222,22 @@ class RequestTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['newClientOrderId']=$data['_client_id'] ?? ($data['newClientOrderId'] ?? '');
+                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                $map['side']='BUY';
+                $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                
+                if(empty($map['newClientOrderId'])) unset($map['newClientOrderId']);
+            
+                //市价单与限价单的参数映射
+                if(isset($data['_number']) && isset($data['_price'])){
+                    $map['timeInForce']=$data['timeInForce'] ?? 'GTC';
+                    $map['price']=$data['_price'] ?? ($data['price'] ?? '');
+                    $map['type']='LIMIT';
+                }else{
+                    $map['type']='MARKET';
+                }
                 
                 break;
             }
@@ -239,6 +270,12 @@ class RequestTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
+                $map['origClientOrderId']=$data['_client_id'] ?? ($data['origClientOrderId'] ?? '');
+                
+                if(empty($map['orderId'])) unset($map['orderId']);
+                if(empty($map['origClientOrderId'])) unset($map['origClientOrderId']);
                 
                 break;
             }
@@ -279,6 +316,12 @@ class RequestTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
+                $map['origClientOrderId']=$data['_client_id'] ?? ($data['origClientOrderId'] ?? '');
+                
+                if(empty($map['orderId'])) unset($map['orderId']);
+                if(empty($map['origClientOrderId'])) unset($map['origClientOrderId']);
                 
                 break;
             }

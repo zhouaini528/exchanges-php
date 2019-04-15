@@ -45,21 +45,21 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function sell(array $data){
-        return [];
+        return $this->platform->trade()->postOrder($data);
     }
     
     /**
      *
      * */
     function buy(array $data){
-        return [];
+        return $this->platform->trade()->postOrder($data);
     }
     
     /**
      *
      * */
     function cancel(array $data){
-        return [];
+        return $this->platform->trade()->deleteOrder($data);
     }
     
     /**
@@ -73,7 +73,7 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function show(array $data){
-        return [];
+        return $this->platform->user()->getOrder($data);
     }
     
     /**
