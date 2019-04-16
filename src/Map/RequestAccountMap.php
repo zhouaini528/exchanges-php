@@ -17,7 +17,24 @@ class RequestAccountMap extends Base implements AccountInterface
      *
      * */
     function position(array $data){
-        return $data;
+        $map=[];
+        
+        switch ($this->platform){
+            case 'huobi':{
+                break;
+            }
+            case 'bitmex':{
+                break;
+            }
+            case 'okex':{
+                break;
+            }
+            case 'binance':{
+                break;
+            }
+        }
+        
+        return $map;
     }
 }
 

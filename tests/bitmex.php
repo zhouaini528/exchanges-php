@@ -19,7 +19,8 @@ $extra='';
 
 $exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
 
-$action=intval($_GET['action'] ?? 0);
+$action=intval($_GET['action'] ?? 0);//http 模式
+if(empty($action)) $action=intval($argv[1]);//cli 模式
 
 switch ($action){
     //***********市价交易
@@ -59,9 +60,17 @@ switch ($action){
         ]);
         break;
     }
-    
-    //***********完整流程
     case 300:{
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'XBTUSD',
+            '_order_id'=>'7d03ac2a-b24d-f48c-95f4-2628e6411927',
+            //'_client_id'=>'自定义ID',
+        ]);
+        
+        break;
+    }
+    //***********完整流程
+    case 400:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'XBTUSD',
             '_number'=>'1',
@@ -69,19 +78,10 @@ switch ($action){
             //'_client_id'=>'自定义ID',
         ]);
         print_r($result);
-        sleep(1);
-        
-        $result=$exchanges->trader()->show([
-            '_symbol'=>'XBTUSD',
-            '_order_id'=>$result['orderID'],
-            //'_client_id'=>'自定义ID',
-        ]);
-        print_r($result);
-        sleep(1);
         
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'XBTUSD',
-            '_order_id'=>$result['orderID'],
+            '_order_id'=>$result['_order_id'],
             //'_client_id'=>'自定义ID',
         ]);
         
@@ -94,4 +94,5 @@ switch ($action){
         //exit;
     }
 }
+
 print_r($result);

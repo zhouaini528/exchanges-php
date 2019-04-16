@@ -288,7 +288,24 @@ class RequestTraderMap extends Base implements TraderInterface
      *
      * */
     function update(array $data){
-        return $data;
+        $map=[];
+        
+        switch ($this->platform){
+            case 'huobi':{
+                break;
+            }
+            case 'bitmex':{
+                break;
+            }
+            case 'okex':{
+                break;
+            }
+            case 'binance':{
+                break;
+            }
+        }
+        
+        return $map;
     }
     
     /**
@@ -334,7 +351,24 @@ class RequestTraderMap extends Base implements TraderInterface
      *
      * */
     function showAll(array $data){
-        return $data;
+        $map=[];
+        
+        switch ($this->platform){
+            case 'huobi':{
+                break;
+            }
+            case 'bitmex':{
+                break;
+            }
+            case 'okex':{
+                break;
+            }
+            case 'binance':{
+                break;
+            }
+        }
+        
+        return $map;
     }
 }
 

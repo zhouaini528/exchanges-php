@@ -60,7 +60,7 @@ class Trader extends Base implements TraderInterface
      *
      * */
     function cancel(array $data){
-        return $this->platform->order()->delete($data);
+        return current($this->platform->order()->delete($data));
     }
     
     /**

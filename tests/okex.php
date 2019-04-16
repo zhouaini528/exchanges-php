@@ -14,11 +14,12 @@ require __DIR__ .'../../vendor/autoload.php';
 include 'key_secret.php';
 $key=$keysecret['ok']['key'];
 $secret=$keysecret['ok']['secret'];
-$passphrase=$keysecret['ok']['extra'];
+$passphrase=$keysecret['ok']['passphrase'];
 
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase);
 
-$action=intval($_GET['action'] ?? 0);
+$action=intval($_GET['action'] ?? 0);//http 模式
+if(empty($action)) $action=intval($argv[1]);//cli 模式
 
 switch ($action){
     //******************************现货
@@ -26,7 +27,7 @@ switch ($action){
     case 100:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USDT',
-            '_price'=>'5',
+            '_price'=>'10',
             //'_client_id'=>'自定义ID',
         ]);
         break;
