@@ -139,6 +139,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'okex':{
+                $map['_order_id']=$data['result']['order_id'] ?? '';
+                $map['_client_id']=$data['result']['client_oid'] ?? '';
+                
+                if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
+                if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
                 break;
             }
             case 'binance':{

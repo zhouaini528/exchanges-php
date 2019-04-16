@@ -19,7 +19,8 @@ $account_id=$keysecret['huobi']['account_id'];
 
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 
-$action=intval($_GET['action'] ?? 0);
+$action=intval($_GET['action'] ?? 0);//http 模式
+if(empty($action)) $action=intval($argv[1]);//cli 模式
 
 switch ($action){
     //******************************现货
