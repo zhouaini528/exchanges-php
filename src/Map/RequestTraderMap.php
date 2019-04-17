@@ -57,6 +57,9 @@ class RequestTraderMap extends Base implements TraderInterface
                 }else{
                     $map['ordType']=$data['ordType'] ?? 'Market';
                 }
+                
+                //支持原生参数
+                $data['side']=$map['side'];
                 break;
             }
             case 'okex':{
@@ -189,6 +192,9 @@ class RequestTraderMap extends Base implements TraderInterface
                 }else{
                     $map['ordType']=$data['ordType'] ?? 'Market';
                 }
+                
+                //支持原生参数
+                $data['side']=$map['side'];
                 
                 break;
             }
