@@ -28,7 +28,7 @@ switch ($action){
     case 100:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'btcusdt',
-            '_price'=>'5',
+            '_price'=>'10',
         ]);
         break;
     }
@@ -60,21 +60,21 @@ switch ($action){
     //***********期货市价交易
     //等待补充
     
-    //******************************现货一个订单完整流程
     case 300:{
+        $result=$exchanges->trader()->show([
+            '_order_id'=>'29897313869',
+        ]);
+        break;
+    }
+    
+    //******************************现货一个订单完整流程
+    case 400:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'btcusdt',
             '_number'=>'0.001',
             '_price'=>'2000',
         ]);
         print_r($result);
-        sleep(1);
-        
-        $result=$exchanges->trader()->show([
-            '_order_id'=>$result['data'],
-        ]);
-        print_r($result);
-        sleep(1);
         
         $result=$exchanges->trader()->cancel([
             '_order_id'=>$result['data']['id'],
@@ -84,7 +84,7 @@ switch ($action){
     }
     
     //******************************期货一个订单完整流程
-    case 350:{
+    case 450:{
         
         
         break;

@@ -41,6 +41,29 @@ class ResponseTraderMap extends Base implements TraderInterface
         ],
     ];
     
+    protected $huobi_status=[
+        'spot'=>[
+            //submitting , submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销
+            'submitting'=>'NEW',
+            'submitted'=>'NEW',
+            'filled'=>'FILLED',
+            'partial-filled'=>'PART_FILLED',
+            'partial-canceled'=>'PART_FILLED',
+            'canceled'=>'CANCELLED',
+        ],
+        'future'=>[
+            //(1准备提交 2准备提交 3已提交 4部分成交 5部分成交已撤单 6全部成交 7已撤单 11撤单中)
+            '1'=>'NEW',
+            '2'=>'NEW',
+            '3'=>'NEW',
+            '6'=>'FILLED',
+            '4'=>'PART_FILLED',
+            '5'=>'PART_FILLED',
+            '7'=>'CANCELLED',
+            '8'=>'CANCELING',
+        ],
+    ];
+    
     /**
      *  
      * */
@@ -49,6 +72,8 @@ class ResponseTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
+                $map['_order_id']=$data['result']['data'] ?? '';
+                if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
                 break;
             }
             case 'bitmex':{
@@ -92,6 +117,10 @@ class ResponseTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
+                $map['_order_id']=$data['result']['data'] ?? '';
+                if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
+                
+                //TODO 期货版本等待
                 break;
             }
             case 'bitmex':{
@@ -128,6 +157,8 @@ class ResponseTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
+                $map['_order_id']=$data['result']['data'] ?? '';
+                if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
                 break;
             }
             case 'bitmex':{
@@ -188,6 +219,17 @@ class ResponseTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
+                //判断是期货还是现货
+                if(isset($data['request']['_future']) && $data['request']['_future']){
+                    
+                }else{
+                    $map['_order_id']=$data['result']['data']['id'];
+                    $map['_filled_qty']=$data['result']['data']['field-amount'];
+                    $map['_price_avg']=$data['result']['data']['field-cash-amount'];
+                    $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
+                }
+                
+                if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
                 break;
             }
             case 'bitmex':{
