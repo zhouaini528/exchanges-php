@@ -298,6 +298,34 @@ switch ($action){
         ]);
         break;
     }
+    
+    case 301:{
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTC-USD-190628',
+            '_order_id'=>'2671566274710528',
+            '_future'=>true,
+        ]);
+        break;
+    }
+    case 302:{
+        //The original parameters
+        $result=$exchanges->trader()->show([
+            'instrument_id'=>'BTC-USD-190628',
+            'order_id'=>'2671566274710528',
+        ]);
+        break;
+    }
+    
+    case 303:{
+        //The original parameters
+        $result=$exchanges->trader()->cancel([
+            'instrument_id'=>'BTC-USD-190628',
+            'order_id'=>'2671566274710528',
+        ]);
+        break;
+    }
+    
+    
     //***Complete future flow
     case 450:{
         $_client_id=md5(rand(1,999999999));//custom ID
