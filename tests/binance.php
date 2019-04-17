@@ -17,7 +17,8 @@ $secret=$keysecret['binance']['secret'];
 
 $exchanges=new Exchanges('binance',$key,$secret);
 
-$action=intval($_GET['action'] ?? 0);
+$action=intval($_GET['action'] ?? 0);//http 模式
+if(empty($action)) $action=intval($argv[1]);//cli 模式
 
 switch ($action){
     //******************************现货
@@ -54,22 +55,29 @@ switch ($action){
         break;
     }
     
-    //******************************现货一个订单完整流程
     case 300:{
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTCUSDT',
+            '_order_id'=>'324168124',
+        ]);
+        break;
+    }
+    case 301:{
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTCUSDT',
+            '_order_id'=>'324171477',
+        ]);
+        break;
+    }
+    
+    //******************************现货一个订单完整流程
+    case 400:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
             '_number'=>'0.01',
             '_price'=>'2000',
         ]);
         print_r($result);
-        sleep(1);
-        
-        $result=$exchanges->trader()->show([
-            '_symbol'=>'BTCUSDT',
-            '_order_id'=>$result['orderId'],
-        ]);
-        print_r($result);
-        sleep(1);
         
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',
@@ -80,7 +88,7 @@ switch ($action){
     }
     
     //******************************期货一个订单完整流程
-    case 350:{
+    case 450:{
         
         
         break;

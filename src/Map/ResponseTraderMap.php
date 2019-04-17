@@ -64,6 +64,18 @@ class ResponseTraderMap extends Base implements TraderInterface
         ],
     ];
     
+    protected $binance_status=[
+        //NEW 新建订单    PARTIALLY_FILLED 部分成交   FILLED 全部成交    CANCELED 已撤销    PENDING_CANCEL 正在撤销中(目前不会遇到这个状态)
+        //REJECTED 订单被拒绝    EXPIRED 订单过期(根据timeInForce参数规则)
+        'FILLED'=>'FILLED',
+        'NEW'=>'NEW',
+        'PARTIALLY_FILLED'=>'PART_FILLED',
+        'CANCELED'=>'CANCELLED',
+        
+        'REJECTED'=>'FAILURE',
+        'EXPIRED'=>'FAILURE',
+    ];
+    
     /**
      *  
      * */
@@ -95,6 +107,8 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['_order_id']=$data['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 break;
             }
         }
@@ -142,6 +156,8 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['_order_id']=$data['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 break;
             }
         }
@@ -178,6 +194,10 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['_order_id']=$data['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['clientOrderId'] ?? '';
+                $map['_status']=$this->binance_status[$data['result']['status']];
+                
                 break;
             }
         }
@@ -256,6 +276,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'binance':{
+                $map['_order_id']=$data['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['clientOrderId'] ?? '';
+                $map['_filled_qty']=$data['result']['executedQty'];
+                $map['_price_avg']=$data['result']['cummulativeQuoteQty'];
+                $map['_status']=$this->binance_status[$data['result']['status']];
                 break;
             }
         }

@@ -89,7 +89,7 @@ class Trader extends Base implements TraderInterface
             $map=$this->map->request_trader()->buy($data);
             $result=$this->platform->trader()->buy($map);
             $trader=$this->map->response_trader()->buy(['result'=>$result,'request'=>$data]);
-
+            
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
             
