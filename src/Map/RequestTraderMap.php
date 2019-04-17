@@ -102,6 +102,15 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                     }
                 }
+                
+                //TODO 支持原生参数
+                $instrument=explode('-', $data['instrument_id']);
+                if(count($instrument)>2){
+                    //期货
+                }else{
+                    //现货
+                    $data['side']='buy';
+                }
                 break;
             }
             case 'binance':{
@@ -224,6 +233,15 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['notional']=$data['_price'] ?? $data['notional'];
                         }
                     }
+                }
+                
+                //TODO 支持原生参数
+                $instrument=explode('-', $data['instrument_id']);
+                if(count($instrument)>2){
+                    //期货
+                }else{
+                    //现货
+                    $data['side']='sell';
                 }
                 
                 break;

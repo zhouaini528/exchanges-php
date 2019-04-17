@@ -17,12 +17,12 @@ $secret=$keysecret['binance']['secret'];
 
 $exchanges=new Exchanges('binance',$key,$secret);
 
-$action=intval($_GET['action'] ?? 0);//http 模式
-if(empty($action)) $action=intval($argv[1]);//cli 模式
+$action=intval($_GET['action'] ?? 0);//http pattern
+if(empty($action)) $action=intval($argv[1]);//cli pattern
 
 switch ($action){
-    //******************************现货
-    //***********现货市价交易
+    //******************************Spot
+    //***********Spot Market
     case 100:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
@@ -31,7 +31,7 @@ switch ($action){
         break;
     }
     case 101:{
-        //原生参数接口交易
+        //The original parameters
         $result=$exchanges->trader()->buy([
             'symbol'=>'BTCUSDT',
             'type'=>'MARKET',
@@ -48,7 +48,7 @@ switch ($action){
         break;
     }
     case 103:{
-        //原生参数接口交易
+        //The original parameters
         $result=$exchanges->trader()->sell([
             'symbol'=>'BTCUSDT',
             'type'=>'MARKET',
@@ -57,7 +57,7 @@ switch ($action){
         break;
     }
     
-    //***********现货限价交易
+    //***********Spot Limit
     case 150:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
@@ -67,8 +67,8 @@ switch ($action){
         break;
     }
     case 151:{
-        //原生参数接口交易
-        $_client_id=md5(rand(1,999999999));//自定义ID
+        //The original parameters
+        $_client_id=md5(rand(1,999999999));//custom ID
         $result=$exchanges->trader()->buy([
             'newClientOrderId'=>$_client_id,
             'symbol'=>'BTCUSDT',
@@ -89,8 +89,8 @@ switch ($action){
         break;
     }
     case 153:{
-        //原生参数接口交易
-        $_client_id=md5(rand(1,999999999));//自定义ID
+        //The original parameters
+        $_client_id=md5(rand(1,999999999));//custom ID
         $result=$exchanges->trader()->sell([
             'newClientOrderId'=>$_client_id,
             'symbol'=>'BTCUSDT',
@@ -135,7 +135,7 @@ switch ($action){
     }
     
     
-    //******************************现货一个订单完整流程
+    //******************************Complete spot flow
     case 400:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
@@ -152,7 +152,7 @@ switch ($action){
         break;
     }
     
-    //******************************期货一个订单完整流程
+    //******************************Complete future flow
     case 450:{
         
         

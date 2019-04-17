@@ -113,6 +113,13 @@ class ResponseTraderMap extends Base implements TraderInterface
                 if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
                 if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
                 
+                //目的支持原生
+                if(isset($data['request']['instrument_id'])) {
+                    $map['_symbol']=$data['request']['instrument_id'];
+                    
+                    $temp=explode('-', $map['_symbol']);
+                    $map['_future']=count($temp)>2 ? true : false;
+                }
                 break;
             }
             case 'binance':{
@@ -155,6 +162,13 @@ class ResponseTraderMap extends Base implements TraderInterface
                 if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
                 if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
                 
+                //目的支持原生
+                if(isset($data['request']['instrument_id'])) {
+                    $map['_symbol']=$data['request']['instrument_id'];
+                    
+                    $temp=explode('-', $map['_symbol']);
+                    $map['_future']=count($temp)>2 ? true : false;
+                }
                 break;
             }
             case 'binance':{

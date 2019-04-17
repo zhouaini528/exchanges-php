@@ -31,7 +31,7 @@ class Base
      * */
     protected function checkOriginalParam(array $data){
         foreach ($data as $k=>$v){
-            if(is_numeric(stripos($k,'_'))) {
+            if(stripos($k,'_') === 0) {
                 return false;
             }
         }
