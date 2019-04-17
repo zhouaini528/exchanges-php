@@ -11,6 +11,55 @@ use Lin\Exchange\Config\Config;
 class Trader extends Base implements TraderInterface
 {
     /**
+     * 买
+     * 统一必填参数
+     * _symbol   币种
+     * _number  购买数量
+     * *****************以上参数必填写
+     * _price      当前价格    填写参数为：限价交易    不填写为：市价交易
+     * _client_id  自定义ID
+     *
+     * _future    是否现货与期货，false：现货   true：期货   默认：false
+     * _entry   true:开仓   false:平仓。只有_future=true有值才有效
+     * *****************以上参数非必填写
+     * @return [
+     *      ***返回原始数据
+     *
+     *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
+     *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
+     *      _filled_qty=>已交易完成数量
+     *      _price_avg=>平均交易价格
+     *      _order_id=>系统ID
+     *      _client_id=>自定义ID
+     * ]
+     *
+     * */
+    function buy(array $data){
+        try {
+            $map=$this->map->request_trader()->buy($data);
+            $result=$this->platform->trader()->buy($map);
+            $trader=$this->map->response_trader()->buy(['result'=>$result,'request'=>$data]);
+
+            //如果交易默认完成，则不用再查询
+            if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
+            
+            //交易所是撮合交易，所以查询需要间隔时间
+            sleep(Config::$ORDER_SHOW_TIME);
+            
+            //再次查询结果
+            return $this->show([
+                '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
+                '_future'=>$data['_future'] ?? ($trader['_future'] ?? ''),
+                
+                '_order_id'=>$trader['_order_id'] ?? '',
+                '_client_id'=>$trader['_client_id'] ?? '',
+            ]);
+        }catch (\Exception $e){
+            return $this->error($e->getMessage());
+        }
+    }
+    
+    /**
      * 卖
      * 统一必填参数
      * _symbol   币种
@@ -20,7 +69,7 @@ class Trader extends Base implements TraderInterface
      * _client_id  自定义ID
      * 
      * _future    是否现货与期货，false：现货   true：期货   默认：false
-     * _entry   true:开仓   false:平仓。只有_future有值才有效
+     * _entry   true:开仓   false:平仓。只有_future=true有值才有效
      * *****************以上参数非必填写
      * @return [
      *      ***返回原始数据
@@ -49,57 +98,8 @@ class Trader extends Base implements TraderInterface
             
             //再次查询结果
             return $this->show([
-                '_symbol'=>$data['_symbol'] ?? '',
-                '_future'=>$data['_future'] ?? '',
-                
-                '_order_id'=>$trader['_order_id'] ?? '',
-                '_client_id'=>$trader['_client_id'] ?? '',
-            ]);
-        }catch (\Exception $e){
-            return $this->error($e->getMessage());
-        }
-    }
-    
-    /**
-     * 买
-     * 统一必填参数
-     * _symbol   币种
-     * _number  购买数量
-     * *****************以上参数必填写
-     * _price      当前价格    填写参数为：限价交易    不填写为：市价交易
-     * _client_id  自定义ID
-     *
-     * _future    是否现货与期货，false：现货   true：期货   默认：false
-     * _entry   true:开仓   false:平仓。只有_future有值才有效
-     * *****************以上参数非必填写
-     * @return [
-     *      ***返回原始数据
-     *
-     *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
-     *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
-     *      _filled_qty=>已交易完成数量
-     *      _price_avg=>平均交易价格
-     *      _order_id=>系统ID
-     *      _client_id=>自定义ID
-     * ]
-     *
-     * */
-    function buy(array $data){
-        try {
-            $map=$this->map->request_trader()->buy($data);
-            $result=$this->platform->trader()->buy($map);
-            $trader=$this->map->response_trader()->buy(['result'=>$result,'request'=>$data]);
-            
-            //如果交易默认完成，则不用再查询
-            if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
-            
-            //交易所是撮合交易，所以查询需要间隔时间
-            sleep(Config::$ORDER_SHOW_TIME);
-            
-            //再次查询结果
-            return $this->show([
-                '_symbol'=>$data['_symbol'] ?? '',
-                '_future'=>$data['_future'] ?? '',
+                '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
+                '_future'=>$data['_future'] ?? ($trader['_future'] ?? ''),
                 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
@@ -145,8 +145,8 @@ class Trader extends Base implements TraderInterface
 
             //再次查询结果
             return $this->show([
-                '_symbol'=>$data['_symbol'] ?? '',
-                '_future'=>$data['_future'] ?? '',
+                '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
+                '_future'=>$data['_future'] ?? ($trader['_future'] ?? ''),
                 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',

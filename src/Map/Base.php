@@ -23,6 +23,21 @@ class Base
         $this->extra=$extra;
         $this->host=$host;
     }
+    
+    /**
+     * 原生参数检测
+     * 只要检测数据没有`_`下划线 即为原生参数
+     * @return true 原生参数   false自定义参数
+     * */
+    protected function checkOriginalParam(array $data){
+        foreach ($data as $k=>$v){
+            if(is_numeric(stripos($k,'_'))) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }
 
 

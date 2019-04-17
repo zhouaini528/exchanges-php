@@ -77,47 +77,7 @@ class ResponseTraderMap extends Base implements TraderInterface
     ];
     
     /**
-     *  
-     * */
-    function sell(array $data){
-        $map=[];
-        
-        switch ($this->platform){
-            case 'huobi':{
-                $map['_order_id']=$data['result']['data'] ?? '';
-                if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
-                break;
-            }
-            case 'bitmex':{
-                $map['_order_id']=$data['result']['orderID'];
-                $map['_client_id']=$data['result']['clOrdID'];
-                $map['_filled_qty']=$data['result']['cumQty'];
-                $map['_price_avg']=$data['result']['avgPx'];
-                $map['_status']=$this->bitmex_status[$data['result']['ordStatus']];
-                
-                break;
-            }
-            case 'okex':{
-                $map['_order_id']=$data['result']['order_id'] ?? '';
-                $map['_client_id']=$data['result']['client_oid'] ?? '';
-                
-                if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
-                if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
-                
-                break;
-            }
-            case 'binance':{
-                $map['_order_id']=$data['result']['orderId'] ?? '';
-                $map['_client_id']=$data['result']['clientOrderId'] ?? '';
-                break;
-            }
-        }
-        
-        return array_merge($data['result'],$map);
-    }
-    
-    /**
-     * 
+     *
      * @return [
      *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
      *      _filled_qty=>已交易完成数量
@@ -158,6 +118,50 @@ class ResponseTraderMap extends Base implements TraderInterface
             case 'binance':{
                 $map['_order_id']=$data['result']['orderId'] ?? '';
                 $map['_client_id']=$data['result']['clientOrderId'] ?? '';
+                
+                $map['_symbol']=$data['result']['symbol'] ?? '';
+                break;
+            }
+        }
+        
+        return array_merge($data['result'],$map);
+    }
+    
+    /**
+     *  
+     * */
+    function sell(array $data){
+        $map=[];
+        
+        switch ($this->platform){
+            case 'huobi':{
+                $map['_order_id']=$data['result']['data'] ?? '';
+                if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
+                break;
+            }
+            case 'bitmex':{
+                $map['_order_id']=$data['result']['orderID'];
+                $map['_client_id']=$data['result']['clOrdID'];
+                $map['_filled_qty']=$data['result']['cumQty'];
+                $map['_price_avg']=$data['result']['avgPx'];
+                $map['_status']=$this->bitmex_status[$data['result']['ordStatus']];
+                
+                break;
+            }
+            case 'okex':{
+                $map['_order_id']=$data['result']['order_id'] ?? '';
+                $map['_client_id']=$data['result']['client_oid'] ?? '';
+                
+                if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
+                if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+                
+                break;
+            }
+            case 'binance':{
+                $map['_order_id']=$data['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['clientOrderId'] ?? '';
+                
+                $map['_symbol']=$data['result']['symbol'] ?? '';
                 break;
             }
         }
