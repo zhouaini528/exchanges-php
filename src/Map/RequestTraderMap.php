@@ -20,8 +20,10 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                
                 //判断是期货还是现货
-                if(isset($data['_future']) && $data['_future']){
+                if($this->checkFuture($map['symbol'])){
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
                         
@@ -30,7 +32,6 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                 }else{
                     $map['account-id']=$data['account-id'] ?? $this->extra;
-                    $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                     
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
@@ -42,6 +43,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['amount']=$data['_price'] ?? $data['amount'];//市价买单时表示买多少钱
                     }
                 }
+                
                 break;
             }
             case 'bitmex':{
@@ -155,8 +157,10 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                
                 //判断是期货还是现货
-                if(isset($data['_future']) && $data['_future']){
+                if($this->checkFuture($map['symbol'])){
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
                         
@@ -165,7 +169,6 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                 }else{
                     $map['account-id']=$data['account-id'] ?? $this->extra;
-                    $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                     
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){

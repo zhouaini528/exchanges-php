@@ -144,6 +144,8 @@ class ResponseTraderMap extends Base implements TraderInterface
             case 'huobi':{
                 $map['_order_id']=$data['result']['data'] ?? '';
                 if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
+                
+                //TODO 期货版本等待
                 break;
             }
             case 'bitmex':{
@@ -266,7 +268,7 @@ class ResponseTraderMap extends Base implements TraderInterface
         switch ($this->platform){
             case 'huobi':{
                 //判断是期货还是现货
-                if(isset($data['request']['_future']) && $data['request']['_future']){
+                if($this->checkFuture($data['request']['_symbol'] ?? '')){
                     
                 }else{
                     $map['_order_id']=$data['result']['data']['id'];

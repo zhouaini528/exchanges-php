@@ -38,6 +38,34 @@ class Base
         
         return true;
     }
+    
+    /**
+     * 检测期货还是现货
+     * 主要针对 huobi  okex
+     * @return boolean  true期货   false现货
+     * */
+    protected function checkFuture(string $symbol=''){
+        switch ($this->platform){
+            case 'huobi':{
+                //判断最后一位是否是数字
+                if(is_numeric(substr($symbol,-1,1))) return true;
+                break;
+            }
+            case 'bitmex':{
+                return true;
+            }
+            case 'okex':{
+                //可以通过判断  spot  future  swap
+                $temp=explode('-', $symbol);
+                return count($temp)>2 ? true : false;
+            }
+            case 'binance':{
+                break;
+            }
+        }
+        
+        return false;
+    }
 }
 
 
