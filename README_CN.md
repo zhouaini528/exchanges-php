@@ -1,10 +1,10 @@
 ### 前言
 
-这个sdk集合了目前交易量最大的几个交易所的API，让开发人员只关注业务层。它目前只是简单的支持买卖以及查询，后期作者会集合更多的API。如果你有特殊的需求你可以单独的实例化API。
+这SDK集合了目前交易量最大的几个交易所的API，让开发人员只关注业务层。它目前只是简单的支持买卖以及查询，后期作者会集合更多的API。如果你有特殊的需求你可以单独的实例化API。
 
-本sdk支持统一参数，也支持原生参数。建议使用者使用统一参数，有特殊需求可以使用原生参数。
+这SDK支持统一参数，也支持原生参数。建议使用者使用统一参数，有特殊需求可以使用原生参数。
 
-所有提交参数与返回参数只要第一个字符为下划线的`_`全部为自定义参数
+所有提交参数与返回参数只要第一个字符为下划线的`_`全部为自定义参数。
 
 很多接口还未完善，使用者可以根据我的设计方案继续扩展，欢迎与我一起改进它。
 
@@ -27,14 +27,17 @@
 composer require "linwj/exchanges dev-master"
 ```
 
-#### 交易所初始化
-
-更多用例 More
+#### 更多用例
 [Bitmex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
+
 [Binance](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
+
 [Huobi](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
+
 [Okex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
 
+
+#### 交易所初始化
 ```php
 $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret);
