@@ -25,6 +25,8 @@
 #### 安装方式
 ```
 composer require linwj/exchanges:dev-master
+
+如果安装中出问题composer.json 添加 "minimum-stability":"dev"
 ```
 
 #### 更多用例

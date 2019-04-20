@@ -25,6 +25,8 @@ Many interfaces are not yet complete, and users can continue to extend them base
 #### Install
 ```
 composer require linwj/exchanges:dev-master
+
+If something goes wrong add composer.json "minimum-stability":"dev"
 ```
 
 #### More Tests
