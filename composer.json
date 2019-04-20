@@ -15,12 +15,13 @@
         }
     },
     "require": {
-        "php": ">=7.0"
+        "php": ">=7.0",
+        "linwj/bitmex":"@dev",
+        "linwj/okex":"@dev",
+        "linwj/huobi":"@dev",
+        "linwj/binance":"@dev"
     },
     "require-dev": {
-        "linwj/bitmex":"dev-master",
-        "linwj/okex":"dev-master",
-        "linwj/huobi":"dev-master",
-        "linwj/binance":"dev-master"
+        
     }
 }
