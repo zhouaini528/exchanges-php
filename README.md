@@ -24,7 +24,7 @@ Many interfaces are not yet complete, and users can continue to extend them base
 
 #### Install
 ```
-composer require "linwj/exchanges dev-master"
+composer require linwj/exchanges:dev-master
 ```
 
 #### More Tests

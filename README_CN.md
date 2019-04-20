@@ -24,7 +24,7 @@
 
 #### 安装方式
 ```
-composer require "linwj/exchanges dev-master"
+composer require linwj/exchanges:dev-master
 ```
 
 #### 更多用例

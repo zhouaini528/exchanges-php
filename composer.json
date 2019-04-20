@@ -15,7 +15,9 @@
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.0"
+    },
+    "require-dev": {
         "linwj/bitmex":"dev-master",
         "linwj/okex":"dev-master",
         "linwj/huobi":"dev-master",
