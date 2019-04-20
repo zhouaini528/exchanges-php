@@ -4,6 +4,8 @@
 
 本sdk支持统一参数，也支持原生参数。建议使用者使用统一参数，有特殊需求可以使用原生参数。
 
+所有提交参数与返回参数只要第一个字符为下划线的`_`全部为自定义参数
+
 很多接口还未完善，使用者可以根据我的设计方案继续扩展，欢迎与我一起改进它。
 
 ### 其他交易所API
@@ -17,6 +19,7 @@
 [Binance](https://github.com/zhouaini528/binance-php)
 
 以上所有交易所集合成的SDK
+
 [Exchanges](https://github.com/zhouaini528/exchanges-php)
 
 #### 安装方式
@@ -25,13 +28,19 @@ composer require "linwj/exchanges dev-master"
 ```
 
 #### 交易所初始化
+
+更多用例 More
+[Bitmex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
+[Binance](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
+[Huobi](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
+[Okex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
+
 ```php
-$exchanges=new Exchanges('okex',$key,$secret,$extra,$host);
 $exchanges=new Exchanges('binance',$key,$secret);
-$exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
+$exchanges=new Exchanges('bitmex',$key,$secret);
+$exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
-
 
 #### 现货交易
 ##### 市价交易
@@ -97,6 +106,7 @@ $exchanges->trader()->buy([
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
+//支持原生参数
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'price'=>'100',
@@ -185,8 +195,8 @@ $exchanges->trader()->buy([
 ]);
 ```
 
-更多用例请查看 [more](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
+更多用例请查看 [more](https://github.com/zhouaini528/exchanges-php/tree/master/tests)
 
-更多API请查看 [more](https://github.com/zhouaini528/bitmex-php/tree/master/src/Api)
+更多API请查看 [more](https://github.com/zhouaini528/exchanges-php/tree/master/src/Api)
 
 
