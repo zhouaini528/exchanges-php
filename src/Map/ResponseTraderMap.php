@@ -116,9 +116,6 @@ class ResponseTraderMap extends Base implements TraderInterface
                 //目的支持原生
                 if(isset($data['request']['instrument_id'])) {
                     $map['_symbol']=$data['request']['instrument_id'];
-                    
-                    $temp=explode('-', $map['_symbol']);
-                    $map['_future']=count($temp)>2 ? true : false;
                 }
                 break;
             }
@@ -167,9 +164,6 @@ class ResponseTraderMap extends Base implements TraderInterface
                 //目的支持原生
                 if(isset($data['request']['instrument_id'])) {
                     $map['_symbol']=$data['request']['instrument_id'];
-                    
-                    $temp=explode('-', $map['_symbol']);
-                    $map['_future']=count($temp)>2 ? true : false;
                 }
                 break;
             }
@@ -215,9 +209,6 @@ class ResponseTraderMap extends Base implements TraderInterface
                 //目的支持原生
                 if(isset($data['request']['instrument_id'])) {
                     $map['_symbol']=$data['request']['instrument_id'];
-                    
-                    $temp=explode('-', $map['_symbol']);
-                    $map['_future']=count($temp)>2 ? true : false;
                 }
                 break;
             }
@@ -293,9 +284,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_client_id']=$data['result']['client_oid'];
                 
                 //判断是期货还是现货
-                //if(isset($data['request']['_future']) && $data['request']['_future']){
-                $temp=explode('-', $data['result']['instrument_id']);
-                if(count($temp)>2){
+                if($this->checkFuture($data['result']['instrument_id'])){
                     $map['_filled_qty']=$data['result']['filled_qty'];
                     $map['_price_avg']=$data['result']['price_avg'];
                     $map['_status']=$this->okex_status['future'][$data['result']['status']];

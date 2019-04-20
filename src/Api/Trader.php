@@ -19,8 +19,7 @@ class Trader extends Base implements TraderInterface
      * _price      当前价格    填写参数为：限价交易    不填写为：市价交易
      * _client_id  自定义ID
      *
-     * _future    是否现货与期货，false：现货   true：期货   默认：false
-     * _entry   true:开仓   false:平仓。只有_future=true有值才有效
+     * _entry   true:开仓   false:平仓。
      * *****************以上参数非必填写
      * @return [
      *      ***返回原始数据
@@ -49,7 +48,6 @@ class Trader extends Base implements TraderInterface
             //再次查询结果
             return $this->show([
                 '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
-                '_future'=>$data['_future'] ?? ($trader['_future'] ?? ''),
                 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
@@ -68,8 +66,7 @@ class Trader extends Base implements TraderInterface
      * _price      当前价格    填写参数为：限价交易    不填写为：市价交易
      * _client_id  自定义ID
      * 
-     * _future    是否现货与期货，false：现货   true：期货   默认：false
-     * _entry   true:开仓   false:平仓。只有_future=true有值才有效
+     * _entry   true:开仓   false:平仓。
      * *****************以上参数非必填写
      * @return [
      *      ***返回原始数据
@@ -99,7 +96,6 @@ class Trader extends Base implements TraderInterface
             //再次查询结果
             return $this->show([
                 '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
-                '_future'=>$data['_future'] ?? ($trader['_future'] ?? ''),
                 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
@@ -117,7 +113,6 @@ class Trader extends Base implements TraderInterface
      * *****************以上参数必填写   
      * _order_id  第三方平台ID
      * _client_id  自定义ID
-     * _future  是否现货与期货，false：现货   true：期货   默认：false
      * *****************以上参数非必填写    
      * 
      * @return [
@@ -146,7 +141,6 @@ class Trader extends Base implements TraderInterface
             //再次查询结果
             return $this->show([
                 '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
-                '_future'=>$data['_future'] ?? ($trader['_future'] ?? ''),
                 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
@@ -171,7 +165,6 @@ class Trader extends Base implements TraderInterface
      * *****************以上参数必填写   
      * _order_id  第三方平台ID
      * _client_id  自定义ID
-     * _future  是否现货与期货，false：现货   true：期货   默认：false
      * *****************以上参数非必填写   
      * @return [
      * _status=>-2,-1,0,1,2   '完成交易'=>1,'挂单中'=>0, '部分完成'=>2,'撤单'=>-1,'系统错误'=>-2,

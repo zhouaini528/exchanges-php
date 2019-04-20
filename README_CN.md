@@ -1,0 +1,192 @@
+### 前言
+
+这个sdk集合了目前交易量最大的几个交易所的API，让开发人员只关注业务层。它目前只是简单的支持买卖以及查询，后期作者会集合更多的API。如果你有特殊的需求你可以单独的实例化API。
+
+本sdk支持统一参数，也支持原生参数。建议使用者使用统一参数，有特殊需求可以使用原生参数。
+
+很多接口还未完善，使用者可以根据我的设计方案继续扩展，欢迎与我一起改进它。
+
+### 其他交易所API
+
+[Bitmex](https://github.com/zhouaini528/bitmex-php)
+
+[Okex](https://github.com/zhouaini528/okex-php)
+
+[Huobi](https://github.com/zhouaini528/huobi-php)
+
+[Binance](https://github.com/zhouaini528/binance-php)
+
+以上所有交易所集合成的SDK
+[Exchanges](https://github.com/zhouaini528/exchanges-php)
+
+#### 安装方式
+```
+composer require "linwj/exchanges dev-master"
+```
+
+#### 交易所初始化
+```php
+$exchanges=new Exchanges('okex',$key,$secret,$extra,$host);
+$exchanges=new Exchanges('binance',$key,$secret);
+$exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
+$exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
+```
+
+
+#### 现货交易
+##### 市价交易
+```php
+//binance
+$exchanges->trader()->buy([
+    '_symbol'=>'BTCUSDT',
+    '_number'=>'0.01',
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'symbol'=>'BTCUSDT',
+    'type'=>'MARKET',
+    'quantity'=>'0.01',
+]);
+
+//okex
+$exchanges->trader()->buy([
+    '_symbol'=>'BTC-USDT',
+    '_price'=>'10',
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'instrument_id'=>'btc-usdt',
+    'type'=>'market',
+    'notional'=>'10'
+]);
+
+//huobi
+$exchanges->trader()->buy([
+    '_symbol'=>'btcusdt',
+    '_price'=>'10',
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'account-id'=>$account_id,
+    'symbol'=>'btcusdt',
+    'type'=>'buy-market',
+    'amount'=>10
+]);
+
+```
+##### 限价交易
+```php
+//binance
+$exchanges->trader()->buy([
+    '_symbol'=>'BTCUSDT',
+    '_number'=>'0.01',
+    '_price'=>'2000',
+]); 
+//支持原生参数
+$exchanges->trader()->buy([
+    'symbol'=>'BTCUSDT',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+
+//okex
+$exchanges->trader()->buy([
+    '_symbol'=>'BTC-USDT',
+    '_number'=>'0.001',
+    '_price'=>'2000',
+]);
+$exchanges->trader()->buy([
+    'instrument_id'=>'btc-usdt',
+    'price'=>'100',
+    'size'=>'0.001',
+]);
+
+//huobi
+$exchanges->trader()->buy([
+    '_symbol'=>'btcusdt',
+    '_number'=>'0.001',
+    '_price'=>'2000',
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'account-id'=>$account_id,
+    'symbol'=>'btcusdt',
+    'type'=>'buy-limit',
+    'amount'=>'0.001',
+    'price'=>'2001',
+]);
+```
+#### 期货交易
+##### 市价交易
+```php
+//bitmex
+$exchanges->trader()->buy([
+    '_symbol'=>'XBTUSD',
+    '_number'=>'1',
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'symbol'=>'XBTUSD',
+    'orderQty'=>'1',
+    'ordType'=>'Market',
+]);
+
+//okex
+$exchanges->trader()->buy([
+    '_symbol'=>'BTC-USD-190628',
+    '_number'=>'1',
+    '_entry'=>true,//open long
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'instrument_id'=>'BTC-USD-190628',
+    'size'=>1,
+    'type'=>1,//1:open long 2:open short 3:close long 4:close short
+    //'price'=>2000,
+    'leverage'=>10,//10x or 20x leverage
+    'match_price' => 1,
+    'order_type'=>0,
+]);
+```
+##### 限价交易
+```php
+//bitmex
+$exchanges->trader()->buy([
+    '_symbol'=>'XBTUSD',
+    '_number'=>'1',
+    '_price'=>100
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'symbol'=>'XBTUSD',
+    'price'=>'100',
+    'orderQty'=>'1',
+    'ordType'=>'Limit',
+]);
+
+//okex
+$exchanges->trader()->buy([
+    '_symbol'=>'BTC-USD-190628',
+    '_number'=>'1',
+    '_price'=>'2000',
+    '_entry'=>true,//open long
+]);
+//支持原生参数
+$exchanges->trader()->buy([
+    'instrument_id'=>'BTC-USD-190628',
+    'size'=>1,
+    'type'=>1,//1:open long 2:open short 3:close long 4:close short
+    'price'=>2000,
+    'leverage'=>10,//10x or 20x leverage
+    'match_price' => 0,
+    'order_type'=>0,
+]);
+```
+
+更多用例请查看 [more](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
+
+更多API请查看 [more](https://github.com/zhouaini528/bitmex-php/tree/master/src/Api)
+
+

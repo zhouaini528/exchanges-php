@@ -70,17 +70,17 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['order_type']=$data['order_type'] ?? 0;
                 
                 //判断是期货还是现货
-                if(isset($data['_future']) && $data['_future']){
+                if($this->checkFuture($map['instrument_id'])){
                     $map['type']=$data['type'] ?? ($data['_entry']?1:2);
                     
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
                         $map['match_price']=0;
                         $map['price']=$data['_price'];
-                        $map['size']=$data['_number'];
+                        $map['size']=$data['_number'] ?? 0;
                     }else{
                         $map['match_price']=1;
-                        $map['size']=$data['_number'];
+                        $map['size']=$data['_number'] ?? 0;
                     }
                     
                     //判断是否是交割合约
@@ -106,14 +106,8 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['notional']=$data['_price'] ?? $data['notional'];
                         }
                     }
-                }
-                
-                //TODO 支持原生参数
-                $instrument=explode('-', $data['instrument_id']);
-                if(count($instrument)>2){
-                    //期货
-                }else{
-                    //现货
+                    
+                    //TODO 支持原生参数
                     $data['side']='buy';
                 }
                 break;
@@ -206,17 +200,17 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
                 
-                if(isset($data['_future']) && $data['_future']){
+                if($this->checkFuture($map['instrument_id'])){
                     $map['type']=$data['type'] ?? ($data['_entry']?3:4);
                     
                     //市价单与限价单的参数映射
                     if(isset($data['_number']) && isset($data['_price'])){
                         $map['match_price']=0;
                         $map['price']=$data['_price'];
-                        $map['size']=$data['_number'];
+                        $map['size']=$data['_number'] ?? 0;
                     }else{
                         $map['match_price']=1;
-                        $map['size']=$data['_number'];
+                        $map['size']=$data['_number'] ?? 0;
                     }
                     
                     //判断是否是交割合约
@@ -242,14 +236,8 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['notional']=$data['_price'] ?? $data['notional'];
                         }
                     }
-                }
-                
-                //TODO 支持原生参数
-                $instrument=explode('-', $data['instrument_id']);
-                if(count($instrument)>2){
-                    //期货
-                }else{
-                    //现货
+                    
+                    //TODO 支持原生参数
                     $data['side']='sell';
                 }
                 

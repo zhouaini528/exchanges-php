@@ -167,7 +167,6 @@ switch ($action){
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
-            '_future'=>true,
             '_entry'=>true,//open long
             //'_client_id'=>'custom ID',
         ]);
@@ -191,7 +190,6 @@ switch ($action){
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
-            '_future'=>true,
             '_entry'=>false,//open short
             //'_client_id'=>'custom ID',
         ]);
@@ -203,7 +201,6 @@ switch ($action){
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
-            '_future'=>true,
             '_entry'=>true,//close long
             //'_client_id'=>'custom ID',
         ]);
@@ -229,7 +226,6 @@ switch ($action){
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
-            '_future'=>true,
             '_entry'=>false,//close short
             //'_client_id'=>'custom ID',
         ]);
@@ -242,7 +238,6 @@ switch ($action){
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
             '_price'=>'2000',
-            '_future'=>true,
             '_entry'=>true,//open long
             //'_client_id'=>'custom ID',
         ]);
@@ -253,7 +248,6 @@ switch ($action){
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
             '_price'=>'99999',
-            '_future'=>true,
             '_entry'=>false,//open short
             //'_client_id'=>'custom ID',
         ]);
@@ -281,7 +275,6 @@ switch ($action){
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
             '_price'=>'1000',
-            '_future'=>true,
             '_entry'=>true,//close long
             //'_client_id'=>'custom ID',
         ]);
@@ -292,7 +285,6 @@ switch ($action){
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
             '_price'=>'1000',
-            '_future'=>true,
             '_entry'=>false,//close short
             //'_client_id'=>'custom ID',
         ]);
@@ -303,7 +295,6 @@ switch ($action){
         $result=$exchanges->trader()->show([
             '_symbol'=>'BTC-USD-190628',
             '_order_id'=>'2671566274710528',
-            '_future'=>true,
         ]);
         break;
     }
@@ -334,7 +325,6 @@ switch ($action){
             '_symbol'=>'BTC-USD-190628',
             '_number'=>'1',
             '_price'=>'2000',
-            '_future'=>true,
             '_entry'=>true,//open long
             '_client_id'=>$_client_id,
         ]);
@@ -343,7 +333,6 @@ switch ($action){
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTC-USD-190628',
             '_client_id'=>$_client_id,
-            '_future'=>true,
         ]);
         
         break;
