@@ -113,4 +113,8 @@ class Bitmex
     function trader(){
         return new Trader($this->platform);
     }
+    
+    function getPlatform(string $type=''){
+        return $this->platform;
+    }
 }

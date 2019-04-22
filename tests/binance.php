@@ -165,7 +165,16 @@ switch ($action){
         break;
     }
     
-    case 0:{
+    case 500:{
+        //The original object，
+        $result=$exchanges->getPlatform()->trade()->postOrder([
+            'symbol'=>'BTCUSDT',
+            'side'=>'BUY',
+            'type'=>'LIMIT',
+            'quantity'=>'0.01',
+            'price'=>'2000',
+            'timeInForce'=>'GTC',
+        ]);
         break;
     }
     

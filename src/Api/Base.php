@@ -65,9 +65,9 @@ class Base
     }
     
     /**
-     * 支持原生访问
+     * 
      * */
-    public function getPlatform(){
-        return $this->platform;
+    function getPlatform(string $type=''){
+        return $this->platform->getPlatform($type);
     }
 }

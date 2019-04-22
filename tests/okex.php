@@ -148,6 +148,20 @@ switch ($action){
         break;
     }
     
+    case 181:{
+        //Place an Order
+        $result=$exchanges->getPlatform('spot')->order()->post([
+            'instrument_id'=>'btc-usdt',
+            'side'=>'buy',
+            'price'=>'100',
+            'size'=>'0.001',
+            
+            //'type'=>'market',
+            //'notional'=>'100'
+        ]);
+        break;
+    }
+    
     
     //***Complete spot flow
     case 400:{
@@ -328,6 +342,17 @@ switch ($action){
         //Get the information of holding positions of a contract.
         $result=$exchanges->account()->get([
             '_symbol'=>'BTC-USD-190628',
+        ]);
+        break;
+    }
+    
+    case 305:{
+        //Place an Order
+        $result=$exchanges->getPlatform('future')->order()->post([
+            'instrument_id'=>'btc-usd-190628',
+            'type'=>'1',
+            'price'=>'100',
+            'size'=>'1',
         ]);
         break;
     }

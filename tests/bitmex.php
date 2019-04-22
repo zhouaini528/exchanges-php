@@ -156,6 +156,19 @@ switch ($action){
         break;
     }
     
+    //
+    case 500:{
+        //The original object，
+        $result=$exchanges->getPlatform()->order()->post([
+            'symbol'=>'XBTUSD',
+            'price'=>'100',
+            'side'=>'Buy',
+            'orderQty'=>'1',
+            'ordType'=>'Limit',
+        ]);
+        break;
+    }
+    
     
     default:{
         echo 'nothing';

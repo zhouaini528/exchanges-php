@@ -147,4 +147,18 @@ class Okex
     function trader(){
         return new Trader($this->platform_future,$this->platform_spot);
     }
+    
+    function getPlatform(string $type=''){
+        switch (strtolower($type)){
+            case 'spot':{
+                return $this->platform_spot;
+            }
+            case 'future':{
+                return $this->platform_future;
+            }
+            case 'swap':{
+                return null;
+            }
+        }
+    }
 }

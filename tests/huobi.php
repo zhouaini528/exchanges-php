@@ -129,6 +129,17 @@ switch ($action){
         break;
     }
     
+    case 304:{
+        $result=$exchanges->getPlatform('spot')->order()->postPlace([
+            'account-id'=>$account_id,
+            'symbol'=>'btcusdt',
+            'type'=>'buy-limit',
+            'amount'=>'0.001',
+            'price'=>'100',
+        ]);
+        break;
+    }
+    
     //***Complete spot flow
     case 400:{
         $result=$exchanges->trader()->buy([
