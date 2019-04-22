@@ -200,6 +200,70 @@ $exchanges->trader()->buy([
 ]);
 ```
 
+#### The original object
+```php
+//binance
+$exchanges->getPlatform()->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+
+
+//bitmex
+$exchanges->getPlatform()->order()->post([
+    'symbol'=>'XBTUSD',
+    'price'=>'100',
+    'side'=>'Buy',
+    'orderQty'=>'1',
+    'ordType'=>'Limit',
+]);
+
+
+//okex
+$exchanges->getPlatform('spot')->order()->post([
+    'instrument_id'=>'btc-usdt',
+    'side'=>'buy',
+    'price'=>'100',
+    'size'=>'0.001',
+    //'type'=>'market',
+    //'notional'=>'100'
+]);
+$exchanges->getPlatform('future')->order()->post([
+    'instrument_id'=>'btc-usd-190628',
+    'type'=>'1',
+    'price'=>'100',
+    'size'=>'1',
+]);
+
+
+//huobi
+$exchanges->getPlatform('spot')->order()->postPlace([
+    'account-id'=>$account_id,
+    'symbol'=>'btcusdt',
+    'type'=>'buy-limit',
+    'amount'=>'0.001',
+    'price'=>'100',
+]);
+
+$exchanges->getPlatform('future')->contract()->postOrder([
+    'symbol'=>'BTC',//string    false   "BTC","ETH"...
+    'contract_type'=>'quarter',//   string  false   Contract Type ("this_week": "next_week": "quarter":)
+    'contract_code'=>'BTC190628',// string  false   BTC180914
+    'price'=>'100',//   decimal true    Price
+    'volume'=>'1',//    long    true    Numbers of orders (amount)
+    'direction'=>'buy',//   string  true    Transaction direction
+    'offset'=>'open',// string  true    "open", "close"
+    //'client_order_id'=>'',//long  false   Clients fill and maintain themselves, and this time must be greater than last time
+    //lever_rate    int true    Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+    //order_price_type   string true    "limit", "opponent"
+]);
+
+```
+
 [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)
 
 [More API](https://github.com/zhouaini528/exchanges-php/tree/master/src/Api)
