@@ -140,6 +140,14 @@ switch ($action){
         break;
     }
     
+    case 180:{
+        //This endpoint supports getting the balance, amount available/on hold of a token in spot account.
+        $result=$exchanges->account()->get([
+            '_symbol'=>'BTC',
+        ]);
+        break;
+    }
+    
     
     //***Complete spot flow
     case 400:{
@@ -312,6 +320,14 @@ switch ($action){
         $result=$exchanges->trader()->cancel([
             'instrument_id'=>'BTC-USD-190628',
             'order_id'=>'2671566274710528',
+        ]);
+        break;
+    }
+    
+    case 304:{
+        //Get the information of holding positions of a contract.
+        $result=$exchanges->account()->get([
+            '_symbol'=>'BTC-USD-190628',
         ]);
         break;
     }

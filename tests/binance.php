@@ -134,6 +134,12 @@ switch ($action){
         break;
     }
     
+    case 304:{
+        //Get current account information.
+        $result=$exchanges->account()->get();
+        break;
+    }
+    
     
     //******************************Complete spot flow
     case 400:{

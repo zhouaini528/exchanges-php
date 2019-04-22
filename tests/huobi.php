@@ -122,7 +122,12 @@ switch ($action){
         break;
     }
     
-    
+    case 303:{
+        $result=$exchanges->account()->get([
+            '_symbol'=>'btcusdt',
+        ]);
+        break;
+    }
     
     //***Complete spot flow
     case 400:{

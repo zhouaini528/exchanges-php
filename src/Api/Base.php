@@ -63,4 +63,11 @@ class Base
             '_error'=>$msg,
         ];
     }
+    
+    /**
+     * 支持原生访问
+     * */
+    public function getPlatform(){
+        return $this->platform;
+    }
 }

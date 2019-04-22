@@ -129,6 +129,14 @@ switch ($action){
         break;
     }
     
+    case 303:{
+        //bargaining transaction
+        $result=$exchanges->account()->get([
+            '_symbol'=>'XBTUSD'
+        ]);
+        break;
+    }
+    
     //***********Complete flow
     case 400:{
         $result=$exchanges->trader()->buy([

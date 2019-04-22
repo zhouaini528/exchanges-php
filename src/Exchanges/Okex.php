@@ -31,6 +31,17 @@ class Account extends Base implements AccountInterface
     function position(array $data){
         
     }
+    
+    /**
+     *
+     * */
+    function get(array $data){
+        if(isset($data['instrument_id'])){
+            return $this->platform_future->position()->get($data);
+        }else{
+            return $this->platform_spot->account()->get($data);
+        }
+    }
 }
 
 class Market extends Base implements MarketInterface

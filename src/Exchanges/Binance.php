@@ -27,6 +27,13 @@ class Account extends Base implements AccountInterface
     function position(array $data){
         return [];
     }
+    
+    /**
+     *
+     * */
+    function get(array $data){
+        return $this->platform->user()->getAccount($data);
+    }
 }
 
 class Market extends Base implements MarketInterface

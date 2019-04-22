@@ -30,6 +30,17 @@ class Account extends Base implements AccountInterface
     function position(array $data){
         return [];
     }
+    
+    /**
+     *
+     * */
+    function get(array $data){
+        if(isset($data['contract_type'])){
+            return [];
+        }else{
+            return $this->platform_spot->account()->getBalance($data);
+        }
+    }
 }
 
 class Market extends Base implements MarketInterface
