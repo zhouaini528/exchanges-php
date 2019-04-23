@@ -6,7 +6,7 @@
 namespace Lin\Exchange\Api;
 
 use Lin\Exchange\Interfaces\TraderInterface;
-use Lin\Exchange\Config\Config;
+use Lin\Exchange\Config\Exchanges;
 
 class Trader extends Base implements TraderInterface
 {
@@ -43,7 +43,7 @@ class Trader extends Base implements TraderInterface
             if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
             
             //交易所是撮合交易，所以查询需要间隔时间
-            sleep(Config::$ORDER_SHOW_TIME);
+            sleep(Exchanges::$TRADER_SHOW_TIME);
             
             //再次查询结果
             return $this->show([
@@ -91,7 +91,7 @@ class Trader extends Base implements TraderInterface
             if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
             
             //交易所是撮合交易，所以查询需要间隔时间
-            sleep(Config::$ORDER_SHOW_TIME);
+            sleep(Exchanges::$TRADER_SHOW_TIME);
             
             //再次查询结果
             return $this->show([
@@ -136,7 +136,7 @@ class Trader extends Base implements TraderInterface
             if(isset($trader['_status']) && in_array($trader['_status'],['CANCELLED','FAILURE'])) return $trader;
             
             //交易所是撮合交易，所以查询需要间隔时间
-            sleep(Config::$ORDER_SHOW_TIME);
+            sleep(Exchanges::$TRADER_SHOW_TIME);
 
             //再次查询结果
             return $this->show([
