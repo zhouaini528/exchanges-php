@@ -25,6 +25,14 @@ if(empty($action)) $action=intval($argv[1]);//cli pattern
 switch ($action){
     //******************************Spot
     //***********Spot Market
+    case 99:{
+        //get $account_id,It's for buy and sell
+        //recommended save database $account_id
+        $exchanges=new Exchanges('huobi',$key,$secret);
+        $result=$exchanges->getPlatform('spot')->account()->get();
+        break;
+    }
+
     case 100:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'btcusdt',
