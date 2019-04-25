@@ -82,7 +82,7 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  * ]
  * */
 ```
-Buy and sell query uniform parameter return [detail](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+Buy and sell query uniform parameter return [detail](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L59)
 
 System error unified parameter return [binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
 [okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
