@@ -44,8 +44,11 @@ composer require linwj/exchanges:dev-master
 $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
+
+//火币获取$account_id方式 [more](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L28)
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
+
 
 #### 现货交易
 ##### 市价交易
