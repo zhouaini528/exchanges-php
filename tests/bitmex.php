@@ -23,6 +23,33 @@ $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 
 switch ($action){
+    //***********system error
+    //exception testing
+    case 1:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'exception testing',
+            '_number'=>'1',
+        ]);
+        
+        /*
+         Array
+        (
+            [_error] => Array
+                (
+                    [error] => Array
+                        (
+                            [message] => symbol is invalid
+                            [name] => HTTPError
+                        )
+                    [_method] => POST
+                    [_url] => https://testnet.bitmex.com/api/v1/order
+                    [_httpcode] => 400
+                )
+        )
+         */
+        break;
+    }
+    
     //***********Trader Market
     case 100:{
         $result=$exchanges->trader()->buy([

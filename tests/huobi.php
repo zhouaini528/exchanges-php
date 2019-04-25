@@ -23,6 +23,30 @@ $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 
 switch ($action){
+    //***********system error
+    //exception testing
+    case 1:{
+        $exchanges=new Exchanges('huobi','exception','exception');
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'exception testing',
+            //'_price'=>'10',
+        ]);
+        
+        /*
+        Array
+        (
+            [_error] => Array
+                (
+                    [status] => error
+                    [err-code] => api-signature-not-valid
+                    [err-msg] => Signature not valid: Incorrect Access key [Access key错误]
+                    [data] => 
+                )
+        )
+         */
+        break;
+    }
+    
     //******************************Spot
     //***********Spot Market
     case 99:{

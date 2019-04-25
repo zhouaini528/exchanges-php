@@ -21,6 +21,30 @@ $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 
 switch ($action){
+    //***********system error
+    //exception testing
+    case 1:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'exception testing',
+            '_number'=>'0.01',
+        ]);
+        
+        /*
+        return Array
+        (
+            [_error] => Array
+                (
+                    [code] => -1100
+                    [msg] => Illegal characters found in parameter 'symbol'; legal range is '^[A-Z0-9_]{1,20}$'.
+                    [_method] => POST
+                    [_url] => https://api.binance.com/api/v3/order
+                    [_httpcode] => 400
+                )
+        )
+         */
+        break;
+    }
+    
     //******************************Spot
     //***********Spot Market
     case 100:{

@@ -22,6 +22,31 @@ $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 
 switch ($action){
+    //***********system error
+    //exception testing
+    case 1:{
+        $exchanges=new Exchanges('okex','exception','exception','exception');
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'exception testing',
+            '_price'=>'10',
+        ]);
+        
+        /*
+        Array
+        (
+            [_error] => Array
+                (
+                    [code] => 30006
+                    [message] => Invalid OK-ACCESS-KEY
+                    [_method] => POST
+                    [_url] => https://www.okex.com/api/spot/v3/orders
+                    [_httpcode] => 401
+                )
+        )
+         */
+        break;
+    }
+    
     //******************************Spot
     //***********Spot Market
     case 100:{
