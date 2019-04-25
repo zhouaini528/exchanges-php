@@ -48,6 +48,26 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
 [火币获取$account_id方式](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L28)
 
+#### 统一参数返回
+```php
+/**
+ * Buy()   Sell()   Show() 三个方法都返回相同参数
+ * @return [
+ *      ***返回原始数据
+ *      ...
+ *      ...
+ *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
+ *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
+ *      _filled_qty=>已交易完成数量
+ *      _price_avg=>平均交易价格
+ *      _order_id=>系统ID
+ *      _client_id=>自定义ID
+ * ]
+ *
+ * */
+```
+[参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+
 
 #### 现货交易
 ##### 市价交易
@@ -200,25 +220,6 @@ $exchanges->trader()->buy([
     'match_price' => 0,
     'order_type'=>0,
 ]);
-```
-
-#### 统一参数返回
-```php
-/**
- * Buy()   Sell()   Show() 三个方法都返回相同参数
- * @return [
- *      ***返回原始数据
- *      ...
- *      ...
- *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
- *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
- *      _filled_qty=>已交易完成数量
- *      _price_avg=>平均交易价格
- *      _order_id=>系统ID
- *      _client_id=>自定义ID
- * ]
- *
- * */
 ```
 
 #### 支持原始对象请求
