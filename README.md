@@ -48,6 +48,49 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
 [Get huobi $account_id](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L28)
 
+#### Uniform parameter return
+```php
+/**
+ * Buy()   Sell()   Show() Uniform parameter return
+ * @return [
+ *      ***Return to original data
+ *      ...
+ *      ...
+ *      ***Returns custom data in a uniform return parameter format with '_' underscore
+ *      _status=>NEW  PART_FILLED  FILLED  CANCELING  CANCELLED  FAILURE
+ *      _filled_qty=>Number of transactions completed
+ *      _price_avg=>Average transaction price
+ *      _order_id=>system ID
+ *      _client_id=>custom ID
+ * ]
+ *
+ * */
+ 
+ /**
+ * System error
+ * http request code 400 403 500 503
+ * @return [
+ *      _error=>[
+ *          ***Return to original data
+ *          ...
+ *          ...
+ *          ***Returns custom data in a uniform return parameter format with '_' underscore
+ *          _method => POST
+ *          _url => https://testnet.bitmex.com/api/v1/order
+ *          _httpcode => 400
+ *      ]
+ * ]
+ * */
+```
+Buy and sell query uniform parameter return [detail](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+
+System error unified parameter return  
+[binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
+[okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
+[huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
+[bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
+
+
 #### Spot Trader
 ##### Market
 ```php
