@@ -48,6 +48,43 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
 [火币获取$account_id方式](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L28)
 
+#### 统一参数返回
+```php
+/**
+ * Buy()   Sell()   Show() 三个方法都返回相同参数
+ * @return [
+ *      ***返回原始数据
+ *      ...
+ *      ...
+ *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
+ *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
+ *      _filled_qty=>已交易完成数量
+ *      _price_avg=>平均交易价格
+ *      _order_id=>系统ID
+ *      _client_id=>自定义ID
+ * ]
+ *
+ * */
+ 
+ /**
+ * 系统错误
+ * http request code 400 403 500 503
+ * @return [
+ *      _error=>[
+ *          ***返回原始数据
+ *          ...
+ *          ...
+ *          ***返回自定义数据，带'_'下划线的是统一返回参数格式。
+ *          _method => POST
+ *          _url => https://testnet.bitmex.com/api/v1/order
+ *          _httpcode => 400
+ *      ]
+ * ]
+ * */
+```
+[buy() sell() show() 参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+
+[system error 参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
 #### 现货交易
 ##### 市价交易
