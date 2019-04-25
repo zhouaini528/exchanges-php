@@ -46,7 +46,7 @@ $exchanges=new Exchanges('bitmex',$key,$secret);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
-[火币获取$account_id方式](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L28)
+[火币获取$account_id方式](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L59)
 
 #### 统一参数返回
 ```php
