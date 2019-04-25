@@ -41,6 +41,9 @@ switch ($action){
                     [err-code] => api-signature-not-valid
                     [err-msg] => Signature not valid: Incorrect Access key [Access key错误]
                     [data] => 
+                    [_method] => POST
+                    [_url] => https://api.huobi.pro/v1/order/orders/place
+                    [_httpcode] => 200
                 )
         )
          */
