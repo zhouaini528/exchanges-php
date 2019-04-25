@@ -76,8 +76,8 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  *          ...
  *          ***返回自定义数据，带'_'下划线的是统一返回参数格式。
  *          _method => POST
-            _url => https://testnet.bitmex.com/api/v1/order
-            _httpcode => 400
+ *          _url => https://testnet.bitmex.com/api/v1/order
+ *          _httpcode => 400
  *      ]
  * ]
  * */
