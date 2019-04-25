@@ -65,9 +65,26 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  * ]
  *
  * */
+ 
+ /**
+ * 系统错误
+ * http request code 400 403 500 503
+ * @return [
+ *      _error=>[
+ *          ***返回原始数据
+ *          ...
+ *          ...
+ *          ***返回自定义数据，带'_'下划线的是统一返回参数格式。
+ *          _method => POST
+            _url => https://testnet.bitmex.com/api/v1/order
+            _httpcode => 400
+ *      ]
+ * ]
+ * */
 ```
-[参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+[buy() sell() show() 参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
+[system error 参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
 #### 现货交易
 ##### 市价交易
