@@ -46,6 +46,7 @@ $exchanges=new Exchanges('bitmex',$key,$secret);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
+[Get huobi $account_id](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L28)
 
 #### Spot Trader
 ##### Market
