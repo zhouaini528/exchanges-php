@@ -82,9 +82,9 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  * ]
  * */
 ```
-buy()sell()show()统一参数返回 [详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+买卖查询统一参数返回 [详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
-系统统一错误返回 
+系统错误统一参数返回 
 [binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
 [okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
