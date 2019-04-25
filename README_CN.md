@@ -84,7 +84,11 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
 [buy() sell() show() 参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
-[system error 参数详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
+系统错误 参数详情
+[binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
+[okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
+[huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
+[bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
 #### 现货交易
 ##### 市价交易
