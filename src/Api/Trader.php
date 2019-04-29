@@ -109,7 +109,7 @@ class Trader extends Base implements TraderInterface
       * 删除订单 即撤单
      * 请求参数
      * '_order_id'   与  _client_id 必须有一个存在
-        '_symbol'=>'',
+     *  '_symbol'=>'',
      * *****************以上参数必填写   
      * _order_id  第三方平台ID
      * _client_id  自定义ID
@@ -161,7 +161,7 @@ class Trader extends Base implements TraderInterface
      * 查询订单
      * 请求参数
      * '_order_id'   与  _client_id 必须有一个存在
-        '_symbol'=>'',
+     * '_symbol'=>'',
      * *****************以上参数必填写   
      * _order_id  第三方平台ID
      * _client_id  自定义ID
