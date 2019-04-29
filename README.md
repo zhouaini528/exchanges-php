@@ -1,6 +1,6 @@
 ### Introduction
 
-The SDK brings together the apis of the most heavily traded exchanges, allowing developers to focus only on the business layer.It currently supports simple buying, selling, and querying, with more apis coming later.If you have special requirements you can instantiate the API separately.
+The SDK brings together the apis of the most heavily traded exchanges, allowing developers to focus only on the business layer.It currently supports simple buying, selling, and querying, with more apis coming later.If you have special needs, you can use this method [getPlatform()](https://github.com/zhouaini528/exchanges-php#the-original-object) alone to return an instance and call the underlying API
 
 The SDK supports both uniform and native parameters.It is recommended that users use uniform parameters, and native parameters can be used for special requirements.
 
