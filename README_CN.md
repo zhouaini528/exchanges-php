@@ -243,6 +243,36 @@ $exchanges->trader()->buy([
 ]);
 ```
 
+#### 账号余额与仓位获取
+```php
+//binance
+//Get current account information.
+$exchanges->account()->get();
+
+//bitmex
+//bargaining transaction
+$exchanges->account()->get([
+    '_symbol'=>'XBTUSD'
+]);
+
+//okex  spot
+//This endpoint supports getting the balance, amount available/on hold of a token in spot account.
+$exchanges->account()->get([
+    '_symbol'=>'BTC',
+]);
+
+//okex future
+//Get the information of holding positions of a contract.
+$exchanges->account()->get([
+    '_symbol'=>'BTC-USD-190628',
+]);
+
+//huobi spot
+$exchanges->account()->get([
+    '_symbol'=>'btcusdt',
+]);
+```
+
 #### 支持原始对象请求
 ```php
 //binance
