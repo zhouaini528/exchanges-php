@@ -1,6 +1,6 @@
 ### 前言
 
-这SDK集合了目前交易量最大的几个交易所的API，让开发人员只关注业务层。它目前只是简单的支持买卖以及查询，后期作者会集合更多的API。如果你有特殊的需求你可以单独通过该方法[getPlatform()](https://github.com/zhouaini528/exchanges-php/blob/master/README_CN.md#%E6%94%AF%E6%8C%81%E5%8E%9F%E5%A7%8B%E5%AF%B9%E8%B1%A1%E8%AF%B7%E6%B1%82)返回实例，调用底层API。
+这SDK集合了目前交易量最大的几个交易所的API，让开发人员只关注业务层。它目前只是简单的支持买卖、查询、账号余额与仓位等，后期作者会集合更多的API。如果你有特殊的需求你可以单独通过该方法[getPlatform()](https://github.com/zhouaini528/exchanges-php/blob/master/README_CN.md#%E6%94%AF%E6%8C%81%E5%8E%9F%E5%A7%8B%E5%AF%B9%E8%B1%A1%E8%AF%B7%E6%B1%82)返回实例，调用底层API。
 
 这SDK支持统一参数，也支持原生参数。建议使用者使用统一参数，有特殊需求可以使用原生参数。
 
