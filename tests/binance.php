@@ -130,6 +130,7 @@ switch ($action){
         $result=$exchanges->trader()->show([
             '_symbol'=>'BTCUSDT',
             '_order_id'=>'324314658',
+            //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
         ]);
         break;
     }
@@ -167,17 +168,20 @@ switch ($action){
     
     //******************************Complete spot flow
     case 400:{
+        $_client_id=md5(rand(1,999999999));//custom ID
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
             '_number'=>'0.01',
-            '_price'=>'2000',
+            '_price'=>'5000',
+            '_client_id'=>$_client_id,
         ]);
         print_r($result);
         
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',
-            '_order_id'=>$result['orderId'],
-        ]);
+            //'_order_id'=>$result['orderId'],
+            '_client_id'=>$_client_id,
+        ]); 
         
         break;
     }
