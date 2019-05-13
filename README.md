@@ -12,15 +12,15 @@ Many interfaces are not yet complete, and users can continue to extend them base
 
 ### Other exchanges API
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php)
+[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
 
-[Okex](https://github.com/zhouaini528/okex-php)
+[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
 
-[Huobi](https://github.com/zhouaini528/huobi-php)
+[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
 
-[Binance](https://github.com/zhouaini528/binance-php)
+[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
 
-[Exchanges](https://github.com/zhouaini528/exchanges-php) All integration
+[Exchanges](https://github.com/zhouaini528/exchanges-php) This is all the aggregation
 
 #### Install
 ```
@@ -28,16 +28,6 @@ composer require linwj/exchanges:dev-master
 
 If something goes wrong add composer.json "minimum-stability":"dev"
 ```
-
-#### More Tests
-[Bitmex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
-
-[Binance](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
-
-[Huobi](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
-
-[Okex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
-
 
 #### Exchanges initialization
 ```php
