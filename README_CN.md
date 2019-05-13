@@ -10,13 +10,13 @@
 
 ### 其他交易所API
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php)
+[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
 
-[Okex](https://github.com/zhouaini528/okex-php)
+[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
 
-[Huobi](https://github.com/zhouaini528/huobi-php)
+[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
 
-[Binance](https://github.com/zhouaini528/binance-php)
+[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
 
 [Exchanges](https://github.com/zhouaini528/exchanges-php)是以上所有交易所集合成的SDK
 
@@ -26,16 +26,6 @@ composer require linwj/exchanges:dev-master
 
 如果安装中出问题composer.json 添加 "minimum-stability":"dev"
 ```
-
-#### 更多用例
-[Bitmex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
-
-[Binance](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
-
-[Huobi](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
-
-[Okex](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
-
 
 #### 交易所初始化
 ```php
