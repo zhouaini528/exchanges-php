@@ -18,9 +18,7 @@
 
 [Binance](https://github.com/zhouaini528/binance-php)
 
-以上所有交易所集合成的SDK
-
-[Exchanges](https://github.com/zhouaini528/exchanges-php)
+[Exchanges](https://github.com/zhouaini528/exchanges-php)是以上所有交易所集合成的SDK
 
 #### 安装方式
 ```
