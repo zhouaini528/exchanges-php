@@ -83,16 +83,9 @@ Local development sets the proxy [More](https://github.com/zhouaini528/binance-p
 ```php
 //If you are developing locally and need an agent, you can set this
 $exchanges->setProxy();
-//huobi okex
-$exchanges->setProxy('spot');
 
 //More flexible Settings
 $exchanges->setProxy([
-    'http'  => 'http://127.0.0.1:12333',
-    'https' => 'http://127.0.0.1:12333',
-]);
-//huobi okex
-$exchanges->setProxy('spot',[
     'http'  => 'http://127.0.0.1:12333',
     'https' => 'http://127.0.0.1:12333',
 ]);

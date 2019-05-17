@@ -82,16 +82,9 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```php
 //如果您正在本地开发需要代理，您可以这样设置
 $exchanges->setProxy();
-//huobi okex
-$exchanges->setProxy('spot');
 
 //更灵活的代理设置
 $exchanges->setProxy([
-    'http'  => 'http://127.0.0.1:12333',
-    'https' => 'http://127.0.0.1:12333',
-]);
-//huobi okex
-$exchanges->setProxy('spot',[
     'http'  => 'http://127.0.0.1:12333',
     'https' => 'http://127.0.0.1:12333',
 ]);
