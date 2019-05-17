@@ -47,16 +47,21 @@ switch ($action){
         break;
     }
     
-    //******************************Spot
-    case 99:{
+    case 2:{
         //If you are developing locally and need an agent, you can set this
-        $exchanges->setProxy('spot');
+        $exchanges->setProxy();
         
         //More flexible Settings
-        $exchanges->setProxy('spot',[
+        $exchanges->setProxy([
             'http'  => 'http://127.0.0.1:12333',
             'https' => 'http://127.0.0.1:12333',
         ]);
+        
+        //Get the information of holding positions of a contract.
+        $result=$exchanges->account()->get([
+            '_symbol'=>'BTC-USD-190628',
+        ]);
+        print_r($result);
         
         //This endpoint supports getting the balance, amount available/on hold of a token in spot account.
         $result=$exchanges->account()->get([
@@ -64,6 +69,8 @@ switch ($action){
         ]);
         break;
     }
+    
+    //******************************Spot
     //***********Spot Market
     case 100:{
         $result=$exchanges->trader()->buy([
@@ -225,22 +232,6 @@ switch ($action){
     
     
     //******************************Future
-    case 199:{
-        //If you are developing locally and need an agent, you can set this
-        $exchanges->setProxy('future');
-        
-        //More flexible Settings
-        $exchanges->setProxy('future',[
-            'http'  => 'http://127.0.0.1:12333',
-            'https' => 'http://127.0.0.1:12333',
-        ]);
-        
-        //Get the information of holding positions of a contract.
-        $result=$exchanges->account()->get([
-            '_symbol'=>'BTC-USD-190628',
-        ]);
-        break;
-    }
     //***********Future Market
     case 200:{
         $result=$exchanges->trader()->buy([

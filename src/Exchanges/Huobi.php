@@ -139,7 +139,7 @@ class Huobi
         return new Trader($this->platform_future,$this->platform_spot);
     }
     
-    function getPlatform($type=null){
+    function getPlatform(string $type=''){
         switch (strtolower($type)){
             case 'spot':{
                 return $this->platform_spot;
@@ -154,5 +154,25 @@ class Huobi
                 return null;
             }
         }
+    }
+    
+    /**
+     * Local development sets the proxy
+     * @param bool|array
+     * $proxy=false Default
+     * $proxy=true  Local proxy http://127.0.0.1:12333
+     *
+     * Manual proxy
+     * $proxy=[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     * ]
+     *
+     * @param mixed
+     * */
+    function setProxy($proxy=true){
+        $this->platform_future->setProxy($proxy);
+        $this->platform_spot->setProxy($proxy);
     }
 }

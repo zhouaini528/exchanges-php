@@ -69,7 +69,7 @@ class Base
     /**
      * 
      * */
-    function getPlatform($type=null){
+    function getPlatform(string $type=''){
         return $this->platform->getPlatform($type);
     }
     
@@ -88,12 +88,7 @@ class Base
      * 
      * @param mixed
      * */
-    function setProxy($type=null,$proxy=true){
-        if (is_array($type)){
-            //针对 bitmex binance
-            $proxy=$type;
-        }
-
-        $this->getPlatform($type)->setProxy($proxy);
+    function setProxy($proxy=true){
+        $this->platform->setProxy($proxy);
     }
 }

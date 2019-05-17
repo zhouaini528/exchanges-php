@@ -20,7 +20,6 @@ class Exchanges
     protected $platform;
     
     protected $proxy=false;
-    protected $type=null;
     
     protected $acount;
     protected $market;
@@ -37,19 +36,19 @@ class Exchanges
     
     function account(){
         $this->acount=new Account($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
-        $this->acount->setProxy($this->type,$this->proxy);
+        $this->acount->setProxy($this->proxy);
         return $this->acount;
     }
     
     function market(){
         $this->market=new Market($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
-        $this->market->setProxy($this->type,$this->proxy);
+        $this->market->setProxy($this->proxy);
         return $this->market;
     }
     
     function trader(){
         $this->trader=new Trader($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
-        $this->trader->setProxy($this->type,$this->proxy);
+        $this->trader->setProxy($this->proxy);
         return $this->trader;
     }
     
@@ -78,8 +77,7 @@ class Exchanges
      'no'    =>  ['.cn']
      * ]
      * */
-    function setProxy($type=null,$proxy=true){
+    function setProxy($proxy=true){
         $this->proxy=$proxy;
-        $this->type=$type;
     }
 }

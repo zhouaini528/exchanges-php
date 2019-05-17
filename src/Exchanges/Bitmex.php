@@ -114,7 +114,26 @@ class Bitmex
         return new Trader($this->platform);
     }
     
-    function getPlatform($type=null){
+    function getPlatform(string $type=''){
         return $this->platform;
+    }
+    
+    /**
+     * Local development sets the proxy
+     * @param bool|array
+     * $proxy=false Default
+     * $proxy=true  Local proxy http://127.0.0.1:12333
+     *
+     * Manual proxy
+     * $proxy=[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     * ]
+     *
+     * @param mixed
+     * */
+    function setProxy($proxy=true){
+        $this->platform->setProxy($proxy);
     }
 }
