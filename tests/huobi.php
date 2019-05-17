@@ -50,8 +50,7 @@ switch ($action){
         break;
     }
     
-    //******************************Spot
-    case 98:{
+    case 2:{
         //If you are developing locally and need an agent, you can set this
         $exchanges->setProxy();
         
@@ -67,6 +66,8 @@ switch ($action){
         ]);
         break;
     }
+    
+    //******************************Spot
     //***********Spot Market
     case 99:{
         //get $account_id,It's for buy and sell
