@@ -78,7 +78,7 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
-支持本地开发代理设置 [More](https://github.com/zhouaini528/binance-php/blob/master/tests/proxy.php#L21)
+支持本地开发代理设置 [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
 ```php
 //如果您正在本地开发需要代理，您可以这样设置
 $exchanges->setProxy();

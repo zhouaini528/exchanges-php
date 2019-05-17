@@ -79,7 +79,7 @@ System error unified parameter return [binance](https://github.com/zhouaini528/e
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
-Local development sets the proxy [More](https://github.com/zhouaini528/binance-php/blob/master/tests/proxy.php#L21)
+Local development sets the proxy [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
 ```php
 //If you are developing locally and need an agent, you can set this
 $exchanges->setProxy();
