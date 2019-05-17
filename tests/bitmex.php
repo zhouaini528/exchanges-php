@@ -50,6 +50,23 @@ switch ($action){
         break;
     }
     
+    case 2:{
+        //If you are developing locally and need an agent, you can set this
+        $exchanges->setProxy();
+        
+        //More flexible Settings
+        $exchanges->setProxy([
+            'http'  => 'http://127.0.0.1:12333',
+            'https' => 'http://127.0.0.1:12333',
+        ]);
+        
+        //bargaining transaction
+        $result=$exchanges->account()->get([
+            '_symbol'=>'XBTUSD'
+        ]);
+        break;
+    }
+    
     //***********Trader Market
     case 100:{
         $result=$exchanges->trader()->buy([

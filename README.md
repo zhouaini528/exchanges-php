@@ -79,6 +79,24 @@ System error unified parameter return [binance](https://github.com/zhouaini528/e
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
+Local development sets the proxy [More](https://github.com/zhouaini528/binance-php/blob/master/tests/proxy.php#L21)
+```php
+//If you are developing locally and need an agent, you can set this
+$exchanges->setProxy();
+//huobi okex
+$exchanges->setProxy('spot');
+
+//More flexible Settings
+$exchanges->setProxy([
+    'http'  => 'http://127.0.0.1:12333',
+    'https' => 'http://127.0.0.1:12333',
+]);
+//huobi okex
+$exchanges->setProxy('spot',[
+    'http'  => 'http://127.0.0.1:12333',
+    'https' => 'http://127.0.0.1:12333',
+]);
+```
 
 #### Spot Trader
 ##### Market

@@ -139,7 +139,7 @@ class Huobi
         return new Trader($this->platform_future,$this->platform_spot);
     }
     
-    function getPlatform(string $type=''){
+    function getPlatform($type=null){
         switch (strtolower($type)){
             case 'spot':{
                 return $this->platform_spot;
@@ -148,6 +148,9 @@ class Huobi
                 return $this->platform_future;
             }
             case 'swap':{
+                return null;
+            }
+            default:{
                 return null;
             }
         }

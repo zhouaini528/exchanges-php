@@ -51,6 +51,22 @@ switch ($action){
     }
     
     //******************************Spot
+    case 98:{
+        //If you are developing locally and need an agent, you can set this
+        $exchanges->setProxy('spot');
+        
+        //More flexible Settings
+        $exchanges->setProxy('spot',[
+            'http'  => 'http://127.0.0.1:12333',
+            'https' => 'http://127.0.0.1:12333',
+        ]);
+        
+        //bargaining transaction
+        $result=$exchanges->account()->get([
+            '_symbol'=>'btcusdt',
+        ]);
+        break;
+    }
     //***********Spot Market
     case 99:{
         //get $account_id,It's for buy and sell

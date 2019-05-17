@@ -78,6 +78,25 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
+支持本地开发代理设置 [More](https://github.com/zhouaini528/binance-php/blob/master/tests/proxy.php#L21)
+```php
+//如果您正在本地开发需要代理，您可以这样设置
+$exchanges->setProxy();
+//huobi okex
+$exchanges->setProxy('spot');
+
+//更灵活的代理设置
+$exchanges->setProxy([
+    'http'  => 'http://127.0.0.1:12333',
+    'https' => 'http://127.0.0.1:12333',
+]);
+//huobi okex
+$exchanges->setProxy('spot',[
+    'http'  => 'http://127.0.0.1:12333',
+    'https' => 'http://127.0.0.1:12333',
+]);
+```
+
 #### 现货交易
 ##### 市价交易
 ```php

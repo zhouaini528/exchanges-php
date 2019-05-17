@@ -19,9 +19,13 @@ class Exchanges
     
     protected $platform;
     
+    protected $proxy=false;
+    protected $type=null;
+    
     protected $acount;
     protected $market;
     protected $trader;
+    
     
     function __construct(string $exchange,string $key,string $secret,string $extra='',string $host=''){
         $this->exchange=$exchange;
@@ -32,15 +36,21 @@ class Exchanges
     }
     
     function account(){
-        return $this->acount=new Account($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $this->acount=new Account($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $this->acount->setProxy($this->type,$this->proxy);
+        return $this->acount;
     }
     
     function market(){
-        return $this->market=new Market($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $this->market=new Market($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $this->market->setProxy($this->type,$this->proxy);
+        return $this->market;
     }
     
     function trader(){
-        return $this->trader=new Trader($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $this->trader=new Trader($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $this->trader->setProxy($this->type,$this->proxy);
+        return $this->trader;
     }
     
     /**
@@ -53,5 +63,23 @@ class Exchanges
         
         //如果没有就初始化
         return $this->trader()->getPlatform($type);
+    }
+    
+    /**
+     * Local development sets the proxy
+     * @param bool|array
+     * $proxy=false Default
+     * $proxy=true  Local proxy http://127.0.0.1:12333
+     *
+     * Manual proxy
+     * $proxy=[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     * ]
+     * */
+    function setProxy($type=null,$proxy=true){
+        $this->proxy=$proxy;
+        $this->type=$type;
     }
 }

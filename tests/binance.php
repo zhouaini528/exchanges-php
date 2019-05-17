@@ -44,6 +44,20 @@ switch ($action){
          */
         break;
     }
+    case 2:{
+        //If you are developing locally and need an agent, you can set this
+        $exchanges->setProxy();
+        
+        //More flexible Settings
+        $exchanges->setProxy([
+            'http'  => 'http://127.0.0.1:12333',
+            'https' => 'http://127.0.0.1:12333',
+        ]);
+        
+        //Get current account information.
+        $result=$exchanges->account()->get();
+        break;
+    }
     
     //******************************Spot
     //***********Spot Market

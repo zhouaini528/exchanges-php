@@ -19,6 +19,8 @@ class Base
     
     protected $map;
     
+    protected $proxy=false;
+    
     /**
      * 初始化交易所
      * */
@@ -67,7 +69,31 @@ class Base
     /**
      * 
      * */
-    function getPlatform(string $type=''){
+    function getPlatform($type=null){
         return $this->platform->getPlatform($type);
+    }
+    
+    /**
+     * Local development sets the proxy
+     * @param bool|array
+     * $proxy=false Default
+     * $proxy=true  Local proxy http://127.0.0.1:12333
+     *
+     * Manual proxy
+     * $proxy=[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     * ]
+     * 
+     * @param mixed
+     * */
+    function setProxy($type=null,$proxy=true){
+        if (is_array($type)){
+            //针对 bitmex binance
+            $proxy=$type;
+        }
+
+        $this->getPlatform($type)->setProxy($proxy);
     }
 }
