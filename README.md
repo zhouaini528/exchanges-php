@@ -253,7 +253,8 @@ $exchanges->account()->get();
 //bitmex
 //bargaining transaction
 $exchanges->account()->get([
-    '_symbol'=>'XBTUSD'
+    //Default return all
+    //'_symbol'=>'XBTUSD'
 ]);
 
 //okex  spot

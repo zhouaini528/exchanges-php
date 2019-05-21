@@ -61,8 +61,9 @@ switch ($action){
         ]);
         
         //bargaining transaction
+        //Default return all
         $result=$exchanges->account()->get([
-            '_symbol'=>'XBTUSD'
+            //'_symbol'=>'XBTUSD'
         ]);
         break;
     }

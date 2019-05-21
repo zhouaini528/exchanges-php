@@ -56,7 +56,10 @@ class RequestAccountMap extends Base implements AccountInterface
                 break;
             }
             case 'bitmex':{
-                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $symbol=$data['_symbol'] ?? ($data['symbol'] ?? '');
+                
+                if(!empty($symbol)) $map['filter']=json_encode(['symbol'=>$symbol]);
+                
                 break;
             }
             case 'okex':{
