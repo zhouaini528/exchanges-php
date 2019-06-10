@@ -10,15 +10,15 @@
 
 ### 其他交易所API
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
+[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
 
-[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
+[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/okex-php/tree/master/tests)
 
-[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
+[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/huobi-php/tree/master/tests)
 
-[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
+[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/binance-php/tree/master/tests)
 
-[Exchanges](https://github.com/zhouaini528/exchanges-php)是以上所有交易所集合成的SDK
+[Exchanges](https://github.com/zhouaini528/exchanges-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)是以上所有交易所集合成的SDK
 
 #### 安装方式
 ```
