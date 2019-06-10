@@ -12,15 +12,15 @@ Many interfaces are not yet complete, and users can continue to extend them base
 
 ### Other exchanges API
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/bitmex.php)
+[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
 
-[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/okex.php)
+[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/okex-php/tree/master/tests)
 
-[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/huobi.php)
+[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/huobi-php/tree/master/tests)
 
-[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests/binance.php)
+[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/binance-php/tree/master/tests)
 
-[Exchanges](https://github.com/zhouaini528/exchanges-php) This is all the aggregation
+[Exchanges](https://github.com/zhouaini528/exchanges-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests) This is all the aggregation
 
 #### Install
 ```
