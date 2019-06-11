@@ -264,8 +264,9 @@ class ResponseTraderMap extends Base implements TraderInterface
                 }else{
                     $map['_order_id']=$data['result']['data']['id'];
                     $map['_filled_qty']=$data['result']['data']['field-amount'];
-                    $map['_price_avg']=$data['result']['data']['field-cash-amount'];
+                    $map['_price_avg']=bcdiv(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-amount']),16);
                     $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
+                    $map['_filed_amount']=$data['result']['data']['field-cash-amount'];
                 }
                 
                 if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
@@ -290,8 +291,9 @@ class ResponseTraderMap extends Base implements TraderInterface
                     $map['_status']=$this->okex_status['future'][$data['result']['status']];
                 }else{
                     $map['_filled_qty']=$data['result']['filled_size'];
-                    $map['_price_avg']=$data['result']['filled_notional'];
+                    $map['_price_avg']=bcdiv(strval($data['result']['filled_notional']),strval($data['result']['filled_size']),16);
                     $map['_status']=$this->okex_status['spot'][$data['result']['status']];
+                    $map['_filed_amount']=$data['result']['filled_notional'];
                 }
                 break;
             }
@@ -299,8 +301,9 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_order_id']=$data['result']['orderId'] ?? '';
                 $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 $map['_filled_qty']=$data['result']['executedQty'];
-                $map['_price_avg']=$data['result']['cummulativeQuoteQty'];
+                $map['_price_avg']=bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
                 $map['_status']=$this->binance_status[$data['result']['status']];
+                $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];
                 break;
             }
         }
