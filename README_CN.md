@@ -47,7 +47,8 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
  *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
  *      _filled_qty=>已交易完成数量
- *      _price_avg=>平均交易价格
+ *      _price_avg=>成交均价
+ *      _filed_amount=>交易价格
  *      _order_id=>系统ID
  *      _client_id=>自定义ID
  * ]
