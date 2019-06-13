@@ -10,7 +10,7 @@ use Lin\Exchange\Interfaces\AccountInterface;
 use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
 
-class Base
+class BaseBinance
 {
     protected $platform;
     
@@ -19,7 +19,7 @@ class Base
     }
 }
 
-class Account extends Base implements AccountInterface
+class AccountBinance extends BaseBinance implements AccountInterface
 {
     /**
      *
@@ -36,7 +36,7 @@ class Account extends Base implements AccountInterface
     }
 }
 
-class Market extends Base implements MarketInterface
+class MarketBinance extends BaseBinance implements MarketInterface
 {
     /**
      *
@@ -46,7 +46,7 @@ class Market extends Base implements MarketInterface
     }
 }
 
-class Trader extends Base implements TraderInterface
+class TraderBinance extends BaseBinance implements TraderInterface
 {
     /**
      *
@@ -102,15 +102,15 @@ class Binance
     }
     
     function account(){
-        return new Account($this->platform);
+        return new AccountBinance($this->platform);
     }
     
     function market(){
-        return new Market($this->platform);
+        return new MarketBinance($this->platform);
     }
     
     function trader(){
-        return new Trader($this->platform);
+        return new TraderBinance($this->platform);
     }
     
     function getPlatform(string $type=''){

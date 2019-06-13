@@ -11,7 +11,7 @@ use Lin\Exchange\Interfaces\AccountInterface;
 use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
 
-class Base
+class BaseHuobi
 {
     protected $platform_future;
     protected $platform_spot;
@@ -22,7 +22,7 @@ class Base
     }
 }
 
-class Account extends Base implements AccountInterface
+class AccountHuobi extends BaseHuobi implements AccountInterface
 {
     /**
      *
@@ -43,7 +43,7 @@ class Account extends Base implements AccountInterface
     }
 }
 
-class Market extends Base implements MarketInterface
+class MarketHuobi extends BaseHuobi implements MarketInterface
 {
     /**
      *
@@ -53,7 +53,7 @@ class Market extends Base implements MarketInterface
     }
 }
 
-class Trader extends Base implements TraderInterface
+class TraderHuobi extends BaseHuobi implements TraderInterface
 {
     /**
      *
@@ -128,15 +128,15 @@ class Huobi
     }
     
     function account(){
-        return new Account($this->platform_future,$this->platform_spot);
+        return new AccountHuobi($this->platform_future,$this->platform_spot);
     }
     
     function market(){
-        return new Market($this->platform_future,$this->platform_spot);
+        return new MarketHuobi($this->platform_future,$this->platform_spot);
     }
     
     function trader(){
-        return new Trader($this->platform_future,$this->platform_spot);
+        return new TraderHuobi($this->platform_future,$this->platform_spot);
     }
     
     function getPlatform(string $type=''){

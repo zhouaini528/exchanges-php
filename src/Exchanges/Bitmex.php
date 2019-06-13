@@ -11,7 +11,7 @@ use Lin\Exchange\Interfaces\AccountInterface;
 use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
 
-class Base
+class BaseBitmex
 {
     protected $platform;
     
@@ -20,7 +20,7 @@ class Base
     }
 }
 
-class Account extends Base implements AccountInterface
+class AccountBitmex extends BaseBitmex implements AccountInterface
 {
     /**
      *
@@ -37,7 +37,7 @@ class Account extends Base implements AccountInterface
     }
 }
 
-class Market extends Base implements MarketInterface
+class MarketBitmex extends BaseBitmex implements MarketInterface
 {
     /**
      *
@@ -47,7 +47,7 @@ class Market extends Base implements MarketInterface
     }
 }
 
-class Trader extends Base implements TraderInterface
+class TraderBitmex extends BaseBitmex implements TraderInterface
 {
     /**
      *
@@ -103,15 +103,15 @@ class Bitmex
     }
     
     function account(){
-        return new Account($this->platform);
+        return new AccountBitmex($this->platform);
     }
     
     function market(){
-        return new Market($this->platform);
+        return new MarketBitmex($this->platform);
     }
     
     function trader(){
-        return new Trader($this->platform);
+        return new TraderBitmex($this->platform);
     }
     
     function getPlatform(string $type=''){

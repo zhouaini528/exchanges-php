@@ -12,7 +12,7 @@ use Lin\Exchange\Interfaces\AccountInterface;
 use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
 
-class Base
+class BaseOkex
 {
     protected $platform_future;
     protected $platform_spot;
@@ -23,7 +23,7 @@ class Base
     }
 }
 
-class Account extends Base implements AccountInterface
+class AccountOkex extends BaseOkex implements AccountInterface
 {
     /**
      *
@@ -44,7 +44,7 @@ class Account extends Base implements AccountInterface
     }
 }
 
-class Market extends Base implements MarketInterface
+class MarketOkex extends BaseOkex implements MarketInterface
 {
     /**
      *
@@ -54,7 +54,7 @@ class Market extends Base implements MarketInterface
     }
 }
 
-class Trader extends Base implements TraderInterface
+class TraderOkex extends BaseOkex implements TraderInterface
 {
     /**
      *
@@ -137,15 +137,15 @@ class Okex
     }
     
     function account(){
-        return new Account($this->platform_future,$this->platform_spot);
+        return new AccountOkex($this->platform_future,$this->platform_spot);
     }
     
     function market(){
-        return new Market($this->platform_future,$this->platform_spot);
+        return new MarketOkex($this->platform_future,$this->platform_spot);
     }
     
     function trader(){
-        return new Trader($this->platform_future,$this->platform_spot);
+        return new TraderOkex($this->platform_future,$this->platform_spot);
     }
     
     function getPlatform(string $type=''){
