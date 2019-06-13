@@ -50,6 +50,7 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  *      _status=>NEW  PART_FILLED  FILLED  CANCELING  CANCELLED  FAILURE
  *      _filled_qty=>Number of transactions completed
  *      _price_avg=>Average transaction price
+ *      _filed_amount=>transaction price
  *      _order_id=>system ID
  *      _client_id=>custom ID
  * ]
