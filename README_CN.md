@@ -20,6 +20,8 @@
 
 [Exchanges](https://github.com/zhouaini528/exchanges-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)是以上所有交易所集合成的SDK
 
+[Exchanges Tools](https://github.com/dytf/exchanges-tools)它是模拟数据测试工具，你可以用它做前期的开发测试。
+
 #### 安装方式
 ```
 composer require linwj/exchanges:dev-master
