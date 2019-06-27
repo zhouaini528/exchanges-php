@@ -96,11 +96,12 @@ $exchanges->setProxy([
 ##### 市价交易
 ```php
 //binance
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTCUSDT',
     '_number'=>'0.01',
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'symbol'=>'BTCUSDT',
     'type'=>'MARKET',
@@ -108,11 +109,12 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_price'=>'10',
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'type'=>'market',
@@ -120,11 +122,12 @@ $exchanges->trader()->buy([
 ]);
 
 //huobi
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'btcusdt',
     '_price'=>'10',
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
@@ -136,12 +139,13 @@ $exchanges->trader()->buy([
 ##### 限价交易
 ```php
 //binance
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTCUSDT',
     '_number'=>'0.01',
     '_price'=>'2000',
 ]); 
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'symbol'=>'BTCUSDT',
     'type'=>'LIMIT',
@@ -151,12 +155,13 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'price'=>'100',
@@ -164,12 +169,13 @@ $exchanges->trader()->buy([
 ]);
 
 //huobi
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'btcusdt',
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
@@ -182,11 +188,12 @@ $exchanges->trader()->buy([
 ##### 市价交易
 ```php
 //bitmex
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
     '_number'=>'1',
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'symbol'=>'XBTUSD',
     'orderQty'=>'1',
@@ -194,12 +201,13 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
     '_entry'=>true,//open long
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
     'size'=>1,
@@ -213,12 +221,13 @@ $exchanges->trader()->buy([
 ##### 限价交易
 ```php
 //bitmex
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
     '_number'=>'1',
     '_price'=>100
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'symbol'=>'XBTUSD',
     'price'=>'100',
@@ -227,13 +236,14 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
+//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
     '_price'=>'2000',
     '_entry'=>true,//open long
 ]);
-//支持原生参数
+//也支持原生参数
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
     'size'=>1,
@@ -276,7 +286,7 @@ $exchanges->account()->get([
 ]);
 ```
 
-#### 支持原始对象请求
+#### 支持更底层API对象请求
 ```php
 //binance
 $exchanges->getPlatform()->trade()->postOrder([
