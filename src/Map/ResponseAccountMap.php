@@ -15,30 +15,6 @@ class ResponseAccountMap extends Base implements AccountInterface
     /**
      *
      * */
-    function position(array $data){
-        $map=[];
-        
-        switch ($this->platform){
-            case 'huobi':{
-                break;
-            }
-            case 'bitmex':{
-                break;
-            }
-            case 'okex':{
-                break;
-            }
-            case 'binance':{
-                break;
-            }
-        }
-        
-        return $map;
-    }
-    
-    /**
-     *
-     * */
     function get(array $data){
         $map=[];
         

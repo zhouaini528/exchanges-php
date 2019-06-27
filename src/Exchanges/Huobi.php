@@ -27,13 +27,6 @@ class AccountHuobi extends BaseHuobi implements AccountInterface
     /**
      *
      * */
-    function position(array $data){
-        return [];
-    }
-    
-    /**
-     *
-     * */
     function get(array $data){
         if(isset($data['contract_type'])){
             return [];

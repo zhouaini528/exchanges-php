@@ -13,10 +13,5 @@ interface AccountInterface extends BaseInterface
     /**
      *
      * */
-    function position(array $data);
-    
-    /**
-     *
-     * */
     function get(array $data);
 }

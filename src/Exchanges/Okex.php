@@ -28,13 +28,6 @@ class AccountOkex extends BaseOkex implements AccountInterface
     /**
      *
      * */
-    function position(array $data){
-        
-    }
-    
-    /**
-     *
-     * */
     function get(array $data){
         if(isset($data['instrument_id'])){
             return $this->platform_future->position()->get($data);

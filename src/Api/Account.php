@@ -30,14 +30,4 @@ class Account extends Base implements AccountInterface
             return $this->error($e->getMessage());
         }
     }
-    /**
-     * 暂时无用，保留坑位
-     * @see \Lin\Exchange\Interfaces\AccountInterface::position()
-     */
-    public function position(array $data)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
 }

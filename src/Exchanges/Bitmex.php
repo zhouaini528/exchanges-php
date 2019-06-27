@@ -25,13 +25,6 @@ class AccountBitmex extends BaseBitmex implements AccountInterface
     /**
      *
      * */
-    function position(array $data){
-        return [];
-    }
-    
-    /**
-     *
-     * */
     function get(array $data){
         return $this->platform->position()->get($data);
     }

@@ -24,13 +24,6 @@ class AccountBinance extends BaseBinance implements AccountInterface
     /**
      *
      * */
-    function position(array $data){
-        return [];
-    }
-    
-    /**
-     *
-     * */
     function get(array $data){
         return $this->platform->user()->getAccount($data);
     }
