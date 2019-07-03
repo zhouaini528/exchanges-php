@@ -15,9 +15,8 @@ include 'key_secret.php';
 $key=$keysecret['bitmex']['key'];
 $secret=$keysecret['bitmex']['secret'];
 $host=$keysecret['bitmex']['host'];
-$extra='';
 
-$exchanges=new Exchanges('bitmex',$key,$secret,$extra,$host);
+$exchanges=new Exchanges('bitmex',$key,$secret,$host);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern

@@ -32,6 +32,11 @@ class Exchanges
         $this->secret=$secret;
         $this->extra=$extra;
         $this->host=$host;
+        
+        if(stripos($extra,'http')===0) {
+            $this->host=$extra;
+            $this->extra='';
+        }
     }
     
     function account(){
@@ -53,14 +58,13 @@ class Exchanges
     }
     
     /**
-     * 支持原生访问
+     * Support native access
      * */
     public function getPlatform(string $type=''){
         if($this->trader!==null) return $this->trader->getPlatform($type);
         if($this->market!==null) return $this->market->getPlatform($type);
         if($this->acount!==null) return $this->acount->getPlatform($type);
         
-        //如果没有就初始化
         return $this->trader()->getPlatform($type);
     }
     
