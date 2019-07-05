@@ -27,8 +27,8 @@ class Trader extends Base implements TraderInterface
      *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
      *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
      *      _filled_qty=>已交易完成数量
-     *      _price_avg=>成交均价
-     *      _filed_amount=>交易价格
+     *      _price_avg=>已成交均价
+     *      _filed_amount=>已成交总金额
      *      _order_id=>系统ID
      *      _client_id=>自定义ID
      * ]
@@ -75,8 +75,8 @@ class Trader extends Base implements TraderInterface
      *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
      *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
      *      _filled_qty=>已交易完成数量
-     *      _price_avg=>成交均价
-     *      _filed_amount=>交易价格
+     *      _price_avg=>已成交均价
+     *      _filed_amount=>已成交总金额
      *      _order_id=>系统ID
      *      _client_id=>自定义ID
      * ]
@@ -123,8 +123,8 @@ class Trader extends Base implements TraderInterface
      *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
      *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
      *      _filled_qty=>已交易完成数量
-     *      _price_avg=>成交均价
-     *      _filed_amount=>交易价格
+     *      _price_avg=>已成交均价
+     *      _filed_amount=>已成交总金额
      *      _order_id=>系统ID
      *      _client_id=>自定义ID
      * ]
@@ -134,7 +134,7 @@ class Trader extends Base implements TraderInterface
             $map=$this->map->request_trader()->cancel($data);
             $result=$this->platform->trader()->cancel($map);
             $trader=$this->map->response_trader()->cancel(['result'=>$result,'request'=>$data]);
-
+            
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status']) && in_array($trader['_status'],['CANCELLED','FAILURE'])) return $trader;
             
@@ -172,8 +172,8 @@ class Trader extends Base implements TraderInterface
      * @return [
      * _status=>-2,-1,0,1,2   '完成交易'=>1,'挂单中'=>0, '部分完成'=>2,'撤单'=>-1,'系统错误'=>-2,
      * _filled_qty  => 返回已经成功  成交的仓位
-     * _price_avg=>成交均价
-     * _filed_amount=>交易价格
+     * _price_avg=>已成交均价
+     * _filed_amount=>已成交总金额
      * _order_id 订单ID
      * _client_id  自定义ID
      * ] 

@@ -24,11 +24,17 @@ class RequestAccountMap extends Base implements AccountInterface
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 
                 //判断是期货还是现货
-                if($this->checkFuture($map['symbol'])){
-                    
-                }else{
-                    $map['account-id']=$data['account-id'] ?? $this->extra;
+                switch ($this->checkType($map['symbol'])){
+                    case 'spot':{
+                        $map['account-id']=$data['account-id'] ?? $this->extra;
+                        break;
+                    }
+                    case 'future':{
+                        
+                        break;
+                    }
                 }
+                
                 break;
             }
             case 'bitmex':{
@@ -41,12 +47,21 @@ class RequestAccountMap extends Base implements AccountInterface
             case 'okex':{
                 $temp=$data['_symbol'] ?? ($data['instrument_id'] ?? $data['currency']);
                 
-                //判断是期货还是现货
-                if($this->checkFuture($temp)){
-                    $map['instrument_id']=$temp;
-                }else{
-                    $map['currency']=$temp;
+                switch ($this->checkType($temp)){
+                    case 'spot':{
+                        $map['currency']=$temp;
+                        break;
+                    }
+                    case 'future':{
+                        $map['instrument_id']=$temp;
+                        break;
+                    }
+                    case 'swap':{
+                        $map['instrument_id']=$temp;
+                        break;
+                    }
                 }
+                
                 break;
             }
             case 'binance':{

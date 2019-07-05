@@ -20,6 +20,11 @@ class BaseHuobi
         $this->platform_future=$platform_future;
         $this->platform_spot=$platform_spot;
     }
+    
+    protected function checkType($symbol){
+        if(is_numeric(substr($symbol,-1,1))) return 'future';
+        return 'spot';
+    }
 }
 
 class AccountHuobi extends BaseHuobi implements AccountInterface
@@ -28,10 +33,14 @@ class AccountHuobi extends BaseHuobi implements AccountInterface
      *
      * */
     function get(array $data){
-        if(isset($data['contract_type'])){
-            return [];
-        }else{
-            return $this->platform_spot->account()->getBalance($data);
+        switch ($this->checkType($data['symbol'])){
+            case 'future':{
+                $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
+                return $this->platform_future->contract()->postPositionInfo($data);
+            }
+            case 'spot':{
+                return $this->platform_spot->account()->getBalance($data);
+            }
         }
     }
 }
@@ -52,7 +61,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
      *
      * */
     function sell(array $data){
-        if(isset($data['contract_type'])){
+        if(isset($data['contract_code'])){
             return $this->platform_future->contract()->postOrder($data);
         }else{
             return $this->platform_spot->order()->postPlace($data);
@@ -63,7 +72,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
      *
      * */
     function buy(array $data){
-        if(isset($data['contract_type'])){
+        if(isset($data['contract_code'])){
             return $this->platform_future->contract()->postOrder($data);
         }else{
             return $this->platform_spot->order()->postPlace($data);
@@ -74,7 +83,8 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
      *
      * */
     function cancel(array $data){
-        if(isset($data['contract_type'])){
+        if(isset($data['symbol']) && !empty($data['symbol'])){
+            $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
             return $this->platform_future->contract()->postCancel($data);
         }else{
             return $this->platform_spot->order()->postSubmitCancel($data);
@@ -92,8 +102,9 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
      *
      * */
     function show(array $data){
-        if(isset($data['contract_type'])){
-            return $this->platform_future->contract()->getContractInfo($data);
+        if(isset($data['symbol']) && !empty($data['symbol'])){
+            $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
+            return $this->platform_future->contract()->postOrderInfo($data);
         }else{
             return $this->platform_spot->order()->get($data);
         }
@@ -113,11 +124,9 @@ class Huobi
     protected $platform_spot;
     
     function __construct($key,$secret,$host=''){
-        $host=empty($host) ? 'https://api.huobi.pro' : $host ;
+        $this->platform_future=new HuobiFuture($key,$secret,empty($host) ? 'https://api.hbdm.com' : $host);
         
-        $this->platform_future=new HuobiFuture($key,$secret,$host);
-        
-        $this->platform_spot=new HuobiSpot($key,$secret,$host);
+        $this->platform_spot=new HuobiSpot($key,$secret,empty($host) ? 'https://api.huobi.pro' : $host);
     }
     
     function account(){

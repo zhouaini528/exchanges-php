@@ -22,28 +22,44 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 
+                if(isset($data['contract_code'])) $map['symbol']=$data['contract_code'];
+                
                 //判断是期货还是现货
-                if($this->checkFuture($map['symbol'])){
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
+                switch ($this->checkType($map['symbol'])){
+                    case 'future':{
+                        $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
+                        unset($map['symbol']);
+                        $map['volume']=$data['_number'] ?? $data['volume'];
+                        $data['direction']=$map['direction']='buy';
+                        $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        $map['lever_rate']=$data['lever_rate'] ?? 20;
+                        //$map['contract_type']
                         
-                    }else {
-                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_price'])){
+                            $map['price']=$data['_price'];
+                            $map['order_price_type']='limit';
+                        }else {
+                            $map['order_price_type']='opponent';
+                        }
+                        break;
                     }
-                }else{
-                    $map['account-id']=$data['account-id'] ?? $this->extra;
-                    
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
-                        $map['price']=$data['_price'];
-                        $map['type']=$data['type'] ?? 'buy-limit';
-                        $map['amount']=$data['_number'] ?? $data['amount'];
-                    }else {
-                        $map['type']=$data['type'] ?? 'buy-market';
-                        $map['amount']=$data['_price'] ?? $data['amount'];//市价买单时表示买多少钱
+                    case 'spot':{
+                        $map['account-id']=$data['account-id'] ?? $this->extra;
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['price']=$data['_price']; 
+                            $map['type']=$data['type'] ?? 'buy-limit';
+                            $map['amount']=$data['_number'] ?? $data['amount'];
+                        }else {
+                            $map['type']=$data['type'] ?? 'buy-market';
+                            $map['amount']=$data['_price'] ?? $data['amount'];//市价买单时表示买多少钱
+                        }
+                        break;
                     }
                 }
-                
                 break;
             }
             case 'bitmex':{
@@ -69,46 +85,48 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
                 
-                //判断是期货还是现货
-                if($this->checkFuture($map['instrument_id'])){
-                    $map['type']=$data['type'] ?? ($data['_entry']?1:2);
-                    
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
-                        $map['match_price']=0;
-                        $map['price']=$data['_price'];
-                        $map['size']=$data['_number'] ?? 0;
-                    }else{
-                        $map['match_price']=1;
-                        $map['size']=$data['_number'] ?? 0;
-                    }
-                    
-                    //判断是否是交割合约
-                    if(!stripos($map['instrument_id'],'SWAP')){
-                        $map['leverage']=$data['leverage'] ?? 10;
-                    }
-                }else{
-                    $map['side']='buy';
-                    $map['margin_trading']=1;
-                    
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
-                        $map['type']='limit';
-                        $map['price']=$data['_price'] ?? $data['price'];
-                        $map['size']=$data['_number'] ?? $data['size'];
-                    }else{
-                        $map['type']='market';
-                        if(isset($data['_number'])){
+                switch ($this->checkType($map['instrument_id'])){
+                    case 'spot':{
+                        $data['side']=$map['side']='buy';
+                        $map['margin_trading']=1;
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['type']='limit';
+                            $map['price']=$data['_price'] ?? $data['price'];
                             $map['size']=$data['_number'] ?? $data['size'];
+                        }else{
+                            $map['type']='market';
+                            if(isset($data['_number'])){
+                                $map['size']=$data['_number'] ?? $data['size'];
+                            }
+                            
+                            if(isset($data['_price'])){
+                                $map['notional']=$data['_price'] ?? $data['notional'];
+                            }
+                        }
+                        break;
+                    }
+                    case 'swap':{
+                        
+                    }
+                    case 'future':{
+                        //	1:开多2:开空3:平多4:平空
+                        $map['type']=$data['type'] ?? ($data['_entry']?1:4);
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['match_price']=0;
+                            $map['price']=$data['_price'];
+                            $map['size']=$data['_number'] ?? 0;
+                        }else{
+                            $map['match_price']=1;
+                            $map['size']=$data['_number'] ?? 0;
                         }
                         
-                        if(isset($data['_price'])){
-                            $map['notional']=$data['_price'] ?? $data['notional'];
-                        }
+                        $map['leverage']=$data['leverage'] ?? 10;
+                        break;
                     }
-                    
-                    //TODO 支持原生参数
-                    $data['side']='buy';
                 }
                 break;
             }
@@ -153,25 +171,42 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 
+                if(isset($data['contract_code'])) $map['symbol']=$data['contract_code'];
+                
                 //判断是期货还是现货
-                if($this->checkFuture($map['symbol'])){
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
+                switch ($this->checkType($map['symbol'])){
+                    case 'future':{
+                        $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
+                        unset($map['symbol']);
+                        $map['volume']=$data['_number'] ?? $data['volume'];
+                        $data['direction']=$map['direction']='sell';
+                        $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        $map['lever_rate']=$data['lever_rate'] ?? 20;
+                        //$map['contract_type']
                         
-                    }else {
-                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_price'])){
+                            $map['price']=$data['_price'];
+                            $map['order_price_type']='limit';
+                        }else {
+                            $map['order_price_type']='opponent';
+                        }
+                        break;
                     }
-                }else{
-                    $map['account-id']=$data['account-id'] ?? $this->extra;
-                    
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
-                        $map['price']=$data['_price'];
-                        $map['type']=$data['type'] ?? 'sell-limit';
-                        $map['amount']=$data['_number'] ?? $data['amount'];
-                    }else {
-                        $map['type']=$data['type'] ?? 'sell-market';
-                        $map['amount']=$data['_number'] ?? $data['amount'];//市价卖单时表示卖多少币
+                    case 'spot':{
+                        $map['account-id']=$data['account-id'] ?? $this->extra;
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['price']=$data['_price'];
+                            $map['type']=$data['type'] ?? 'buy-limit';
+                            $map['amount']=$data['_number'] ?? $data['amount'];
+                        }else {
+                            $map['type']=$data['type'] ?? 'buy-market';
+                            $map['amount']=$data['_price'] ?? $data['amount'];//市价买单时表示买多少钱
+                        }
+                        break;
                     }
                 }
                 break;
@@ -200,47 +235,50 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
                 $map['order_type']=$data['order_type'] ?? 0;
                 
-                if($this->checkFuture($map['instrument_id'])){
-                    $map['type']=$data['type'] ?? ($data['_entry']?3:4);
-                    
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
-                        $map['match_price']=0;
-                        $map['price']=$data['_price'];
-                        $map['size']=$data['_number'] ?? 0;
-                    }else{
-                        $map['match_price']=1;
-                        $map['size']=$data['_number'] ?? 0;
-                    }
-                    
-                    //判断是否是交割合约
-                    if(!stripos($map['instrument_id'],'SWAP')){
-                        $map['leverage']=$data['leverage'] ?? 10;
-                    }
-                }else{
-                    $map['side']='sell';
-                    $map['margin_trading']=1;
-                    
-                    //市价单与限价单的参数映射
-                    if(isset($data['_number']) && isset($data['_price'])){
-                        $map['type']='limit';
-                        $map['price']=$data['_price'] ?? $data['price'];
-                        $map['size']=$data['_number'] ?? $data['size'];
-                    }else{
-                        $map['type']='market';
-                        if(isset($data['_number'])){
+                switch ($this->checkType($map['instrument_id'])){
+                    case 'spot':{
+                        $data['side']=$map['side']='sell';
+                        $map['margin_trading']=1;
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['type']='limit';
+                            $map['price']=$data['_price'] ?? $data['price'];
                             $map['size']=$data['_number'] ?? $data['size'];
+                        }else{
+                            $map['type']='market';
+                            if(isset($data['_number'])){
+                                $map['size']=$data['_number'] ?? $data['size'];
+                            }
+                            
+                            if(isset($data['_price'])){
+                                $map['notional']=$data['_price'] ?? $data['notional'];
+                            }
+                        }
+                        break;
+                    }
+                    case 'swap':{
+                    }
+                    case 'future':{
+                        $map['type']=$data['type'] ?? ($data['_entry']?2:3);
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['match_price']=0;
+                            $map['price']=$data['_price'];
+                            $map['size']=$data['_number'] ?? 0;
+                        }else{
+                            $map['match_price']=1;
+                            $map['size']=$data['_number'] ?? 0;
                         }
                         
-                        if(isset($data['_price'])){
-                            $map['notional']=$data['_price'] ?? $data['notional'];
+                        //判断是否是交割合约
+                        if(!stripos($map['instrument_id'],'SWAP')){
+                            $map['leverage']=$data['leverage'] ?? 10;
                         }
+                        break;
                     }
-                    
-                    //TODO 支持原生参数
-                    $data['side']='sell';
                 }
-                
                 break;
             }
             case 'binance':{
@@ -281,7 +319,18 @@ class RequestTraderMap extends Base implements TraderInterface
         $map=[];
         switch ($this->platform){
             case 'huobi':{
-                $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                $map['symbol']=$data['_symbol'] ?? ($data['symbol'] ?? '');
+                
+                switch ($this->checkType($map['symbol'])){
+                    case 'future':{
+                        $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                        break;
+                    }
+                    case 'spot':{
+                        $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                        break;
+                    }
+                }
                 break;
             }
             case 'bitmex':{
@@ -350,7 +399,18 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
-                $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                switch ($this->checkType($data['_symbol'] ?? $data['symbol'])){
+                    case 'future':{
+                        $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        $map['symbol']=$data['_symbol'] ?? ($data['symbol'] ?? '');
+                        break;
+                    }
+                    case 'spot':{
+                        $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                        break;
+                    }
+                }
                 break;
             }
             case 'bitmex':{

@@ -19,6 +19,9 @@ $account_id=$keysecret['huobi']['account_id'];
 
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 
+//If you are developing locally and need an agent, you can set this
+$exchanges->setProxy();
+
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 
@@ -212,12 +215,178 @@ switch ($action){
     
     //******************************Future
     //***********Future Market
-    //TODO
+    case 401:{
+        //It's the same as that  => case 402
+        //It's the opposite of that  => case 403
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        
+        break;
+    }
+    case 402:{
+        //It's the same as that  => case 401
+        $result=$exchanges->trader()->buy([
+            'symbol'=>'XRP',//string	false	"BTC","ETH"...
+            'contract_type'=>'quarter',//	string	false	Contract Type ("this_week": "next_week": "quarter":)
+            'contract_code'=>'XRP190927',//	string	false	BTC180914
+            //'price'=>'0.3',//	decimal	true	Price
+            'volume'=>'1',//	long	true	Numbers of orders (amount)
+            //'direction'=>'buy',//	string	true	Transaction direction
+            'offset'=>'open',//	string	true	"open", "close"
+            'order_price_type'=>'opponent',//"limit", "opponent"
+            'lever_rate'=>20,//int	true	Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+        ]);
+        
+        break;
+    }
+    case 403:{
+        //It's the opposite of that  => case 401
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_entry'=>false,//true:open  false:close
+        ]);
+        
+        break;
+    }
     
+    case 404:{
+        //It's the opposite of that  => case 405
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        
+        break;
+    }
+    
+    case 405:{
+        //It's the opposite of that  => case 404
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_entry'=>false,//true:open  false:close
+        ]);
+        
+        break;
+    }
+    
+    //***********Future Limit
+    case 410:{
+        //It's the same as that  => case 411
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_price'=>'0.3',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        break;
+    }
+    
+    case 411:{
+        //It's the same as that  => case 410
+        $result=$exchanges->trader()->buy([
+            'symbol'=>'XRP',//string	false	"BTC","ETH"...
+            'contract_type'=>'quarter',//	string	false	Contract Type ("this_week": "next_week": "quarter":)
+            'contract_code'=>'XRP190927',//	string	false	BTC180914
+            'price'=>'0.3',//	decimal	true	Price
+            'volume'=>'1',//	long	true	Numbers of orders (amount)
+            //'direction'=>'buy',//	string	true	Transaction direction
+            'offset'=>'open',//	string	true	"open", "close"
+            'order_price_type'=>'limit',//"limit", "opponent"
+            'lever_rate'=>20,//int	true	Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+        ]);
+        break;
+    }
+    
+    case 412:{
+        //It's the same as that  => case 413
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_price'=>'0.4',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        break;
+    }
+    case 413:{
+        //It's the same as that  => case 412
+        $result=$exchanges->trader()->sell([
+            'symbol'=>'XRP',//string	false	"BTC","ETH"...
+            'contract_type'=>'quarter',//	string	false	Contract Type ("this_week": "next_week": "quarter":)
+            'contract_code'=>'XRP190927',//	string	false	BTC180914
+            'price'=>'0.4',//	decimal	true	Price
+            'volume'=>'1',//	long	true	Numbers of orders (amount)
+            //'direction'=>'buy',//	string	true	Transaction direction
+            'offset'=>'open',//	string	true	"open", "close"
+            'order_price_type'=>'limit',//"limit", "opponent"
+            'lever_rate'=>20,//int	true	Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+        ]);
+        break;
+    }
+    
+    case 420:{
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'XRP190927',
+            '_order_id'=>'2715696586',
+        ]);
+        break;
+    }
+    
+    case 421:{
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'XRP190927',
+            '_order_id'=>'2715696586',
+        ]);
+        break;
+    }
+    
+    case 430:{
+        $result=$exchanges->account()->get([
+            '_symbol'=>'XRP190927',
+        ]);
+        break;
+    }
     
     //***Complete future flow
     //TODO
     case 450:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'XRP190927',
+            '_number'=>'1',
+            '_price'=>'0.3',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'XRP190927',
+            '_order_id'=>$result['_order_id'],
+        ]);
+        
+        break;
+    }
+    
+    case 500:{
+        $result=$exchanges->getPlatform('future')->contract()->postOrder([
+            'symbol'=>'XRP',//string	false	"BTC","ETH"...
+            'contract_type'=>'quarter',//	string	false	Contract Type ("this_week": "next_week": "quarter":)
+            'contract_code'=>'XRP190927',//	string	false	BTC180914
+            'price'=>'0.3',//	decimal	true	Price
+            'volume'=>'1',//	long	true	Numbers of orders (amount)
+            'direction'=>'buy',//	string	true	Transaction direction
+            'offset'=>'open',//	string	true	"open", "close"
+            'order_price_type'=>'limit',//"limit", "opponent"
+            'lever_rate'=>20,//int	true	Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+        ]);
+        break;
+    }
+    
+    case 501:{
         break;
     }
     

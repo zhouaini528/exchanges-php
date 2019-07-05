@@ -11,15 +11,28 @@ use Lin\Okex\OkexSpot;
 use Lin\Exchange\Interfaces\AccountInterface;
 use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
+use Lin\Okex\OkexSwap;
 
 class BaseOkex
 {
     protected $platform_future;
     protected $platform_spot;
+    protected $platform_swap;
     
-    function __construct(OkexFuture $platform_future,OkexSpot $platform_spot){
+    function __construct(OkexFuture $platform_future,OkexSpot $platform_spot,OkexSwap $platform_swap){
         $this->platform_future=$platform_future;
         $this->platform_spot=$platform_spot;
+        $this->platform_swap=$platform_swap;
+    }
+    
+    protected function checkType($symbol){
+        $temp=explode('-', $symbol);
+        if(count($temp)>2){
+            if(is_numeric($temp[2])) return 'future';
+            return 'swap';
+        }
+        
+        return 'spot';
     }
 }
 
@@ -29,10 +42,16 @@ class AccountOkex extends BaseOkex implements AccountInterface
      *
      * */
     function get(array $data){
-        if(isset($data['instrument_id'])){
-            return $this->platform_future->position()->get($data);
-        }else{
-            return $this->platform_spot->account()->get($data);
+        switch ($this->checkType($data['instrument_id'])){
+            case 'future':{
+                return $this->platform_future->position()->get($data);
+            }
+            case 'spot':{
+                return $this->platform_spot->account()->get($data);
+            }
+            case 'swap':{
+                return $this->platform_swap->position()->get($data);
+            }
         }
     }
 }
@@ -53,11 +72,16 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function sell(array $data){
-        //判断是期货还是现货
-        if(isset($data['match_price'])){
-            return $this->platform_future->order()->post($data);
-        }else{
-            return $this->platform_spot->order()->post($data);
+        switch ($this->checkType($data['instrument_id'])){
+            case 'future':{
+                return $this->platform_future->order()->post($data);
+            }
+            case 'spot':{
+                return $this->platform_spot->order()->post($data);
+            }
+            case 'swap':{
+                return $this->platform_swap->order()->post($data);
+            }
         }
     }
     
@@ -65,11 +89,16 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function buy(array $data){
-        //判断是期货还是现货
-        if(isset($data['match_price'])){
-            return $this->platform_future->order()->post($data);
-        }else{
-            return $this->platform_spot->order()->post($data);
+        switch ($this->checkType($data['instrument_id'])){
+            case 'future':{
+                return $this->platform_future->order()->post($data);
+            }
+            case 'spot':{
+                return $this->platform_spot->order()->post($data);
+            }
+            case 'swap':{
+                return $this->platform_swap->order()->post($data);
+            }
         }
     }
     
@@ -77,11 +106,16 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function cancel(array $data){
-        $instrument=explode('-', $data['instrument_id']);
-        if(count($instrument)>2){
-            return $this->platform_future->order()->postCancel($data);
-        }else{
-            return $this->platform_spot->order()->postCancel($data);
+        switch ($this->checkType($data['instrument_id'])){
+            case 'future':{
+                return $this->platform_future->order()->postCancel($data);
+            }
+            case 'spot':{
+                return $this->platform_spot->order()->postCancel($data);
+            }
+            case 'swap':{
+                return $this->platform_swap->order()->postCancel($data);
+            }
         }
     }
     
@@ -96,14 +130,16 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function show(array $data){
-        //BTC-USD-190628
-        //BTC-USD-SWAP
-        //BTC-USD
-        $instrument=explode('-', $data['instrument_id']);
-        if(count($instrument)>2){
-            return $this->platform_future->order()->get($data);
-        }else{
-            return $this->platform_spot->order()->get($data);
+        switch ($this->checkType($data['instrument_id'])){
+            case 'future':{
+                return $this->platform_future->order()->get($data);
+            }
+            case 'spot':{
+                return $this->platform_spot->order()->get($data);
+            }
+            case 'swap':{
+                return $this->platform_swap->order()->get($data);
+            }
         }
     }
     
@@ -119,7 +155,7 @@ class Okex
 {
     protected $platform_future;
     protected $platform_spot;
-    
+    protected $platform_swap;
     
     function __construct($key,$secret,$passphrase,$host=''){
         $host=empty($host) ? 'https://www.okex.com' : $host ;
@@ -127,18 +163,20 @@ class Okex
         $this->platform_future=new OkexFuture($key,$secret,$passphrase,$host);
         
         $this->platform_spot=new OkexSpot($key,$secret,$passphrase,$host);
+        
+        $this->platform_swap=new OkexSwap($key,$secret,$passphrase,$host);
     }
     
     function account(){
-        return new AccountOkex($this->platform_future,$this->platform_spot);
+        return new AccountOkex($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
     
     function market(){
-        return new MarketOkex($this->platform_future,$this->platform_spot);
+        return new MarketOkex($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
     
     function trader(){
-        return new TraderOkex($this->platform_future,$this->platform_spot);
+        return new TraderOkex($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
     
     function getPlatform(string $type=''){
@@ -150,7 +188,7 @@ class Okex
                 return $this->platform_future;
             }
             case 'swap':{
-                return null;
+                return $this->platform_swap;
             }
             default:{
                 return null;
@@ -176,5 +214,6 @@ class Okex
     function setProxy($proxy=true){
         $this->platform_future->setProxy($proxy);
         $this->platform_spot->setProxy($proxy);
+        $this->platform_swap->setProxy($proxy);
     }
 }
