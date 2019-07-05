@@ -35,7 +35,7 @@ $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
-[Get huobi $account_id](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L73)
+[Get Huobi Spot $account_id](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L73)
 
 #### Uniform parameter return
 ```php
@@ -99,7 +99,7 @@ $exchanges->trader()->buy([
     '_symbol'=>'BTCUSDT',
     '_number'=>'0.01',
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'BTCUSDT',
     'type'=>'MARKET',
@@ -111,7 +111,7 @@ $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_price'=>'10',
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'type'=>'market',
@@ -123,7 +123,7 @@ $exchanges->trader()->buy([
     '_symbol'=>'btcusdt',
     '_price'=>'10',
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
@@ -140,7 +140,7 @@ $exchanges->trader()->buy([
     '_number'=>'0.01',
     '_price'=>'2000',
 ]); 
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'BTCUSDT',
     'type'=>'LIMIT',
@@ -155,7 +155,7 @@ $exchanges->trader()->buy([
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'price'=>'100',
@@ -168,7 +168,7 @@ $exchanges->trader()->buy([
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
@@ -185,7 +185,7 @@ $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
     '_number'=>'1',
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'XBTUSD',
     'orderQty'=>'1',
@@ -198,7 +198,7 @@ $exchanges->trader()->buy([
     '_number'=>'1',
     '_entry'=>true,//open long
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
     'size'=>1,
@@ -217,7 +217,7 @@ $exchanges->trader()->buy([
     '_number'=>'1',
     '_price'=>100
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'XBTUSD',
     'price'=>'100',
@@ -232,7 +232,7 @@ $exchanges->trader()->buy([
     '_price'=>'2000',
     '_entry'=>true,//open long
 ]);
-//The original parameters
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
     'size'=>1,
@@ -242,6 +242,52 @@ $exchanges->trader()->buy([
     'match_price' => 0,
     'order_type'=>0,
 ]);
+```
+
+#### Get Order Details
+```php
+//binance
+$exchanges->trader()->show([
+    '_symbol'=>'BTCUSDT',
+    '_order_id'=>'324314658',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+]);
+
+//bitmex
+$exchanges->trader()->show([
+    '_symbol'=>'XBTUSD',
+    '_order_id'=>'7d03ac2a-b24d-f48c-95f4-2628e6411927',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+]);
+
+//okex
+$exchanges->trader()->show([
+    '_symbol'=>'BTC-USDT',
+    '_order_id'=>'2671215997495296',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+]);
+$exchanges->trader()->show([
+    '_symbol'=>'BTC-USD-190927',
+    '_order_id'=>'2671566274710528',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+]);
+$exchanges->trader()->show([
+    '_symbol'=>'BTC-USD-SWAP',
+    '_order_id'=>'2671566274710528',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+]);
+
+//huobi spot
+$exchanges->trader()->show([
+    '_order_id'=>'29897313869',
+]);
+//huobi future
+$exchanges->trader()->show([
+    '_symbol'=>'XRP190927',
+    '_order_id'=>'2715696586',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+]);
+
 ```
 
 #### Get accounts or positions
@@ -269,13 +315,23 @@ $exchanges->account()->get([
     '_symbol'=>'BTC-USD-190628',
 ]);
 
+//okex swap
+$exchanges->account()->get([
+    '_symbol'=>'BTC-USD-SWAP',
+]);
+
 //huobi spot
 $exchanges->account()->get([
     '_symbol'=>'btcusdt',
 ]);
+
+//huobi future
+$exchanges->account()->get([
+    '_symbol'=>'BTC190927',
+]);
 ```
 
-#### The original object
+#### Support for original parameters
 ```php
 //binance
 $exchanges->getPlatform()->trade()->postOrder([
@@ -313,6 +369,12 @@ $exchanges->getPlatform('future')->order()->post([
     'price'=>'100',
     'size'=>'1',
 ]);
+$result=$exchanges->getPlatform('swap')->order()->post([
+    'instrument_id'=>'BTC-USD-SWAP',
+    'type'=>'1',
+    'price'=>'5000',
+    'size'=>'1',
+]);
 
 
 //huobi
@@ -325,16 +387,16 @@ $exchanges->getPlatform('spot')->order()->postPlace([
 ]);
 
 $exchanges->getPlatform('future')->contract()->postOrder([
-    'symbol'=>'BTC',//string    false   "BTC","ETH"...
+    'symbol'=>'XRP',//string    false   "BTC","ETH"...
     'contract_type'=>'quarter',//   string  false   Contract Type ("this_week": "next_week": "quarter":)
-    'contract_code'=>'BTC190628',// string  false   BTC180914
-    'price'=>'100',//   decimal true    Price
+    'contract_code'=>'XRP190927',// string  false   BTC180914
+    'price'=>'0.3',//   decimal true    Price
     'volume'=>'1',//    long    true    Numbers of orders (amount)
     'direction'=>'buy',//   string  true    Transaction direction
     'offset'=>'open',// string  true    "open", "close"
+    'order_price_type'=>'limit',//"limit", "opponent"
+    'lever_rate'=>20,//int  true    Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
     //'client_order_id'=>'',//long  false   Clients fill and maintain themselves, and this time must be greater than last time
-    //lever_rate    int true    Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
-    //order_price_type   string true    "limit", "opponent"
 ]);
 
 ```
