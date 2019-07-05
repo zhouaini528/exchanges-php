@@ -343,6 +343,8 @@ $exchanges->account()->get([
 ```
 
 #### 支持更底层API对象请求
+使用前建议先去看看这些[Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php)底层已经封装过的SDK。
+以下列子是调用底层API的发起一个新的订单实例
 ```php
 //binance
 $exchanges->getPlatform()->trade()->postOrder([
