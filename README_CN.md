@@ -72,6 +72,8 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  * ]
  * */
 ```
+Buy Sell 方法默认有[2秒](https://github.com/zhouaini528/exchanges-php/blob/master/src/Config/Exchanges.php)的等待查询，因为交易所是撮合交易所以查询需要等待。
+
 买卖查询统一参数返回 [详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
 系统错误统一参数返回 
