@@ -200,11 +200,11 @@ class RequestTraderMap extends Base implements TraderInterface
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
                             $map['price']=$data['_price'];
-                            $map['type']=$data['type'] ?? 'buy-limit';
+                            $map['type']=$data['type'] ?? 'sell-limit';
                             $map['amount']=$data['_number'] ?? $data['amount'];
                         }else {
-                            $map['type']=$data['type'] ?? 'buy-market';
-                            $map['amount']=$data['_price'] ?? $data['amount'];//市价买单时表示买多少钱
+                            $map['type']=$data['type'] ?? 'sell-market';
+                            $map['amount']=$data['_number'] ?? $data['amount'];//市价卖单时表示卖多少币
                         }
                         break;
                     }
