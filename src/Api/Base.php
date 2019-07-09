@@ -54,12 +54,12 @@ class Base
     
     /**
      *
-     * @param
-     * @param int 错误类型
+     * @param 
      * @return array
      * */
     protected function error($msg){
-        $msg=json_decode($msg,true);
+        $temp=json_decode($msg,true);
+        if(!empty($temp) && is_array($temp)) return ['_error'=>$temp];
         
         return [
             '_error'=>$msg,
