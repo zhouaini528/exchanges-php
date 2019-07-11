@@ -115,7 +115,7 @@ switch ($action){
     case 150:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USDT',
-            '_number'=>'0.001',
+            '_number'=>'1',
             '_price'=>'2000',
             //'_client_id'=>'custom ID',
         ]);

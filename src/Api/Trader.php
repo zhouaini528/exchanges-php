@@ -41,7 +41,7 @@ class Trader extends Base implements TraderInterface
             $trader=$this->map->response_trader()->buy(['result'=>$result,'request'=>$data]);
             
             //如果交易默认完成，则不用再查询
-            if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
+            if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return ['_error'=>$trader];
             
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
@@ -90,7 +90,7 @@ class Trader extends Base implements TraderInterface
             
             //如果交易默认完成，则不用再查询
             //bitmex 存在可能
-            if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return $trader;
+            if(isset($trader['_status']) && in_array($trader['_status'],['FILLED','FAILURE'])) return ['_error'=>$trader];
             
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
@@ -136,7 +136,7 @@ class Trader extends Base implements TraderInterface
             $trader=$this->map->response_trader()->cancel(['result'=>$result,'request'=>$data]);
             
             //如果交易默认完成，则不用再查询
-            if(isset($trader['_status']) && in_array($trader['_status'],['CANCELLED','FAILURE'])) return $trader;
+            if(isset($trader['_status']) && in_array($trader['_status'],['CANCELLED','FAILURE'])) return ['_error'=>$trader];
             
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
