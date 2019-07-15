@@ -58,8 +58,16 @@ class Base
      * @return array
      * */
     protected function error($msg){
+        //是否有请求超时的错误
+        if(stripos($msg,'Connection timed out after')!==false){
+            $httpcode=504;
+        }
+        
         $temp=json_decode($msg,true);
-        if(!empty($temp) && is_array($temp)) return ['_error'=>$temp];
+        if(!empty($temp) && is_array($temp)) {
+            if(isset($httpcode)) $temp['_httpcode']=$httpcode;
+            return ['_error'=>$temp];
+        }
         
         return [
             '_error'=>$msg,
