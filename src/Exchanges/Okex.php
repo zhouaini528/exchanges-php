@@ -216,4 +216,13 @@ class Okex
         $this->platform_spot->setProxy($proxy);
         $this->platform_swap->setProxy($proxy);
     }
+    
+    /**
+     * Set the request timeout to 60 seconds by default
+     * */
+    function setTimeOut($timeout=60){
+        $this->platform_future->setTimeOut($timeout);
+        $this->platform_spot->setTimeOut($timeout);
+        $this->platform_swap->setTimeOut($timeout);
+    }
 }

@@ -20,6 +20,9 @@ $exchanges=new Exchanges('binance',$key,$secret);
 //If you are developing locally and need an agent, you can set this
 $exchanges->setProxy();
 
+//Set the request timeout to 60 seconds by default
+$exchanges->setTimeOut(5);
+
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 
@@ -194,11 +197,11 @@ switch ($action){
         ]);
         print_r($result);
         
-        $result=$exchanges->trader()->cancel([
+       $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',
             //'_order_id'=>$result['orderId'],
             '_client_id'=>$_client_id,
-        ]); 
+        ]);
         
         break;
     }
@@ -206,7 +209,10 @@ switch ($action){
     //******************************Complete future flow
     case 450:{
         
-        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTCUSDT',
+            '_client_id'=>'4b9dd6a3916561da4c7931ec63870bbf',
+        ]); 
         break;
     }
     

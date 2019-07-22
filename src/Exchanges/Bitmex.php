@@ -129,4 +129,11 @@ class Bitmex
     function setProxy($proxy=true){
         $this->platform->setProxy($proxy);
     }
+    
+    /**
+     * Set the request timeout to 60 seconds by default
+     * */
+    function setTimeOut($timeout=60){
+        $this->platform->setTimeOut($timeout);
+    }
 }

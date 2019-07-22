@@ -177,4 +177,12 @@ class Huobi
         $this->platform_future->setProxy($proxy);
         $this->platform_spot->setProxy($proxy);
     }
+    
+    /**
+     * Set the request timeout to 60 seconds by default
+     * */
+    function setTimeOut($timeout=60){
+        $this->platform_future->setTimeOut($timeout);
+        $this->platform_spot->setTimeOut($timeout);
+    }
 }

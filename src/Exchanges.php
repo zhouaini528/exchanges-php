@@ -20,6 +20,7 @@ class Exchanges
     protected $platform;
     
     protected $proxy=false;
+    protected $timeout=60;
     
     protected $acount;
     protected $market;
@@ -42,18 +43,21 @@ class Exchanges
     function account(){
         $this->acount=new Account($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $this->acount->setProxy($this->proxy);
+        $this->acount->setTimeOut($this->timeout);
         return $this->acount;
     }
     
     function market(){
         $this->market=new Market($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $this->market->setProxy($this->proxy);
+        $this->market->setTimeOut($this->timeout);
         return $this->market;
     }
     
     function trader(){
         $this->trader=new Trader($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $this->trader->setProxy($this->proxy);
+        $this->trader->setTimeOut($this->timeout);
         return $this->trader;
     }
     
@@ -83,5 +87,12 @@ class Exchanges
      * */
     function setProxy($proxy=true){
         $this->proxy=$proxy;
+    }
+    
+    /**
+     * Set the request timeout to 60 seconds by default
+     * */
+    function setTimeOut($timeout=60){
+        $this->timeout=$timeout;
     }
 }

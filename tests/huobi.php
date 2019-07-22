@@ -22,6 +22,9 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 //If you are developing locally and need an agent, you can set this
 $exchanges->setProxy();
 
+//Set the request timeout to 60 seconds by default
+$exchanges->setTimeOut(5);
+
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
 

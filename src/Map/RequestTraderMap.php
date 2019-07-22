@@ -399,7 +399,7 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
-                switch ($this->checkType($data['_symbol'] ?? $data['symbol'])){
+                switch ($this->checkType($data['_symbol'] ?? ($data['symbol'] ?? ''))){
                     case 'future':{
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
