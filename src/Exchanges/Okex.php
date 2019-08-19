@@ -42,7 +42,7 @@ class AccountOkex extends BaseOkex implements AccountInterface
      *
      * */
     function get(array $data){
-        switch ($this->checkType($data['instrument_id'])){
+        switch ($this->checkType($data['instrument_id'] ?? '')){
             case 'future':{
                 return $this->platform_future->position()->get($data);
             }
@@ -72,7 +72,7 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function sell(array $data){
-        switch ($this->checkType($data['instrument_id'])){
+        switch ($this->checkType($data['instrument_id'] ?? '')){
             case 'future':{
                 return $this->platform_future->order()->post($data);
             }
@@ -89,7 +89,7 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function buy(array $data){
-        switch ($this->checkType($data['instrument_id'])){
+        switch ($this->checkType($data['instrument_id'] ?? '')){
             case 'future':{
                 return $this->platform_future->order()->post($data);
             }
@@ -106,7 +106,7 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function cancel(array $data){
-        switch ($this->checkType($data['instrument_id'])){
+        switch ($this->checkType($data['instrument_id'] ?? '')){
             case 'future':{
                 return $this->platform_future->order()->postCancel($data);
             }
@@ -130,7 +130,7 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function show(array $data){
-        switch ($this->checkType($data['instrument_id'])){
+        switch ($this->checkType($data['instrument_id'] ?? '')){
             case 'future':{
                 return $this->platform_future->order()->get($data);
             }
