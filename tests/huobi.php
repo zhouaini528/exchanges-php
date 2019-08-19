@@ -79,6 +79,7 @@ switch ($action){
         //get $account_id,It's for buy and sell
         //recommended save database $account_id
         $exchanges=new Exchanges('huobi',$key,$secret);
+        $exchanges->setProxy();
         $result=$exchanges->getPlatform('spot')->account()->get();
         break;
     }
@@ -86,7 +87,7 @@ switch ($action){
     case 100:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'btcusdt',
-            '_price'=>'10',
+            '_price'=>'20',
         ]);
         break;
     }
@@ -160,7 +161,7 @@ switch ($action){
     
     case 300:{
         $result=$exchanges->trader()->show([
-            '_order_id'=>'29897313869',
+            '_order_id'=>'44997280257',
         ]);
         break;
     }
@@ -168,14 +169,14 @@ switch ($action){
     case 301:{
         //The original parameters
         $result=$exchanges->trader()->show([
-            'order-id'=>'30002957180',
+            'order-id'=>'44997280257',
         ]);
         break;
     }
     case 302:{
         //The original parameters
         $result=$exchanges->trader()->cancel([
-            'order-id'=>'30003632696',
+            'order-id'=>'44997280257',
         ]);
         break;
     }
@@ -199,11 +200,85 @@ switch ($action){
     }
     
     //***Complete spot flow
-    case 400:{
+    case 391:{
+        echo $_client_id='abc'.rand(10000,99999).rand(10000,99999);
         $result=$exchanges->trader()->buy([
             '_symbol'=>'btcusdt',
             '_number'=>'0.001',
             '_price'=>'2000',
+            '_client_id'=>$_client_id,
+        ]);
+        break;
+    }
+    
+    case 392:{
+        $result=$exchanges->trader()->show([
+            '_client_id'=>'abc7083059759',
+        ]);
+        break;
+    }
+    
+    case 393:{
+        $result=$exchanges->trader()->cancel([
+            '_client_id'=>'abc7083059759',
+        ]);
+        break;
+    }
+    
+    
+    case 397:{
+        $_client_id=rand(10000,99999).rand(10000,99999);
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'btcusdt',
+            '_number'=>'0.001',
+            '_price'=>'2000',
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_client_id'=>$_client_id,
+        ]);
+        
+        break;
+    }
+    case 398:{
+        $_client_id=rand(10000,99999).rand(10000,99999);
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'btcusdt',
+            '_number'=>'0.001',
+            '_price'=>'30000',
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_client_id'=>$_client_id,
+        ]);
+        
+        break;
+    }
+    
+    case 399:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'btcusdt',
+            '_number'=>'0.001',
+            '_price'=>'2000',
+        ]);
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_order_id'=>$result['data']['id'],
+        ]);
+        
+        break;
+    }
+    
+    case 400:{
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'btcusdt',
+            '_number'=>'0.001',
+            '_price'=>'30000',
         ]);
         print_r($result);
         

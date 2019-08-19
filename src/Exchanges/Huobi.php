@@ -87,6 +87,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
             return $this->platform_future->contract()->postCancel($data);
         }else{
+            if(isset($data['client-order-id'])) return $this->platform_spot->order()->postSubmitCancelClientOrder($data);
             return $this->platform_spot->order()->postSubmitCancel($data);
         }
     }
@@ -106,6 +107,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
             return $this->platform_future->contract()->postOrderInfo($data);
         }else{
+            if(isset($data['clientOrderId'])) return $this->platform_spot->order()->getClientOrder($data);
             return $this->platform_spot->order()->get($data);
         }
     }

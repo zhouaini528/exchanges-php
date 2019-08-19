@@ -121,6 +121,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':{
                         $map['_order_id']=$data['result']['data'] ?? '';
+                        $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
                         break;
                     }
                 }
@@ -178,6 +179,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':{
                         $map['_order_id']=$data['result']['data'] ?? '';
+                        $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
                         break;
                     }
                 }
@@ -228,12 +230,13 @@ class ResponseTraderMap extends Base implements TraderInterface
         switch ($this->platform){
             case 'huobi':{
                 switch ($this->checkType($data['request']['_symbol'] ?? '')){
-                    case 'spot':{
-                        $map['_order_id']=$data['result']['data'] ?? '';
-                        break;
-                    }
                     case 'future':{
                         $map['_order_id']=$data['result']['data']['successes'] ?? '';
+                        break;
+                    }
+                    case 'spot':{
+                        $map['_order_id']=$data['result']['data'] ?? '';
+                        $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
                         break;
                     }
                 }
@@ -317,6 +320,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $data['result']['data']['field-amount'] == 0 ? $map['_price_avg']=0:$map['_price_avg']=bcdiv(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-amount']),16);
                         $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
                         $map['_filed_amount']=$data['result']['data']['field-cash-amount'];
+                        $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
                         break;
                     }
                     case 'future':{

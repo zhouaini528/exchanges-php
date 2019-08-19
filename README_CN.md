@@ -293,6 +293,7 @@ $exchanges->trader()->show([
 //huobi spot
 $exchanges->trader()->show([
     '_order_id'=>'29897313869',
+    //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
 ]);
 //huobi future
 $exchanges->trader()->show([

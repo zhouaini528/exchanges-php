@@ -34,7 +34,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
                         $map['lever_rate']=$data['lever_rate'] ?? 20;
-                        //$map['contract_type']
                         
                         //市价单与限价单的参数映射
                         if(isset($data['_price'])){
@@ -47,6 +46,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':{
                         $map['account-id']=$data['account-id'] ?? $this->extra;
+                        $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
                         
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
@@ -183,7 +183,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
                         $map['lever_rate']=$data['lever_rate'] ?? 20;
-                        //$map['contract_type']
                         
                         //市价单与限价单的参数映射
                         if(isset($data['_price'])){
@@ -196,6 +195,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':{
                         $map['account-id']=$data['account-id'] ?? $this->extra;
+                        $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
                         
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
@@ -328,6 +328,10 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':{
                         $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                        
+                        $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
+                        if(empty($map['client-order-id'])) unset($map['client-order-id']);
+                        
                         break;
                     }
                 }
@@ -408,6 +412,10 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':{
                         $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                        
+                        $map['clientOrderId']=$data['_client_id'] ?? ($data['clientOrderId'] ?? '');
+                        if(empty($map['clientOrderId'])) unset($map['clientOrderId']);
+                        
                         break;
                     }
                 }
