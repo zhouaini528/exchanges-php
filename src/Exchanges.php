@@ -19,12 +19,11 @@ class Exchanges
     
     protected $platform;
     
-    protected $proxy=false;
-    protected $timeout=60;
-    
     protected $acount;
     protected $market;
     protected $trader;
+    
+    protected $options=[];
     
     
     function __construct(string $exchange,string $key,string $secret,string $extra='',string $host=''){
@@ -40,29 +39,35 @@ class Exchanges
         }
     }
     
+    /**
+     * 
+     * */
     function account(){
         $this->acount=new Account($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
-        $this->acount->setProxy($this->proxy);
-        $this->acount->setTimeOut($this->timeout);
+        $this->acount->setOptions($this->options);
         return $this->acount;
     }
     
+    /**
+    *
+    * */
     function market(){
         $this->market=new Market($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
-        $this->market->setProxy($this->proxy);
-        $this->market->setTimeOut($this->timeout);
+        $this->market->setOptions($this->options);
         return $this->market;
     }
     
+    /**
+    *
+    * */
     function trader(){
         $this->trader=new Trader($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
-        $this->trader->setProxy($this->proxy);
-        $this->trader->setTimeOut($this->timeout);
+        $this->trader->setOptions($this->options);
         return $this->trader;
     }
     
     /**
-     * Support native access
+     * Returns the underlying instance object
      * */
     public function getPlatform(string $type=''){
         if($this->trader!==null) return $this->trader->getPlatform($type);
@@ -73,26 +78,9 @@ class Exchanges
     }
     
     /**
-     * Local development sets the proxy
-     * @param bool|array
-     * $proxy=false Default
-     * $proxy=true  Local proxy http://127.0.0.1:12333
-     *
-     * Manual proxy
-     * $proxy=[
-     'http'  => 'http://127.0.0.1:12333',
-     'https' => 'http://127.0.0.1:12333',
-     'no'    =>  ['.cn']
-     * ]
+     * Support for more request Settings
      * */
-    function setProxy($proxy=true){
-        $this->proxy=$proxy;
-    }
-    
-    /**
-     * Set the request timeout to 60 seconds by default
-     * */
-    function setTimeOut($timeout=60){
-        $this->timeout=$timeout;
+    function setOptions(array $options=[]){
+        $this->options=$options;
     }
 }

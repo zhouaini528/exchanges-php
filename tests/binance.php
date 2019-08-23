@@ -17,11 +17,22 @@ $secret=$keysecret['binance']['secret'];
 
 $exchanges=new Exchanges('binance',$key,$secret);
 
-//If you are developing locally and need an agent, you can set this
-$exchanges->setProxy();
-
-//Set the request timeout to 60 seconds by default
-$exchanges->setTimeOut(5);
+//Support for more request Settings
+$exchanges->setOptions([
+    //Set the request timeout to 60 seconds by default
+    'timeout'=>10,
+    
+    //If you are developing locally and need an agent, you can set this
+    'proxy'=>true,
+    //More flexible Settings
+    /* 'proxy'=>[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     ], */
+    //Close the certificate
+    //'verify'=>false,
+]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
@@ -70,7 +81,7 @@ switch ($action){
     case 100:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
-            '_number'=>'0.01',
+            '_number'=>'10',
         ]);
         break;
     }
@@ -189,16 +200,16 @@ switch ($action){
     //******************************Complete spot flow
     case 400:{
         $_client_id=md5(rand(1,999999999));//custom ID
-        $result=$exchanges->trader()->buy([
-            '_symbol'=>'BTCUSDT',
-            '_number'=>'0.01',
-            '_price'=>'5000',
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'ETHUSDT',
+            '_number'=>'0.1',
+            '_price'=>'500',
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
         
        $result=$exchanges->trader()->cancel([
-            '_symbol'=>'BTCUSDT',
+            '_symbol'=>'ETHUSDT',
             //'_order_id'=>$result['orderId'],
             '_client_id'=>$_client_id,
         ]);

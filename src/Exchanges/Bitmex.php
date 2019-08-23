@@ -112,28 +112,9 @@ class Bitmex
     }
     
     /**
-     * Local development sets the proxy
-     * @param bool|array
-     * $proxy=false Default
-     * $proxy=true  Local proxy http://127.0.0.1:12333
-     *
-     * Manual proxy
-     * $proxy=[
-     'http'  => 'http://127.0.0.1:12333',
-     'https' => 'http://127.0.0.1:12333',
-     'no'    =>  ['.cn']
-     * ]
-     *
-     * @param mixed
+     * Support for more request Settings
      * */
-    function setProxy($proxy=true){
-        $this->platform->setProxy($proxy);
-    }
-    
-    /**
-     * Set the request timeout to 60 seconds by default
-     * */
-    function setTimeOut($timeout=60){
-        $this->platform->setTimeOut($timeout);
+    function setOptions(array $options=[]){
+        $this->platform->setOptions($options);
     }
 }

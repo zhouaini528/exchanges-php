@@ -197,32 +197,11 @@ class Okex
     }
     
     /**
-     * Local development sets the proxy
-     * @param bool|array
-     * $proxy=false Default
-     * $proxy=true  Local proxy http://127.0.0.1:12333
-     *
-     * Manual proxy
-     * $proxy=[
-     'http'  => 'http://127.0.0.1:12333',
-     'https' => 'http://127.0.0.1:12333',
-     'no'    =>  ['.cn']
-     * ]
-     *
-     * @param mixed
+     * Support for more request Settings
      * */
-    function setProxy($proxy=true){
-        $this->platform_future->setProxy($proxy);
-        $this->platform_spot->setProxy($proxy);
-        $this->platform_swap->setProxy($proxy);
-    }
-    
-    /**
-     * Set the request timeout to 60 seconds by default
-     * */
-    function setTimeOut($timeout=60){
-        $this->platform_future->setTimeOut($timeout);
-        $this->platform_spot->setTimeOut($timeout);
-        $this->platform_swap->setTimeOut($timeout);
+    function setOptions(array $options=[]){
+        $this->platform_future->setOptions($options);
+        $this->platform_spot->setOptions($options);
+        $this->platform_swap->setOptions($options);
     }
 }

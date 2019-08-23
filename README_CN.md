@@ -82,15 +82,22 @@ Buy Sell 方法默认有[2秒](https://github.com/zhouaini528/exchanges-php/blob
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
-支持本地开发代理设置 [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
+支持更多的请求设置 [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
 ```php
-//如果您正在本地开发需要代理，您可以这样设置
-$exchanges->setProxy();
-
-//更灵活的代理设置
-$exchanges->setProxy([
-    'http'  => 'http://127.0.0.1:12333',
-    'https' => 'http://127.0.0.1:12333',
+$exchanges->setOptions([
+    //设置请求超时时间，默认60s
+    'timeout'=>10,
+    
+    //如果您正在本地开发需要代理，您可以这样设置
+    'proxy'=>true,
+    //更灵活的代理设置
+    /* 'proxy'=>[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     ], */
+    //是否开启证书
+    //'verify'=>false,
 ]);
 ```
 

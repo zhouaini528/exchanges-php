@@ -19,11 +19,22 @@ $account_id=$keysecret['huobi']['account_id'];
 
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 
-//If you are developing locally and need an agent, you can set this
-$exchanges->setProxy();
-
-//Set the request timeout to 60 seconds by default
-$exchanges->setTimeOut(5);
+//Support for more request Settings
+$exchanges->setOptions([
+    //Set the request timeout to 60 seconds by default
+    'timeout'=>10,
+    
+    //If you are developing locally and need an agent, you can set this
+    'proxy'=>true,
+    //More flexible Settings
+    /* 'proxy'=>[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     ], */
+    //Close the certificate
+    //'verify'=>false,
+]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern

@@ -18,11 +18,22 @@ $passphrase=$keysecret['ok']['passphrase'];
 
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase);
 
-//If you are developing locally and need an agent, you can set this
-$exchanges->setProxy();
-
-//Set the request timeout to 60 seconds by default
-$exchanges->setTimeOut(5);
+//Support for more request Settings
+$exchanges->setOptions([
+    //Set the request timeout to 60 seconds by default
+    'timeout'=>10,
+    
+    //If you are developing locally and need an agent, you can set this
+    'proxy'=>true,
+    //More flexible Settings
+    /* 'proxy'=>[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     ], */
+    //Close the certificate
+    //'verify'=>false,
+]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
 if(empty($action)) $action=intval($argv[1]);//cli pattern
@@ -80,8 +91,9 @@ switch ($action){
     //***********Spot Market
     case 100:{
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'BTC-USDT',
-            '_price'=>'10',
+            //'_symbol'=>'DASH-USDT',
+            '_symbol'=>'ADA-USDT',
+            '_price'=>'0.5',
             //'_client_id'=>'custom ID',
         ]);
         break;
@@ -98,7 +110,7 @@ switch ($action){
     
     case 102:{
         $result=$exchanges->trader()->sell([
-            '_symbol'=>'BTC-USDT',
+            '_symbol'=>'DASH-USDT',
             '_number'=>'0.001',
             //'_client_id'=>'custom ID',
         ]);

@@ -79,15 +79,22 @@ System error unified parameter return [binance](https://github.com/zhouaini528/e
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
-Local development sets the proxy [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
+Support for more request Settings [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
 ```php
-//If you are developing locally and need an agent, you can set this
-$exchanges->setProxy();
-
-//More flexible Settings
-$exchanges->setProxy([
-    'http'  => 'http://127.0.0.1:12333',
-    'https' => 'http://127.0.0.1:12333',
+$exchanges->setOptions([
+    //Set the request timeout to 60 seconds by default
+    'timeout'=>10,
+    
+    //If you are developing locally and need an agent, you can set this
+    'proxy'=>true,
+    //More flexible Settings
+    /* 'proxy'=>[
+     'http'  => 'http://127.0.0.1:12333',
+     'https' => 'http://127.0.0.1:12333',
+     'no'    =>  ['.cn']
+     ], */
+    //Close the certificate
+    //'verify'=>false,
 ]);
 ```
 
