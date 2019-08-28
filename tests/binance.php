@@ -63,12 +63,17 @@ switch ($action){
     }
     case 2:{
         //If you are developing locally and need an agent, you can set this
-        $exchanges->setProxy();
+        $exchanges->setOptions([
+            'proxy'=>true,
+        ]);
         
         //More flexible Settings
-        $exchanges->setProxy([
-            'http'  => 'http://127.0.0.1:12333',
-            'https' => 'http://127.0.0.1:12333',
+        $exchanges->setOptions([
+            'proxy'=>[
+                'http'  => 'http://127.0.0.1:12333',
+                'https' => 'http://127.0.0.1:12333',
+                'no'    =>  ['.cn']
+            ],
         ]);
         
         //Get current account information.

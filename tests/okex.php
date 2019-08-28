@@ -69,13 +69,14 @@ switch ($action){
         $exchanges->setOptions([
             'proxy'=>true,
         ]);
+        
         //More flexible Settings
         $exchanges->setOptions([
             'proxy'=>[
-             'http'  => 'http://127.0.0.1:12333',
-             'https' => 'http://127.0.0.1:12333',
-             'no'    =>  ['.cn']
-             ], 
+                'http'  => 'http://127.0.0.1:12333',
+                'https' => 'http://127.0.0.1:12333',
+                'no'    =>  ['.cn']
+            ],
         ]);
         
         //Get the information of holding positions of a contract.
