@@ -9,17 +9,15 @@
 
 ### 其他交易所API
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
+[Exchanges](https://github.com/zhouaini528/exchanges-php) 它包含以下所有交易所，强烈推荐使用该SDK。
 
-[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/okex-php/tree/master/tests)
+[Bitmex](https://github.com/zhouaini528/bitmex-php)
 
-[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/huobi-php/tree/master/tests)
+[Okex](https://github.com/zhouaini528/okex-php)
 
-[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/binance-php/tree/master/tests)
+[Huobi](https://github.com/zhouaini528/huobi-php)
 
-[Exchanges](https://github.com/zhouaini528/exchanges-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)是以上所有交易所集合成的SDK
-
-[Exchanges Tools](https://github.com/dytf/exchanges-tools) 模拟数据测试工具
+[Binance](https://github.com/zhouaini528/binance-php)
 
 #### 安装方式
 ```
