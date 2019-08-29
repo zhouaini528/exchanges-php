@@ -11,15 +11,15 @@ Many interfaces are not yet complete, and users can continue to extend them base
 
 ### Other exchanges API
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php) [More Tests](https://github.com/zhouaini528/bitmex-php/tree/master/tests)
+[Exchanges](https://github.com/zhouaini528/exchanges-php) It includes all of the following exchanges and is highly recommended.
 
-[Okex](https://github.com/zhouaini528/okex-php) [More Tests](https://github.com/zhouaini528/okex-php/tree/master/tests)
+[Bitmex](https://github.com/zhouaini528/bitmex-php)
 
-[Huobi](https://github.com/zhouaini528/huobi-php) [More Tests](https://github.com/zhouaini528/huobi-php/tree/master/tests)
+[Okex](https://github.com/zhouaini528/okex-php)
 
-[Binance](https://github.com/zhouaini528/binance-php) [More Tests](https://github.com/zhouaini528/binance-php/tree/master/tests)
+[Huobi](https://github.com/zhouaini528/huobi-php)
 
-[Exchanges](https://github.com/zhouaini528/exchanges-php) [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests) This is all the aggregation
+[Binance](https://github.com/zhouaini528/binance-php)
 
 #### Install
 ```
