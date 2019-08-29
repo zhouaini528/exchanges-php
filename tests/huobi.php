@@ -95,7 +95,9 @@ switch ($action){
         //get $account_id,It's for buy and sell
         //recommended save database $account_id
         $exchanges=new Exchanges('huobi',$key,$secret);
-        $exchanges->setProxy();
+        $exchanges->setOptions([
+            'proxy'=>true,
+        ]);
         $result=$exchanges->getPlatform('spot')->account()->get();
         break;
     }
