@@ -1,7 +1,7 @@
 {
     "name": "linwj/exchanges",
     "type": "library",
-    "description": "It's a simple integration of the world's top five exchanges",
+    "description": "This is a simple integration SDK for multiple exchanges",
     "license": "MIT",
     "keywords": ["bitmex", "binance", "okex", "huobi","exchange"],
     "authors": [
