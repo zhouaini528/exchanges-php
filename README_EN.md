@@ -1,9 +1,11 @@
-### 前言
-这SDK集合了目前交易量最大的多家交易所的API，让开发人员只关注业务层。它是基于[Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php)等等，这些底层API再次封装。它的优点同时支持多平台，支持统一参数输入与输出，也支持原生参数输入，简单的量化交易完全满足你的需求。就算你有特殊的需求你可以单独通过该方法[getPlatform()](https://github.com/zhouaini528/exchanges-php/blob/master/README_CN.md#%E6%94%AF%E6%8C%81%E6%9B%B4%E5%BA%95%E5%B1%82api%E5%AF%B9%E8%B1%A1%E8%AF%B7%E6%B1%82)返回实例，调用底层API。
+### Introduction
+This SDK brings together the APIs of the many exchanges currently trading the most, allowing developers to focus only on the business layer. It is based on [Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php) and so on, and these underlying APIs are encapsulated again. Its advantages support multiple platforms at the same time, support unified parameter input and output, also support native parameter input, and simple quantitative trading to fully meet your needs. Even if you have special requirements, you can use the method [getPlatform()](https://github.com/zhouaini528/exchanges-php/blob/master/README.md#the-original-object) to return the instance and call the underlying API.
 
-### 其他交易所API
+[中文文档](https://github.com/zhouaini528/exchanges-php/blob/master/README.md)
 
-[Exchanges](https://github.com/zhouaini528/exchanges-php) 它包含以下所有交易所，强烈推荐使用该SDK。
+### Other exchanges API
+
+[Exchanges](https://github.com/zhouaini528/exchanges-php) It includes all of the following exchanges and is highly recommended.
 
 [Bitmex](https://github.com/zhouaini528/bitmex-php)
 
@@ -13,53 +15,53 @@
 
 [Binance](https://github.com/zhouaini528/binance-php)
 
-#### 安装方式
+#### Install
 ```
 composer require linwj/exchanges:dev-master
 
-如果安装中出问题composer.json 添加 "minimum-stability":"dev"
+If something goes wrong add composer.json "minimum-stability":"dev"
 ```
 
-#### 交易所初始化
+#### Exchanges initialization
 ```php
 $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 ```
-[火币获取$account_id方式](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L101)
+[Get Huobi Spot $account_id](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L101)
 
-#### 统一参数返回
+#### Uniform parameter return
 
-所有提交参数与返回参数只要第一个字符为下划线的"_"全部为自定义参数。
+All submitted parameters and return as long as the first character for the underlined ` _ ` all for custom parameters.
 
 ```php
 /**
- * Buy()   Sell()   Show() 三个方法都返回相同参数
+ * Buy()   Sell()   Show() Uniform parameter return
  * @return [
- *      ***返回原始数据
+ *      ***Return to original data
  *      ...
  *      ...
- *      ***返回自定义数据，带'_'下划线的是统一返回参数格式。
- *      _status=>NEW 进行中   PART_FILLED 部分成交   FILLED 完全成交  CANCELING:撤销中   CANCELLED 已撤销   FAILURE 下单失败
- *      _filled_qty=>已交易完成数量
- *      _price_avg=>成交均价
- *      _filed_amount=>交易价格
- *      _order_id=>系统ID
- *      _client_id=>自定义ID
+ *      ***Returns custom data in a uniform return parameter format with '_' underscore
+ *      _status=>NEW  PART_FILLED  FILLED  CANCELING  CANCELLED  FAILURE
+ *      _filled_qty=>Number of transactions completed
+ *      _price_avg=>Average transaction price
+ *      _filed_amount=>transaction price
+ *      _order_id=>system ID
+ *      _client_id=>custom ID
  * ]
  *
  * */
  
  /**
- * 系统错误
+ * System error
  * http request code 400 403 500 503
  * @return [
  *      _error=>[
- *          ***返回原始数据
+ *          ***Return to original data
  *          ...
  *          ...
- *          ***返回自定义数据，带'_'下划线的是统一返回参数格式。
+ *          ***Returns custom data in a uniform return parameter format with '_' underscore
  *          _method => POST
  *          _url => https://testnet.bitmex.com/api/v1/order
  *          _httpcode => 400
@@ -67,45 +69,41 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
  * ]
  * */
 ```
-Buy Sell 方法默认有[2秒](https://github.com/zhouaini528/exchanges-php/blob/master/src/Config/Exchanges.php)的等待查询，因为交易所是撮合交易所以查询需要等待。
+Buy and sell query uniform parameter return [detail](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L59)
 
-买卖查询统一参数返回 [详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
-
-系统错误统一参数返回 
-[binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
+System error unified parameter return [binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
 [okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
 
-支持更多的请求设置 [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
+Support for more request Settings [More](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L53)
 ```php
 $exchanges->setOptions([
-    //设置请求超时时间，默认60s
+    //Set the request timeout to 60 seconds by default
     'timeout'=>10,
     
-    //如果您正在本地开发需要代理，您可以这样设置
+    //If you are developing locally and need an agent, you can set this
     'proxy'=>true,
-    //更灵活的代理设置
+    //More flexible Settings
     /* 'proxy'=>[
      'http'  => 'http://127.0.0.1:12333',
      'https' => 'http://127.0.0.1:12333',
      'no'    =>  ['.cn']
      ], */
-    //是否开启证书
+    //Close the certificate
     //'verify'=>false,
 ]);
 ```
 
-#### 现货交易
-##### 市价交易
+#### Spot Trader
+##### Market
 ```php
 //binance
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTCUSDT',
     '_number'=>'0.01',
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'BTCUSDT',
     'type'=>'MARKET',
@@ -113,12 +111,11 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_price'=>'10',
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'type'=>'market',
@@ -126,12 +123,11 @@ $exchanges->trader()->buy([
 ]);
 
 //huobi
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'btcusdt',
     '_price'=>'10',
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
@@ -140,16 +136,15 @@ $exchanges->trader()->buy([
 ]);
 
 ```
-##### 限价交易
+##### Limit
 ```php
 //binance
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTCUSDT',
     '_number'=>'0.01',
     '_price'=>'2000',
 ]); 
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'BTCUSDT',
     'type'=>'LIMIT',
@@ -159,13 +154,12 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'btc-usdt',
     'price'=>'100',
@@ -173,13 +167,12 @@ $exchanges->trader()->buy([
 ]);
 
 //huobi
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'btcusdt',
     '_number'=>'0.001',
     '_price'=>'2000',
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
@@ -188,16 +181,15 @@ $exchanges->trader()->buy([
     'price'=>'2001',
 ]);
 ```
-#### 期货交易
-##### 市价交易
+#### Future Trader
+##### Market
 ```php
 //bitmex
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
     '_number'=>'1',
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'XBTUSD',
     'orderQty'=>'1',
@@ -205,13 +197,12 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
     '_entry'=>true,//open long
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
     'size'=>1,
@@ -222,16 +213,15 @@ $exchanges->trader()->buy([
     'order_type'=>0,
 ]);
 ```
-##### 限价交易
+##### Limit
 ```php
 //bitmex
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
     '_number'=>'1',
     '_price'=>100
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'symbol'=>'XBTUSD',
     'price'=>'100',
@@ -240,14 +230,13 @@ $exchanges->trader()->buy([
 ]);
 
 //okex
-//统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
     '_price'=>'2000',
     '_entry'=>true,//open long
 ]);
-//也支持原生参数，与上等同
+//Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
     'size'=>1,
@@ -259,7 +248,7 @@ $exchanges->trader()->buy([
 ]);
 ```
 
-#### 订单查询
+#### Get Order Details
 ```php
 //binance
 $exchanges->trader()->show([
@@ -306,7 +295,7 @@ $exchanges->trader()->show([
 
 ```
 
-#### 账号余额与仓位获取
+#### Get accounts or positions
 ```php
 //binance
 //Get current account information.
@@ -315,7 +304,7 @@ $exchanges->account()->get();
 //bitmex
 //bargaining transaction
 $exchanges->account()->get([
-    //不填写默认返回所有仓位
+    //Default return all
     //'_symbol'=>'XBTUSD'
 ]);
 
@@ -347,10 +336,7 @@ $exchanges->account()->get([
 ]);
 ```
 
-#### 支持更底层API对象请求
-使用前建议先去看看这些[Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php)底层已经封装过的SDK。
-
-以下是调用底层API的发起一个新的订单实例
+#### Support for original parameters
 ```php
 //binance
 $exchanges->getPlatform()->trade()->postOrder([
@@ -420,9 +406,6 @@ $exchanges->getPlatform('future')->contract()->postOrder([
 
 ```
 
+[More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)
 
-更多用例请查看 [more](https://github.com/zhouaini528/exchanges-php/tree/master/tests)
-
-更多API请查看 [more](https://github.com/zhouaini528/exchanges-php/tree/master/src/Api)
-
-
+[More API](https://github.com/zhouaini528/exchanges-php/tree/master/src/Api)
