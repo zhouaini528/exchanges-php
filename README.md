@@ -1,5 +1,5 @@
 ### Introduction
-This SDK brings together the APIs of the most traded exchanges currently, allowing developers to focus only on the business layer. It is currently only a simple support for purchases, sales, inquiries, account balances and positions. Later authors will improve more APIs.
+This SDK brings together the APIs of the few exchanges currently trading the most, allowing developers to focus only on the business layer. It currently only supports sales, inquiries, account balances and positions, and there will be more unified input and output APIs later.
 
 This SDK is based on the basic API of [Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php). It has the advantages of supporting multiple platforms, supporting unified parameter input and output, and supporting native parameter input. Simple quantitative trading fully meets your needs. Even if you have special requirements, you can use the [getPlatform()](https://github.com/zhouaini528/exchanges-php/blob/master/README.md#the-original-object) method to return an instance and call the underlying API.
 
