@@ -15,6 +15,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Binance](https://github.com/zhouaini528/binance-php)
 
+[Kucoin](https://github.com/zhouaini528/kucoin-php)
+
 #### Install
 ```
 composer require linwj/exchanges:dev-master
