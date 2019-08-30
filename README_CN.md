@@ -15,6 +15,8 @@
 
 [Binance](https://github.com/zhouaini528/binance-php)
 
+[Kucoin](https://github.com/zhouaini528/kucoin-php)
+
 #### 安装方式
 ```
 composer require linwj/exchanges:dev-master
