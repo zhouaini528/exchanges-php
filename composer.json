@@ -3,7 +3,7 @@
     "type": "library",
     "description": "This is a simple integration SDK for multiple exchanges",
     "license": "MIT",
-    "keywords": ["bitmex", "binance", "okex", "huobi","exchange"],
+    "keywords": ["exchange","bitmex", "binance", "okex", "huobi","kucoin","kumex"],
     "authors": [
         {
             "name": "linwenjun",
@@ -20,6 +20,7 @@
         "linwj/bitmex":"*",
         "linwj/okex":"*",
         "linwj/huobi":"*",
-        "linwj/binance":"*"
+        "linwj/binance":"*",
+        "linwj/kucoin":"*"
     }
 }

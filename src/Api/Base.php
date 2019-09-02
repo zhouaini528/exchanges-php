@@ -11,6 +11,7 @@ use Lin\Exchange\Exchanges\Okex;
 use Lin\Exchange\Exchanges\Binance;
 use Lin\Exchange\Exceptions\Exception;
 use Lin\Exchange\Map\Map;
+use Lin\Exchange\Exchanges\Ku;
 
 
 class Base
@@ -40,6 +41,10 @@ class Base
             }
             case 'binance':{
                 $this->platform=new Binance($key,$secret,$host);
+                break;
+            }
+            case 'kucoin':{
+                $this->platform=new Ku($key,$secret,$extra,$host);
                 break;
             }
             default:{
