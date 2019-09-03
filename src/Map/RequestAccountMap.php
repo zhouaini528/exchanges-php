@@ -67,6 +67,23 @@ class RequestAccountMap extends Base implements AccountInterface
             case 'binance':{
                 break;
             }
+            case 'kucoin':{
+                $temp=$data['_symbol'] ?? ($data['accountId'] ?? ($data['symbol'] ?? ''));
+                
+                if(!empty($temp)){
+                    switch ($this->checkType()){
+                        case 'spot':{
+                            $map['accountId']=$temp;
+                            break;
+                        }
+                        case 'future':{
+                            $map['symbol']=$temp;
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
         }
         
         //检测是否原生参数

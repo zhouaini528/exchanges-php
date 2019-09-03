@@ -158,6 +158,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_symbol']=$data['result']['symbol'] ?? '';
                 break;
             }
+            case 'kucoin':{
+                $map['_order_id']=$data['result']['data']['orderId'] ?? '';
+                if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
+                break;
+            }
         }
 
         return array_merge($data['result'],$map);
@@ -216,6 +221,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_symbol']=$data['result']['symbol'] ?? '';
                 break;
             }
+            case 'kucoin':{
+                $map['_order_id']=$data['result']['data']['orderId'] ?? '';
+                if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
+                break;
+            }
         }
 
         return array_merge($data['result'],$map);
@@ -270,6 +280,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 $map['_status']=$this->binance_status[$data['result']['status']];
 
+                break;
+            }
+            case 'kucoin':{
+                $map['_order_id']=$data['request']['_order_id'] ?? '';
+                if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
                 break;
             }
         }
@@ -385,6 +400,20 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $data['result']['executedQty']==0 ? $map['_price_avg']=0 : $map['_price_avg']=bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
                 $map['_status']=$this->binance_status[$data['result']['status']];
                 $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];
+                break;
+            }
+            case 'kucoin':{
+                switch ($this->checkType()){
+                    case 'future':{
+                        break;
+                    }
+                    case 'spot':{
+                        $map['_order_id']=$data['result']['data']['id'] ?? '';
+                        $map['_client_id']=$data['result']['data']['clientOid'] ?? '';
+                        if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
+                        break;
+                    }
+                }
                 break;
             }
         }

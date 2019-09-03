@@ -82,134 +82,137 @@ switch ($action){
         break;
     }
     
-    //***********Trader Market
-    case 100:{
-        $result=$kucoin->trader()->buy([
-            '_symbol'=>'XBTUSD',
+    case 2:{
+        $result=$kumex->trader()->buy([
+            '_symbol'=>'exception testing',
             '_number'=>'1',
-            //'_client_id'=>'custom ID',
-        ]);
-        break;
-    }
-    case 101:{
-        $result=$kucoin->trader()->sell([
-            '_symbol'=>'XBTUSD',
-            '_number'=>'1',
-            //'_client_id'=>'custom ID',
         ]);
         break;
     }
     
-    case 110:{
+    //***********Trader Market
+    case 100:{
+        $client_id=rand(10000,99999).rand(10000,99999);
+        $result=$kucoin->trader()->buy([
+            '_client_id'=>$client_id,
+            '_symbol'=>'ETH-BTC',
+            '_number'=>'0.001',
+        ]);
+        print_r($result);
+        
         //The original parameters
         $result=$kucoin->trader()->buy([
-            'symbol'=>'XBTUSD',
-            'orderQty'=>'1',
-            'ordType'=>'Market',
+            'clientOid'=>$client_id,
+            'symbol'=>'ETH-BTC',
+            'size'=>'0.001',
+            'type'=>'market'
+        ]);
+        
+        break;
+    }
+    case 101:{
+        $client_id=rand(10000,99999).rand(10000,99999);
+        $result=$kucoin->trader()->sell([
+            '_client_id'=>$client_id,
+            '_symbol'=>'ETH-BTC',
+            '_number'=>'0.001',
+        ]);
+        print_r($result);
+        
+        //The original parameters
+        $result=$kucoin->trader()->sell([
+            'clientOid'=>$client_id,
+            'symbol'=>'ETH-BTC',
+            'size'=>'0.001',
+            'type'=>'market'
         ]);
         break;
     }
-    case 111:{
-        //The original parameters
-        $result=$kucoin->trader()->sell([
-            'symbol'=>'XBTUSD',
-            'orderQty'=>'1',
-            'ordType'=>'Market',
+    
+    //Get Account
+    case 102:{
+        $result=$kucoin->account()->get();
+        print_r($result);
+        
+        $result=$kucoin->account()->get([
+            '_symbol'=>'5d5cbaa1ef83c753ca6ddd7f',
+        ]);
+        break;
+    }
+    
+    case 103:{
+        $result=$kucoin->trader()->show([
+            '_order_id'=>'5d6e0d26ef83c7622be82eb0',
         ]);
         break;
     }
     
     //***********Trader Limit
     case 200:{
+        $client_id=rand(10000,99999).rand(10000,99999);
         $result=$kucoin->trader()->buy([
-            '_symbol'=>'XBTUSD',
-            '_number'=>'1',
-            '_price'=>100
-            //'_client_id'=>'custom ID',
+            '_client_id'=>$client_id,
+            '_symbol'=>'ETH-BTC',
+            '_number'=>'0.001',
+            '_price'=>'0.00001',
         ]);
+        print_r($result);
+        
+        //The original parameters
+        $result=$kucoin->trader()->buy([
+            'clientOid'=>$client_id,
+            'symbol'=>'ETH-BTC',
+            'size'=>'0.001',
+            'type'=>'limit',
+            'price'=>'0.00001'
+        ]);
+        
         break;
     }
     case 201:{
+        $client_id=rand(10000,99999).rand(10000,99999);
         $result=$kucoin->trader()->sell([
-            '_symbol'=>'XBTUSD',
-            '_number'=>'1',
-            '_price'=>999999
-            //'_client_id'=>'custom ID',
+            '_client_id'=>$client_id,
+            '_symbol'=>'ETH-BTC',
+            '_number'=>'0.001',
+            '_price'=>'1',
         ]);
-        break;
-    }
-    
-    case 211:{
-        //The original parameters
-        $result=$kucoin->trader()->buy([
-            'symbol'=>'XBTUSD',
-            'price'=>'100',
-            'orderQty'=>'1',
-            'ordType'=>'Limit',
-        ]);
-        break;
-    }
-    
-    case 212:{
+        print_r($result);
+        
         //The original parameters
         $result=$kucoin->trader()->sell([
-            'symbol'=>'XBTUSD',
-            'price'=>'9999',
-            'orderQty'=>'1',
-            'ordType'=>'Limit',
+            'clientOid'=>$client_id,
+            'symbol'=>'ETH-BTC',
+            'size'=>'0.001',
+            'type'=>'limit',
+            'price'=>'1.1'
         ]);
         break;
     }
     
-    case 300:{
-        $result=$kucoin->trader()->show([
-            '_symbol'=>'XBTUSD',
-            '_order_id'=>'7d03ac2a-b24d-f48c-95f4-2628e6411927',
-            //'_client_id'=>'custom ID',
-        ]);
-        break;
-    }
-    
-    case 301:{
-        //The original parameters
-        $result=$kucoin->trader()->show([
-            'symbol'=>'XBTUSD',
-            'orderID'=>'807772e6-fc86-ddcc-9237-a3d8b36e6bfe',
-        ]);
-        break;
-    }
-    
-    case 302:{
-        //The original parameters
+    case 202:{
         $result=$kucoin->trader()->cancel([
-            'symbol'=>'XBTUSD',
-            'orderID'=>'1bffaa7f-c945-3b78-e10a-37c87bff6152',
+            '_order_id'=>'5d6e0d8fef83c7622be83320',
         ]);
+        
+        //The original parameters
         break;
     }
     
-    case 303:{
-        //bargaining transaction
-        $result=$kucoin->account()->get([
-            '_symbol'=>'XBTUSD'
-        ]);
-        break;
-    }
     
     //***********Complete flow
     case 400:{
-        $result=$kucoin->trader()->buy([
-            '_symbol'=>'XBTUSD',
-            '_number'=>'1',
-            '_price'=>100
-            //'_client_id'=>'custom ID',
+        $client_id=rand(10000,99999).rand(10000,99999);
+        $result=$kucoin->trader()->sell([
+            '_client_id'=>$client_id,
+            '_symbol'=>'ETH-BTC',
+            '_number'=>'0.001',
+            '_price'=>'1',
         ]);
         print_r($result);
         
         $result=$kucoin->trader()->cancel([
-            '_symbol'=>'XBTUSD',
             '_order_id'=>$result['_order_id'],
-            //'_client_id'=>'custom ID',
         ]);
         
         break;
@@ -246,6 +249,28 @@ switch ($action){
     
     //***********Kumex
     case 600:{
+        $client_id=rand(10000,99999).rand(10000,99999);
+        $result=$kumex->trader()->buy([
+            '_client_id'=>$client_id,
+            '_symbol'=>'XBTUSDM',
+            '_number'=>'0.001',
+        ]);
+        print_r($result);
+        die;
+        
+        //The original parameters
+        $result=$kumex->trader()->buy([
+            'clientOid'=>$client_id,
+            'symbol'=>'XBTUSDM',
+            'size'=>'0.001',
+            'type'=>'market'
+        ]);
+        break;
+    }
+    
+    
+    //The original object，
+    case 700:{
         $clientOid=rand(10000,99999).rand(10000,99999);
         
         $result=$kumex->getPlatform()->order()->post([
@@ -269,6 +294,18 @@ switch ($action){
         $result=$kumex->getPlatform()->order()->delete([
             'order-id'=>$result['data']['id'],
         ]);
+        break;
+    }
+    
+    //Get Position
+    case 701:{
+        $result=$kumex->account()->get();
+        print_r($result);
+        
+        $result=$kumex->account()->get([
+            '_symbol'=>'XBTUSDM',
+        ]);
+        
         break;
     }
     

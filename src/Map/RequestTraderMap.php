@@ -153,6 +153,35 @@ class RequestTraderMap extends Base implements TraderInterface
                 
                 break;
             }
+            case 'kucoin':{
+                $map['clientOid']=$data['_client_id'] ?? $data['clientOid'];
+                $map['side']='buy';
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                
+                
+                switch ($this->checkType()){
+                    case 'future':{
+                        break;
+                    }
+                    case 'spot':{
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['price']=$data['_price'] ?? $data['price'];
+                            $map['size']=$data['_number'] ?? $data['size'];
+                            $map['type']='limit';
+                        }else{
+                            if(isset($data['_number'])) $map['size']=$data['_number'];
+                            if(isset($data['_price'])) $map['funds']=$data['_price'];
+                            $map['type']='market';
+                        }
+                        break;
+                    }
+                }
+                
+                //支持原生参数
+                $data['side']=$map['side'];
+                break;
+            }
         }
         
         //检测是否原生参数
@@ -304,6 +333,26 @@ class RequestTraderMap extends Base implements TraderInterface
                 
                 break;
             }
+            case 'kucoin':{
+                $map['clientOid']=$data['_client_id'] ?? $data['clientOid'];
+                $map['side']='sell';
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                
+                //市价单与限价单的参数映射
+                if(isset($data['_number']) && isset($data['_price'])){
+                    $map['price']=$data['_price'] ?? $data['price'];
+                    $map['size']=$data['_number'] ?? $data['size'];
+                    $map['type']='limit';
+                }else{
+                    if(isset($data['_number'])) $map['size']=$data['_number'];
+                    if(isset($data['_price'])) $map['funds']=$data['_price'];
+                    $map['type']='market';
+                }
+                
+                //支持原生参数
+                $data['side']=$map['side'];
+                break;
+            }
         }
         
         //检测是否原生参数
@@ -358,6 +407,10 @@ class RequestTraderMap extends Base implements TraderInterface
                 if(empty($map['orderId'])) unset($map['orderId']);
                 if(empty($map['origClientOrderId'])) unset($map['origClientOrderId']);
                 
+                break;
+            }
+            case 'kucoin':{
+                $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
                 break;
             }
         }
@@ -442,6 +495,10 @@ class RequestTraderMap extends Base implements TraderInterface
                 if(empty($map['orderId'])) unset($map['orderId']);
                 if(empty($map['origClientOrderId'])) unset($map['origClientOrderId']);
                 
+                break;
+            }
+            case 'kucoin':{
+                $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
                 break;
             }
         }

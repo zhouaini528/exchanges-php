@@ -64,6 +64,11 @@ class Base
             case 'binance':{
                 break;
             }
+            case 'kucoin':{
+                if(stripos($this->host,'kumex')!==false){
+                    return 'future';
+                }
+            }
         }
         
         return 'spot';

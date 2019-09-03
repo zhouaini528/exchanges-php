@@ -31,6 +31,9 @@ class ResponseAccountMap extends Base implements AccountInterface
             case 'binance':{
                 break;
             }
+            case 'kucoin':{
+                break;
+            }
         }
         
         return array_merge($data['result'],$map);
