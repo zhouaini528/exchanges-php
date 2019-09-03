@@ -59,24 +59,23 @@ switch ($action){
     //exception testing
     case 1:{
         $result=$kucoin->trader()->buy([
+            '_client_id'=>'exception testing',
             '_symbol'=>'exception testing',
-            '_number'=>'1',
+            '_number'=>'exception testing',
         ]);
         
         /*
-         Array
+        Array
         (
             [_error] => Array
                 (
-                    [error] => Array
-                        (
-                            [message] => symbol is invalid
-                            [name] => HTTPError
-                        )
+                    [code] => 400000
+                    [msg] => Bad Request
                     [_method] => POST
-                    [_url] => https://testnet.bitmex.com/api/v1/order
+                    [_url] => https://openapi-sandbox.kucoin.com/api/v1/orders
                     [_httpcode] => 400
                 )
+        
         )
          */
         break;
@@ -84,8 +83,9 @@ switch ($action){
     
     case 2:{
         $result=$kumex->trader()->buy([
+            '_client_id'=>'exception testing',
             '_symbol'=>'exception testing',
-            '_number'=>'1',
+            '_number'=>'exception testing',
         ]);
         break;
     }

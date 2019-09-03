@@ -30,6 +30,7 @@ $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
+$exchanges=new Exchanges('kucoin',$key,$secret,$passphrase,$host);
 ...
 ...
 
