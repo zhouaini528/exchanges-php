@@ -161,6 +161,16 @@ class RequestTraderMap extends Base implements TraderInterface
                 
                 switch ($this->checkType()){
                     case 'future':{
+                        $map['leverage']=$data['leverage'] ?? 20;
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['price']=$data['_price'] ?? $data['price'];
+                            $map['size']=$data['_number'] ?? $data['size'];
+                            $map['type']='limit';
+                        }else{
+                            $map['size']=$data['_number'] ?? $data['size'];
+                            $map['type']='market';
+                        }
                         break;
                     }
                     case 'spot':{
@@ -410,7 +420,16 @@ class RequestTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'kucoin':{
-                $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
+                switch ($this->checkType()){
+                    case 'future':{
+                        $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                        break;
+                    }
+                    case 'spot':{
+                        $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
+                        break;
+                    }
+                }
                 break;
             }
         }
@@ -498,7 +517,16 @@ class RequestTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'kucoin':{
-                $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
+                switch ($this->checkType()){
+                    case 'future':{
+                        $map['order-id']=$data['_order_id'] ?? ($data['order-id'] ?? '');
+                        break;
+                    }
+                    case 'spot':{
+                        $map['orderId']=$data['_order_id'] ?? ($data['orderId'] ?? '');
+                        break;
+                    }
+                }
                 break;
             }
         }

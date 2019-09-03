@@ -253,24 +253,82 @@ switch ($action){
         $result=$kumex->trader()->buy([
             '_client_id'=>$client_id,
             '_symbol'=>'XBTUSDM',
-            '_number'=>'0.001',
+            '_number'=>'1',
         ]);
         print_r($result);
-        die;
+        
         
         //The original parameters
         $result=$kumex->trader()->buy([
             'clientOid'=>$client_id,
             'symbol'=>'XBTUSDM',
-            'size'=>'0.001',
+            'size'=>'1',
             'type'=>'market'
         ]);
         break;
     }
     
+    case 601:{
+        $client_id=rand(10000,99999).rand(10000,99999);
+        $result=$kumex->trader()->buy([
+            '_client_id'=>$client_id,
+            '_symbol'=>'XBTUSDM',
+            '_number'=>'1',
+            '_price'=>'7000'
+        ]);
+        print_r($result);
+        
+        //The original parameters
+        $result=$kumex->trader()->buy([
+            'clientOid'=>$client_id,
+            'symbol'=>'XBTUSDM',
+            'size'=>'1',
+            'price'=>'7000',
+            'type'=>'limit',
+            'leverage'=>'20',
+        ]);
+        break;
+    }
+    
+    case 602:{
+        $result=$kumex->trader()->show([
+            '_order_id'=>'5d6e187211527a5d67f5c12b',
+        ]);
+        print_r($result);
+        
+        $result=$kumex->trader()->show([
+            'order-id'=>'5d6e187211527a5d67f5c12b',
+        ]);
+        break;
+    }
+    
+    case 603:{
+        $result=$kumex->trader()->cancel([
+            '_order_id'=>'5d6e187211527a5d67f5c12b',
+        ]);
+        print_r($result);
+        break;
+    }
+    
+    //***********Complete flow
+    case 700:{
+        $client_id=rand(10000,99999).rand(10000,99999);
+        $result=$kumex->trader()->buy([
+            '_client_id'=>$client_id,
+            '_symbol'=>'XBTUSDM',
+            '_number'=>'1',
+            '_price'=>'7000'
+        ]);
+        print_r($result);
+        
+        $result=$kumex->trader()->cancel([
+            '_order_id'=>$result['_order_id'],
+        ]);
+        break;
+    }
     
     //The original object，
-    case 700:{
+    case 701:{
         $clientOid=rand(10000,99999).rand(10000,99999);
         
         $result=$kumex->getPlatform()->order()->post([
@@ -298,7 +356,7 @@ switch ($action){
     }
     
     //Get Position
-    case 701:{
+    case 702:{
         $result=$kumex->account()->get();
         print_r($result);
         
