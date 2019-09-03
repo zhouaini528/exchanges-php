@@ -30,6 +30,9 @@ $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
 $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
+$exchanges=new Exchanges('kucoin',$key,$secret,$passphrase,$host);
+...
+...
 ```
 [Get Huobi Spot $account_id](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L101)
 
@@ -77,6 +80,7 @@ System error unified parameter return [binance](https://github.com/zhouaini528/e
 [okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
+[kucoin](https://github.com/zhouaini528/exchanges-php/blob/master/tests/kucoin.php#L35)
 
 The SDK currently only supports REST requests, and does not support Websocket for the time being. It will be added later.
 
