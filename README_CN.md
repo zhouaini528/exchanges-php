@@ -84,6 +84,7 @@ Buy Sell 方法默认有[2秒](https://github.com/zhouaini528/exchanges-php/blob
 [okex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/okex.php#L35)
 [huobi](https://github.com/zhouaini528/exchanges-php/blob/master/tests/huobi.php#L35)
 [bitmex](https://github.com/zhouaini528/exchanges-php/blob/master/tests/bitmex.php#L35)
+[kucoin](https://github.com/zhouaini528/exchanges-php/blob/master/tests/kucoin.php#L35)
 
 该SDK目前只支持REST请求，暂时不支持Websocket，后期会加入这块。
 
