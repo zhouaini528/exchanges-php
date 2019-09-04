@@ -191,7 +191,13 @@ class Trader extends Base implements TraderInterface
         try {
             $map=$this->map->request_trader()->show($data);
             $result=$this->platform->trader()->show($map);
-            return $this->map->response_trader()->show(['result'=>$result,'request'=>$data]);
+            $trader=$this->map->response_trader()->show(['result'=>$result,'request'=>$data]);
+            
+            if(isset($trader['_status'])) {
+                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
+            }
+            
+            return $trader;
         }catch (\Exception $e){
             return $this->error($e->getMessage());
         }

@@ -320,10 +320,9 @@ class ResponseTraderMap extends Base implements TraderInterface
      *
      * */
     function show(array $data){
-        if(empty($data['result'])) return [];
-
+        if(empty($data['result'])) return array_merge($data['result'],['_status'=>'FAILURE','msg'=>'Something went wrong last time']);;
+        
         $map=[];
-
         switch ($this->platform){
             case 'huobi':{
                 
