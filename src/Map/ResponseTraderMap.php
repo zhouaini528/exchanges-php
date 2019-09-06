@@ -284,7 +284,9 @@ class ResponseTraderMap extends Base implements TraderInterface
             }
             case 'kucoin':{
                 $map['_order_id']=$data['request']['_order_id'] ?? '';
+                
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
+                if(isset($data['result']['data']['totalNum'])) $map['_status']='FAILURE';
                 break;
             }
         }
@@ -405,6 +407,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_order_id']=$data['result']['data']['id'] ?? '';
                 $map['_client_id']=$data['result']['data']['clientOid'] ?? '';
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
+                if(isset($data['result']['data']['totalNum'])) $map['_status']='FAILURE';
                 break;
             }
         }
