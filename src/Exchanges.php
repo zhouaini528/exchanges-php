@@ -26,7 +26,7 @@ class Exchanges
     protected $options=[];
     
     
-    function __construct(string $exchange,string $key,string $secret,string $extra='',string $host=''){
+    function __construct(string $exchange,string $key='',string $secret='',string $extra='',string $host=''){
         $this->exchange=$exchange;
         $this->key=$key;
         $this->secret=$secret;

@@ -33,7 +33,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    //'verify'=>false,
+    'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -95,9 +95,10 @@ switch ($action){
         //get $account_id,It's for buy and sell
         //recommended save database $account_id
         $exchanges=new Exchanges('huobi',$key,$secret);
-        $exchanges->setOptions([
+        /* $exchanges->setOptions([
             'proxy'=>true,
-        ]);
+            'verify'=>false
+        ]); */
         $result=$exchanges->getPlatform('spot')->account()->get();
         break;
     }
@@ -315,7 +316,7 @@ switch ($action){
         //It's the same as that  => case 402
         //It's the opposite of that  => case 403
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'XRP190927',
+            '_symbol'=>'BTC190927',
             '_number'=>'1',
             '_entry'=>true,//true:open  false:close
         ]);
@@ -483,6 +484,20 @@ switch ($action){
     }
     
     case 501:{
+        break;
+    }
+    
+    case 1001:{
+        //Public API
+        $exchanges=new Exchanges('huobi');
+        $exchanges->setOptions([
+            'timeout'=>10,
+            'proxy'=>true,
+            'verify'=>false,
+        ]);
+        $result=$exchanges->getPlatform('spot')->market()->getDepth([
+            'symbol'=>'btcusdt',
+        ]);
         break;
     }
     

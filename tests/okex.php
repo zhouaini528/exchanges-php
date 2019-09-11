@@ -32,7 +32,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    //'verify'=>false,
+    'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -265,6 +265,13 @@ switch ($action){
             '_entry'=>true,//open long
             //'_client_id'=>'custom ID',
         ]);
+        
+        /* $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USD-190927',
+            '_number'=>'1',
+            '_entry'=>true,//open long
+            //'_client_id'=>'custom ID',
+        ]); */
         break;
     }
     case 201:{
@@ -275,8 +282,20 @@ switch ($action){
             '_entry'=>false,//open short
             //'_client_id'=>'custom ID',
         ]);
+        
+        /* $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-190927',
+            '_number'=>'1',
+            '_entry'=>false,//open short
+            //'_client_id'=>'custom ID',
+        ]); */
         break;
     }
+    
+    
+    
+    
+    
     case 203:{
         //It's the opposite of that  => case 204
         $result=$exchanges->trader()->sell([
@@ -442,6 +461,12 @@ switch ($action){
         break;
     }
     
+    case 306:{
+        $result=$exchanges->getPlatform('future')->position()->get();
+        break;
+    }
+    
+    
     
     //***Complete future flow
     case 450:{
@@ -582,6 +607,22 @@ switch ($action){
             'type'=>'1',
             'price'=>'5000',
             'size'=>'1',
+        ]);
+        break;
+    }
+    
+    
+    case 1001:{
+        //Public API
+        $exchanges=new Exchanges('okex');
+        $exchanges->setOptions([
+            'timeout'=>10,
+            'proxy'=>true,
+            'verify'=>false,
+        ]);
+        $result=$exchanges->getPlatform('spot')->instrument()->getBook([
+            'instrument_id'=>'BTC-USDT',
+            'size'=>20
         ]);
         break;
     }

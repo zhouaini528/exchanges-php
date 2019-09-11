@@ -31,7 +31,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    //'verify'=>false,
+    'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -241,6 +241,20 @@ switch ($action){
             'quantity'=>'0.01',
             'price'=>'2000',
             'timeInForce'=>'GTC',
+        ]);
+        break;
+    }
+    
+    case 1001:{
+        //Public API
+        $exchanges=new Exchanges('binance');
+        $exchanges->setOptions([
+            'timeout'=>10,
+            'proxy'=>true,
+            'verify'=>false,
+        ]);
+        $result=$exchanges->getPlatform()->system()->getDepth([
+            'symbol'=>'BTCUSDT',
         ]);
         break;
     }

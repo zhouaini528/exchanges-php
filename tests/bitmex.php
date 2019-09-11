@@ -32,7 +32,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    //'verify'=>false,
+    'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -67,21 +67,6 @@ switch ($action){
     }
     
     case 2:{
-        //If you are developing locally and need an agent, you can set this
-        $exchanges->setOptions([
-            'proxy'=>true,
-        ]);
-        
-        //More flexible Settings
-        $exchanges->setOptions([
-            'proxy'=>[
-                'http'  => 'http://127.0.0.1:12333',
-                'https' => 'http://127.0.0.1:12333',
-                'no'    =>  ['.cn']
-            ],
-        ]);
-        
-        //bargaining transaction
         //Default return all
         $result=$exchanges->account()->get([
             //'_symbol'=>'XBTUSD'
@@ -231,6 +216,21 @@ switch ($action){
             'side'=>'Buy',
             'orderQty'=>'1',
             'ordType'=>'Limit',
+        ]);
+        break;
+    }
+    
+    case 1001:{
+        //Public API
+        $exchanges=new Exchanges('bitmex');
+        $exchanges->setOptions([
+            'timeout'=>10,
+            'proxy'=>true,
+            'verify'=>false,
+        ]);
+        $result=$exchanges->getPlatform()->orderBook()->get([
+            'symbol'=>'ETHUSD',
+            'depth'=>20
         ]);
         break;
     }

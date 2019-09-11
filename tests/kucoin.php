@@ -142,7 +142,7 @@ switch ($action){
     
     case 103:{
         $result=$kucoin->trader()->show([
-            '_order_id'=>'5d6e0d26ef83c7622be82eb0',
+            //'_order_id'=>'5d6e0d26ef83c7622be82eb0',
         ]);
         break;
     }
@@ -209,7 +209,6 @@ switch ($action){
             '_number'=>'0.001',
             '_price'=>'1',
         ]);
-        print_r($result);
         
         $result=$kucoin->trader()->cancel([
             '_order_id'=>$result['_order_id'],
