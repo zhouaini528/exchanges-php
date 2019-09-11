@@ -26,6 +26,16 @@ composer require linwj/exchanges:dev-master
 
 #### 交易所初始化
 ```php
+//公共接口初始化对象
+$exchanges=new Exchanges('binance');
+$exchanges=new Exchanges('bitmex');
+$exchanges=new Exchanges('okex');
+$exchanges=new Exchanges('huobi');
+$exchanges=new Exchanges('kucoin');
+...
+...
+
+//私有接口初始化对象
 $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
