@@ -26,6 +26,16 @@ If something goes wrong add composer.json "minimum-stability":"dev"
 
 #### Exchanges initialization
 ```php
+//Private
+$exchanges=new Exchanges('binance');
+$exchanges=new Exchanges('bitmex');
+$exchanges=new Exchanges('okex');
+$exchanges=new Exchanges('huobi');
+$exchanges=new Exchanges('kucoin');
+...
+...
+
+//Public
 $exchanges=new Exchanges('binance',$key,$secret);
 $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges=new Exchanges('okex',$key,$secret,$passphrase,$host);
