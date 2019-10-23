@@ -19,9 +19,7 @@
 
 #### 安装方式
 ```
-composer require linwj/exchanges:dev-master
-
-如果安装中出问题composer.json 添加 "minimum-stability":"dev"
+composer require linwj/exchanges
 ```
 
 #### 交易所初始化

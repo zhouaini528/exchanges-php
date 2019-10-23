@@ -19,9 +19,7 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 #### Install
 ```
-composer require linwj/exchanges:dev-master
-
-If something goes wrong add composer.json "minimum-stability":"dev"
+composer require linwj/exchanges
 ```
 
 #### Exchanges initialization
