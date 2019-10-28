@@ -40,7 +40,7 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['price']=$data['_price'];
                             $map['order_price_type']='limit';
                         }else {
-                            $map['order_price_type']='opponent';
+                            $map['order_price_type']='optimal_20';
                         }
                         break;
                     }
@@ -228,7 +228,7 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['price']=$data['_price'];
                             $map['order_price_type']='limit';
                         }else {
-                            $map['order_price_type']='opponent';
+                            $map['order_price_type']='optimal_20';
                         }
                         break;
                     }

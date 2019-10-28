@@ -25,7 +25,7 @@ $exchanges->setOptions([
     'timeout'=>10,
     
     //If you are developing locally and need an agent, you can set this
-    'proxy'=>true,
+    //'proxy'=>true,
     //More flexible Settings
     /* 'proxy'=>[
      'http'  => 'http://127.0.0.1:12333',
@@ -33,7 +33,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    'verify'=>false,
+    //'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -316,7 +316,7 @@ switch ($action){
         //It's the same as that  => case 402
         //It's the opposite of that  => case 403
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'BTC190927',
+            '_symbol'=>'ETC191227',
             '_number'=>'1',
             '_entry'=>true,//true:open  false:close
         ]);
@@ -342,7 +342,7 @@ switch ($action){
     case 403:{
         //It's the opposite of that  => case 401
         $result=$exchanges->trader()->sell([
-            '_symbol'=>'XRP190927',
+            '_symbol'=>'ETC191227',
             '_number'=>'1',
             '_entry'=>false,//true:open  false:close
         ]);
@@ -453,15 +453,15 @@ switch ($action){
     //TODO
     case 450:{
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'XRP190927',
+            '_symbol'=>'ETC191227',
             '_number'=>'1',
-            '_price'=>'0.3',
+            '_price'=>'1',
             '_entry'=>true,//true:open  false:close
         ]);
         print_r($result);
         
         $result=$exchanges->trader()->cancel([
-            '_symbol'=>'XRP190927',
+            '_symbol'=>'ETC191227',
             '_order_id'=>$result['_order_id'],
         ]);
         
