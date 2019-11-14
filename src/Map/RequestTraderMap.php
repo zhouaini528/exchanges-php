@@ -33,7 +33,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         $data['direction']=$map['direction']='buy';
                         $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
-                        $map['lever_rate']=$data['lever_rate'] ?? 10;
+                        $map['lever_rate']=$data['lever_rate'] ?? 20;
                         
                         //市价单与限价单的参数映射
                         if(isset($data['_price'])){
@@ -221,7 +221,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         $data['direction']=$map['direction']='sell';
                         $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
-                        $map['lever_rate']=$data['lever_rate'] ?? 10;
+                        $map['lever_rate']=$data['lever_rate'] ?? 20;
                         
                         //市价单与限价单的参数映射
                         if(isset($data['_price'])){
