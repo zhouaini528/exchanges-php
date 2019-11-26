@@ -13,6 +13,7 @@ class Trader extends Base implements TraderInterface
     /**
      * 买
      * 统一必填参数
+     * @param $data
      * _symbol   币种
      * _number  购买数量
      * *****************以上参数必填写
@@ -20,6 +21,9 @@ class Trader extends Base implements TraderInterface
      * _client_id  自定义ID
      *
      * _entry   true:开仓   false:平仓。
+     * 
+     * @param $show 默认true 下单完成后执行查询
+     * 
      * *****************以上参数非必填写
      * @return [
      *      ***返回原始数据
@@ -34,7 +38,7 @@ class Trader extends Base implements TraderInterface
      * ]
      *
      * */
-    function buy(array $data){
+    function buy(array $data,bool $show=true){
         try {
             $map=$this->map->request_trader()->buy($data);
             $result=$this->platform->trader()->buy($map);
@@ -45,6 +49,8 @@ class Trader extends Base implements TraderInterface
                 if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
                 if(in_array($trader['_status'],['CANCELLED'])) return $trader;
             }
+            
+            if(!$show) return $trader;
             
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
@@ -64,6 +70,7 @@ class Trader extends Base implements TraderInterface
     /**
      * 卖
      * 统一必填参数
+     * @param $data
      * _symbol   币种
      * _number  购买数量
      * *****************以上参数必填写
@@ -71,6 +78,8 @@ class Trader extends Base implements TraderInterface
      * _client_id  自定义ID
      * 
      * _entry   true:开仓   false:平仓。
+     * 
+     * @param $show 默认true 下单完成后执行查询
      * *****************以上参数非必填写
      * @return [
      *      ***返回原始数据
@@ -85,7 +94,7 @@ class Trader extends Base implements TraderInterface
      * ]
      * 
      * */
-    function sell(array $data){
+    function sell(array $data,bool $show=true){
         try {
             $map=$this->map->request_trader()->sell($data);
             $result=$this->platform->trader()->sell($map);
@@ -97,6 +106,8 @@ class Trader extends Base implements TraderInterface
                 if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
                 if(in_array($trader['_status'],['CANCELLED'])) return $trader;
             }
+            
+            if(!$show) return $trader;
             
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
@@ -116,11 +127,14 @@ class Trader extends Base implements TraderInterface
     /**
       * 删除订单 即撤单
      * 请求参数
+     * @param $data
      * '_order_id'   与  _client_id 必须有一个存在
      *  '_symbol'=>'',
      * *****************以上参数必填写   
      * _order_id  第三方平台ID
      * _client_id  自定义ID
+     * 
+     * @param $show 默认true 删除订单后执行查询
      * *****************以上参数非必填写    
      * 
      * @return [
@@ -135,7 +149,7 @@ class Trader extends Base implements TraderInterface
      *      _client_id=>自定义ID
      * ]
      * */
-    function cancel(array $data){
+    function cancel(array $data,bool $show=true){
         try {
             $map=$this->map->request_trader()->cancel($data);
             $result=$this->platform->trader()->cancel($map);
@@ -146,6 +160,8 @@ class Trader extends Base implements TraderInterface
                 if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
                 if(in_array($trader['_status'],['CANCELLED'])) return $trader;
             }
+            
+            if(!$show) return $trader;
             
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
