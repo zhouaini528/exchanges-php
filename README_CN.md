@@ -83,7 +83,7 @@ $exchanges=new Exchanges('kucoin',$key,$secret,$passphrase);
  * ]
  * */
 ```
-Buy Sell 方法默认有[2秒](https://github.com/zhouaini528/exchanges-php/blob/master/src/Config/Exchanges.php)的等待查询，因为交易所是撮合交易所以查询需要等待。
+Buy Sell 方法默认有[2秒](https://github.com/zhouaini528/exchanges-php/blob/master/src/Config/Exchanges.php)的等待查询，因为交易所是撮合交易所以查询需要等待。该默认2秒查询可以关闭如：[buy($data,false)](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L41)
 
 买卖查询统一参数返回 [详情](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L36)
 
@@ -115,7 +115,7 @@ $exchanges->setOptions([
 ]);
 ```
 
-#### 现货交易
+#### 现货
 ##### 市价交易
 ```php
 //binance
@@ -207,7 +207,7 @@ $exchanges->trader()->buy([
     'price'=>'2001',
 ]);
 ```
-#### 期货交易
+#### 期货
 ##### 市价交易
 ```php
 //bitmex
@@ -239,6 +239,25 @@ $exchanges->trader()->buy([
     'leverage'=>10,//10x or 20x leverage
     'match_price' => 1,
     'order_type'=>0,
+]);
+
+//huobi
+$exchanges->trader()->buy([
+    '_symbol'=>'ETC191227',
+    '_number'=>'1',
+    '_entry'=>true,//true:open  false:close
+]);
+//也支持原生参数，与上等同
+$exchanges->trader()->buy([
+    'symbol'=>'XRP',//string false "BTC","ETH"...
+    'contract_type'=>'quarter',//string false Contract Type ("this_week": "next_week": "quarter":)
+    'contract_code'=>'XRP190927',//string false BTC180914
+    //'price'=>'0.3',// decimal true Price
+    'volume'=>'1',//long true Numbers of orders (amount)
+    //'direction'=>'buy',// string  true    Transaction direction
+    'offset'=>'open',// string  true    "open", "close"
+    'order_price_type'=>'opponent',//"limit", "opponent"
+    'lever_rate'=>20,//int true Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
 ]);
 ```
 ##### 限价交易
@@ -275,6 +294,27 @@ $exchanges->trader()->buy([
     'leverage'=>10,//10x or 20x leverage
     'match_price' => 0,
     'order_type'=>0,
+]);
+
+
+//huobi
+$exchanges->trader()->buy([
+    '_symbol'=>'XRP190927',
+    '_number'=>'1',
+    '_price'=>'0.3',
+    '_entry'=>true,//true:open  false:close
+]);
+//也支持原生参数，与上等同
+$exchanges->trader()->buy([
+'symbol'=>'XRP',//string false "BTC","ETH"...
+'contract_type'=>'quarter',//string false Contract Type ("this_week": "next_week": "quarter":)
+'contract_code'=>'XRP190927',// string  false   BTC180914
+'price'=>'0.3',//decimal true Price
+'volume'=>'1',//long true Numbers of orders (amount)
+//'direction'=>'buy',// string  true Transaction direction
+'offset'=>'open',// string  true    "open", "close"
+'order_price_type'=>'limit',//"limit", "opponent"
+'lever_rate'=>20,//int true Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
 ]);
 ```
 

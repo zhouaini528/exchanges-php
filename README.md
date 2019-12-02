@@ -82,6 +82,8 @@ All submitted parameters and return as long as the first character for the under
  * ]
  * */
 ```
+The Buy Sell method has a waiting time of [2 seconds](https://github.com/zhouaini528/exchanges-php/blob/master/src/Config/Exchanges.php) by default. Because the exchange is a matching transaction, the inquiry needs to wait. The default 2-second query can be turned off as：[buy($data,false)](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L41)
+
 Buy and sell query uniform parameter return [detail](https://github.com/zhouaini528/exchanges-php/blob/master/src/Api/Trader.php#L59)
 
 System error unified parameter return [binance](https://github.com/zhouaini528/exchanges-php/blob/master/tests/binance.php#L33)
@@ -228,6 +230,25 @@ $exchanges->trader()->buy([
     'match_price' => 1,
     'order_type'=>0,
 ]);
+
+//huobi
+$exchanges->trader()->buy([
+    '_symbol'=>'ETC191227',
+    '_number'=>'1',
+    '_entry'=>true,//true:open  false:close
+]);
+//Support for original parameters
+$exchanges->trader()->buy([
+    'symbol'=>'XRP',//string false "BTC","ETH"...
+    'contract_type'=>'quarter',//string false Contract Type ("this_week": "next_week": "quarter":)
+    'contract_code'=>'XRP190927',//string false BTC180914
+    //'price'=>'0.3',// decimal true Price
+    'volume'=>'1',//long true Numbers of orders (amount)
+    //'direction'=>'buy',// string  true    Transaction direction
+    'offset'=>'open',// string  true    "open", "close"
+    'order_price_type'=>'opponent',//"limit", "opponent"
+    'lever_rate'=>20,//int true Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+]);
 ```
 ##### Limit
 ```php
@@ -261,6 +282,26 @@ $exchanges->trader()->buy([
     'leverage'=>10,//10x or 20x leverage
     'match_price' => 0,
     'order_type'=>0,
+]);
+
+//huobi
+$exchanges->trader()->buy([
+    '_symbol'=>'XRP190927',
+    '_number'=>'1',
+    '_price'=>'0.3',
+    '_entry'=>true,//true:open  false:close
+]);
+//Support for original parameters
+$exchanges->trader()->buy([
+'symbol'=>'XRP',//string false "BTC","ETH"...
+'contract_type'=>'quarter',//string false Contract Type ("this_week": "next_week": "quarter":)
+'contract_code'=>'XRP190927',// string  false   BTC180914
+'price'=>'0.3',//decimal true Price
+'volume'=>'1',//long true Numbers of orders (amount)
+//'direction'=>'buy',// string  true Transaction direction
+'offset'=>'open',// string  true    "open", "close"
+'order_price_type'=>'limit',//"limit", "opponent"
+'lever_rate'=>20,//int true Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
 ]);
 ```
 
