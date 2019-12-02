@@ -293,15 +293,15 @@ $exchanges->trader()->buy([
 ]);
 //Support for original parameters
 $exchanges->trader()->buy([
-'symbol'=>'XRP',//string false "BTC","ETH"...
-'contract_type'=>'quarter',//string false Contract Type ("this_week": "next_week": "quarter":)
-'contract_code'=>'XRP190927',// string  false   BTC180914
-'price'=>'0.3',//decimal true Price
-'volume'=>'1',//long true Numbers of orders (amount)
-//'direction'=>'buy',// string  true Transaction direction
-'offset'=>'open',// string  true    "open", "close"
-'order_price_type'=>'limit',//"limit", "opponent"
-'lever_rate'=>20,//int true Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+    'symbol'=>'XRP',//string false "BTC","ETH"...
+    'contract_type'=>'quarter',//string false Contract Type ("this_week": "next_week": "quarter":)
+    'contract_code'=>'XRP190927',// string  false   BTC180914
+    'price'=>'0.3',//decimal true Price
+    'volume'=>'1',//long true Numbers of orders (amount)
+    //'direction'=>'buy',// string  true Transaction direction
+    'offset'=>'open',// string  true    "open", "close"
+    'order_price_type'=>'limit',//"limit", "opponent"
+    'lever_rate'=>20,//int true Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
 ]);
 ```
 
