@@ -99,7 +99,7 @@ switch ($action){
             '_number'=>'0.001',
         ]);
         print_r($result);
-        
+        die;
         //The original parameters
         $result=$kucoin->trader()->buy([
             'clientOid'=>$client_id,
@@ -209,6 +209,7 @@ switch ($action){
             '_number'=>'0.001',
             '_price'=>'1',
         ]);
+        print_r($result);
         
         $result=$kucoin->trader()->cancel([
             '_order_id'=>$result['_order_id'],

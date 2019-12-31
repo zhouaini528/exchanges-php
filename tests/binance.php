@@ -15,7 +15,10 @@ include 'key_secret.php';
 $key=$keysecret['binance']['key'];
 $secret=$keysecret['binance']['secret'];
 
-$exchanges=new Exchanges('binance',$key,$secret);
+$spot_host='https://api.binance.com';
+$future_host='https://fapi.binance.com';
+
+$exchanges=new Exchanges('binance',$key,$secret,$spot_host);
 
 //Support for more request Settings
 $exchanges->setOptions([
@@ -23,7 +26,7 @@ $exchanges->setOptions([
     'timeout'=>10,
     
     //If you are developing locally and need an agent, you can set this
-    'proxy'=>true,
+    //'proxy'=>true,
     //More flexible Settings
     /* 'proxy'=>[
      'http'  => 'http://127.0.0.1:12333',
@@ -31,7 +34,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    'verify'=>false,
+    //'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -224,6 +227,7 @@ switch ($action){
     
     //******************************Complete future flow
     case 450:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
         
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',

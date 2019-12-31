@@ -295,9 +295,9 @@ switch ($action){
     
     case 400:{
         $result=$exchanges->trader()->sell([
-            '_symbol'=>'btcusdt',
-            '_number'=>'0.001',
-            '_price'=>'30000',
+            '_symbol'=>'eosusdt',
+            '_number'=>'0.1',
+            '_price'=>'20',
         ]);
         print_r($result);
         
