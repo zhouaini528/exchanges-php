@@ -210,6 +210,19 @@ $exchanges->trader()->buy([
 #### 期货
 ##### 市价交易
 ```php
+//binance
+//统一提交参数
+$exchanges->trader()->buy([
+    '_symbol'=>'BTCUSDT',
+    '_number'=>'0.001',
+]);
+//也支持原生参数，与上等同
+$exchanges->trader()->buy([
+    'symbol'=>'BTCUSDT',
+    'quantity'=>'0.001',
+    'type'=>'MARKET',
+]);
+
 //bitmex
 //统一提交参数
 $exchanges->trader()->buy([
@@ -262,6 +275,22 @@ $exchanges->trader()->buy([
 ```
 ##### 限价交易
 ```php
+//binance
+//统一提交参数
+$exchanges->trader()->buy([
+    '_symbol'=>'BTCUSDT',
+    '_number'=>'0.001',
+    '_price'=>'6000'
+]);
+//也支持原生参数，与上等同
+$exchanges->trader()->buy([
+    'symbol'=>'BTCUSDT',
+    'quantity'=>'0.001',
+    'type'=>'LIMIT',
+    'price'=>'6500',
+    'timeInForce'=>'GTC',
+]);
+
 //bitmex
 //统一提交参数
 $exchanges->trader()->buy([
@@ -412,7 +441,15 @@ $exchanges->account()->get([
 以下是调用底层API的发起一个新的订单实例
 ```php
 //binance
-$exchanges->getPlatform()->trade()->postOrder([
+$exchanges->getPlatform('spot')->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+$exchanges->getPlatform('future')->trade()->postOrder([
     'symbol'=>'BTCUSDT',
     'side'=>'BUY',
     'type'=>'LIMIT',

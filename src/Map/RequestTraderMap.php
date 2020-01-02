@@ -147,7 +147,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['type']='MARKET';
                 }
                 
-                switch ($this->checkType($map['symbol'])){
+                switch ($this->checkType()){
                     case 'future':{
                         break;
                     }
@@ -346,7 +346,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['type']='MARKET';
                 }
                 
-                switch ($this->checkType($map['symbol'])){
+                switch ($this->checkType()){
                     case 'future':{
                         break;
                     }

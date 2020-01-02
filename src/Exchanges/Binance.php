@@ -38,7 +38,7 @@ class AccountBinance extends BaseBinance implements AccountInterface
     function get(array $data){
         switch ($this->checkType()){
             case 'future':{
-                return $this->platform_future->position()->get($data);
+                return $this->platform_future->user()->getAccount($data);
             }
             case 'spot':{
                 return $this->platform_spot->user()->getAccount($data);

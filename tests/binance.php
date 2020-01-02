@@ -234,18 +234,67 @@ switch ($action){
             '_number'=>'0.001',
             '_price'=>'6500',
         ]);
+        
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTCUSDT',
+            '_order_id'=>$result['orderId'],
+            //'_client_id'=>$_client_id,
+        ]);
         break;
     }
     
-    case 500:{
-        //The original object，
-        $result=$exchanges->getPlatform()->trade()->postOrder([
+    
+    case 461:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->account()->get();
+        break;
+    }
+    
+    case 462:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'0.001',
+        ]);
+        break;
+    }
+    
+    case 463:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
             'symbol'=>'BTCUSDT',
-            'side'=>'BUY',
+            'quantity'=>'0.001',
             'type'=>'LIMIT',
-            'quantity'=>'0.01',
-            'price'=>'2000',
+            'price'=>'6500',
             'timeInForce'=>'GTC',
+        ]);
+        break;
+    }
+    
+    case 463:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
+            'symbol'=>'BTCUSDT',
+            'quantity'=>'0.001',
+            'type'=>'LIMIT',
+            'price'=>'6500',
+            'timeInForce'=>'GTC',
+        ]);
+        break;
+    }
+    
+    case 464:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTCUSDT',
+            '_order_id'=>'487693783',
         ]);
         break;
     }
