@@ -229,10 +229,11 @@ switch ($action){
     case 450:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
         
-        $result=$exchanges->trader()->cancel([
+        $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
-            '_client_id'=>'4b9dd6a3916561da4c7931ec63870bbf',
-        ]); 
+            '_number'=>'0.001',
+            '_price'=>'6500',
+        ]);
         break;
     }
     
