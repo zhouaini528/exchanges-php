@@ -15,7 +15,10 @@ include 'key_secret.php';
 $key=$keysecret['binance']['key'];
 $secret=$keysecret['binance']['secret'];
 
-$exchanges=new Exchanges('binance',$key,$secret);
+$spot_host='https://api.binance.com';
+$future_host='https://fapi.binance.com';
+
+$exchanges=new Exchanges('binance',$key,$secret,$spot_host);
 
 //Support for more request Settings
 $exchanges->setOptions([
@@ -23,7 +26,7 @@ $exchanges->setOptions([
     'timeout'=>10,
     
     //If you are developing locally and need an agent, you can set this
-    'proxy'=>true,
+    //'proxy'=>true,
     //More flexible Settings
     /* 'proxy'=>[
      'http'  => 'http://127.0.0.1:12333',
@@ -31,7 +34,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    'verify'=>false,
+    //'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -224,23 +227,74 @@ switch ($action){
     
     //******************************Complete future flow
     case 450:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'0.001',
+            '_price'=>'6500',
+        ]);
+        
+        print_r($result);
         
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',
-            '_client_id'=>'4b9dd6a3916561da4c7931ec63870bbf',
-        ]); 
+            '_order_id'=>$result['orderId'],
+            //'_client_id'=>$_client_id,
+        ]);
         break;
     }
     
-    case 500:{
-        //The original object，
-        $result=$exchanges->getPlatform()->trade()->postOrder([
+    
+    case 461:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->account()->get();
+        break;
+    }
+    
+    case 462:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'0.001',
+        ]);
+        break;
+    }
+    
+    case 463:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
             'symbol'=>'BTCUSDT',
-            'side'=>'BUY',
+            'quantity'=>'0.001',
             'type'=>'LIMIT',
-            'quantity'=>'0.01',
-            'price'=>'2000',
+            'price'=>'6500',
             'timeInForce'=>'GTC',
+        ]);
+        break;
+    }
+    
+    case 463:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->buy([
+            'symbol'=>'BTCUSDT',
+            'quantity'=>'0.001',
+            'type'=>'LIMIT',
+            'price'=>'6500',
+            'timeInForce'=>'GTC',
+        ]);
+        break;
+    }
+    
+    case 464:{
+        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
+        
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTCUSDT',
+            '_order_id'=>'487693783',
         ]);
         break;
     }

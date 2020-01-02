@@ -627,6 +627,14 @@ switch ($action){
         break;
     }
     
+    case 1002:{
+        $result=$exchanges->getPlatform('future')->fill()->get([
+            'instrument_id'=>"BTC-USD-190920",
+            "limit"=>15
+        ]);
+        break;
+    }
+    
     default:{
         echo 'nothing';
         exit;

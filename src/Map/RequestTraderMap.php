@@ -135,7 +135,6 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['newClientOrderId']=$data['_client_id'] ?? ($data['newClientOrderId'] ?? '');
                 $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                 $map['side']='BUY';
-                $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                 
                 if(empty($map['newClientOrderId'])) unset($map['newClientOrderId']);
             
@@ -146,6 +145,16 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['type']='LIMIT';
                 }else{
                     $map['type']='MARKET';
+                }
+                
+                switch ($this->checkType()){
+                    case 'future':{
+                        break;
+                    }
+                    case 'spot':{
+                        $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                        break;
+                    }
                 }
                 
                 //支持原生参数
@@ -325,7 +334,6 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['newClientOrderId']=$data['_client_id'] ?? ($data['newClientOrderId'] ?? '');
                 $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                 $map['side']='SELL';
-                $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                 
                 if(empty($map['newClientOrderId'])) unset($map['newClientOrderId']);
                 
@@ -336,6 +344,16 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['type']='LIMIT';
                 }else{
                     $map['type']='MARKET';
+                }
+                
+                switch ($this->checkType()){
+                    case 'future':{
+                        break;
+                    }
+                    case 'spot':{
+                        $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                        break;
+                    }
                 }
                 
                 //支持原生参数

@@ -202,6 +202,18 @@ $exchanges->trader()->buy([
 #### Future Trader
 ##### Market
 ```php
+//binance
+$exchanges->trader()->buy([
+    '_symbol'=>'BTCUSDT',
+    '_number'=>'0.001',
+]);
+//Support for original parameters
+$exchanges->trader()->buy([
+    'symbol'=>'BTCUSDT',
+    'quantity'=>'0.001',
+    'type'=>'MARKET',
+]);
+
 //bitmex
 $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
@@ -252,6 +264,21 @@ $exchanges->trader()->buy([
 ```
 ##### Limit
 ```php
+//binance
+$exchanges->trader()->buy([
+    '_symbol'=>'BTCUSDT',
+    '_number'=>'0.001',
+    '_price'=>'6000'
+]);
+//Support for original parameters
+$exchanges->trader()->buy([
+    'symbol'=>'BTCUSDT',
+    'quantity'=>'0.001',
+    'type'=>'LIMIT',
+    'price'=>'6500',
+    'timeInForce'=>'GTC',
+]);
+
 //bitmex
 $exchanges->trader()->buy([
     '_symbol'=>'XBTUSD',
@@ -394,9 +421,18 @@ $exchanges->account()->get([
 ```
 
 #### Support for original parameters
+Below is the call to the underlying API to initiate a new order instance
 ```php
 //binance
-$exchanges->getPlatform()->trade()->postOrder([
+$exchanges->getPlatform('spot')->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+$exchanges->getPlatform('future')->trade()->postOrder([
     'symbol'=>'BTCUSDT',
     'side'=>'BUY',
     'type'=>'LIMIT',

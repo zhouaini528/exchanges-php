@@ -62,7 +62,7 @@ class Base
                 }
             }
             case 'binance':{
-                break;
+                if(stristr($this->host,"fapi")!==false) return 'future';
             }
             case 'kucoin':{
                 if(stripos($this->host,'kumex')!==false){

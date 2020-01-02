@@ -398,9 +398,20 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_order_id']=$data['result']['orderId'] ?? '';
                 $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 $map['_filled_qty']=$data['result']['executedQty'];
-                $data['result']['executedQty']==0 ? $map['_price_avg']=0 : $map['_price_avg']=bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
                 $map['_status']=$this->binance_status[$data['result']['status']];
-                $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];
+                
+                switch ($this->checkType()){
+                    case 'future':{
+                        $map['_price_avg']=$data['result']['avgPrice'];
+                        $map['_filed_amount']=bcmul(strval($data['result']['executedQty']),strval($data['result']['avgPrice']),16);
+                        break;
+                    }
+                    case 'spot':{
+                        $data['result']['executedQty']==0 ? $map['_price_avg']=0 : $map['_price_avg']=bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
+                        $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];
+                        break;
+                    }
+                }
                 break;
             }
             case 'kucoin':{
