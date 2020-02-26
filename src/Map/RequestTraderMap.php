@@ -515,6 +515,9 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['orderID']=$data['_order_id'] ?? ($data['orderID'] ?? '');
                 $map['clOrdID']=$data['_client_id'] ?? ($data['clOrdID'] ?? '');
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                
+                if(empty($map['orderID'])) unset($map['orderID']);
+                if(empty($map['clOrdID'])) unset($map['clOrdID']);
                 break;
             }
             case 'okex':{
