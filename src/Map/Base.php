@@ -48,6 +48,7 @@ class Base
             case 'huobi':{
                 //判断最后一位是否是数字
                 if(is_numeric(substr($symbol,-1,1))) return 'future';
+                if(stristr($symbol,'-USD')) return 'swap';
                 break;
             }
             case 'bitmex':{

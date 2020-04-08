@@ -44,6 +44,24 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                         break;
                     }
+                    case 'swap':{
+                        $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
+                        unset($map['symbol']);
+                        $map['volume']=$data['_number'] ?? $data['volume'];
+                        $data['direction']=$map['direction']='buy';
+                        $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        $map['lever_rate']=$data['lever_rate'] ?? 20;
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_price'])){
+                            $map['price']=$data['_price'];
+                            $map['order_price_type']='limit';
+                        }else {
+                            $map['order_price_type']='optimal_20';
+                        }
+                        break;
+                    }
                     case 'spot':{
                         $map['account-id']=$data['account-id'] ?? $this->extra;
                         $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
@@ -241,6 +259,24 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                         break;
                     }
+                    case 'swap':{
+                        $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
+                        unset($map['symbol']);
+                        $map['volume']=$data['_number'] ?? $data['volume'];
+                        $data['direction']=$map['direction']='sell';
+                        $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        $map['lever_rate']=$data['lever_rate'] ?? 20;
+                        
+                        //市价单与限价单的参数映射
+                        if(isset($data['_price'])){
+                            $map['price']=$data['_price'];
+                            $map['order_price_type']='limit';
+                        }else {
+                            $map['order_price_type']='optimal_20';
+                        }
+                        break;
+                    }
                     case 'spot':{
                         $map['account-id']=$data['account-id'] ?? $this->extra;
                         $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
@@ -398,8 +434,15 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? ($data['symbol'] ?? '');
                 
+                if(isset($data['contract_code'])) $map['symbol']=$data['contract_code'];
+                
                 switch ($this->checkType($map['symbol'])){
                     case 'future':{
+                        $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                        break;
+                    }
+                    case 'swap':{
+                        unset($map['symbol']);
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                         break;
                     }
@@ -493,11 +536,17 @@ class RequestTraderMap extends Base implements TraderInterface
         
         switch ($this->platform){
             case 'huobi':{
-                switch ($this->checkType($data['_symbol'] ?? ($data['symbol'] ?? ''))){
+                switch ($this->checkType($data['_symbol'] ?? ($data['symbol'] ?? ($data['contract_code'] ?? '')))){
                     case 'future':{
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
                         $map['symbol']=$data['_symbol'] ?? ($data['symbol'] ?? '');
+                        break;
+                    }
+                    case 'swap':{
+                        $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        $map['contract_code']=$data['_symbol'] ?? ($data['contract_code'] ?? '');
                         break;
                     }
                     case 'spot':{
