@@ -84,6 +84,17 @@ class ResponseTraderMap extends Base implements TraderInterface
             '7'=>'CANCELLED',
             '8'=>'CANCELING',
         ],
+        'swap'=>[
+            //(1准备提交 2准备提交 3已提交 4部分成交 5部分成交已撤单 6全部成交 7已撤单 11撤单中)
+            '1'=>'NEW',
+            '2'=>'NEW',
+            '3'=>'NEW',
+            '6'=>'FILLED',
+            '4'=>'PART_FILLED',
+            '5'=>'PART_FILLED',
+            '7'=>'CANCELLED',
+            '8'=>'CANCELING',
+        ],
     ];
 
     protected $binance_status=[
