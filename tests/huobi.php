@@ -487,6 +487,20 @@ switch ($action){
         break;
     }
     
+    
+    //******************************Swap
+    case 610:{
+        //It's the same as that  => case 411
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'ETH-USD',
+            '_number'=>'1',
+            '_price'=>'100',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        break;
+    }
+    
+    
     case 1001:{
         //Public API
         $exchanges=new Exchanges('huobi');

@@ -84,7 +84,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
                 return $this->platform_spot->order()->postPlace($data);
             }
             case 'swap':{
-                return null;
+                return $this->platform_swap->account()->postOrder($data);
             }
         }
     }
@@ -105,7 +105,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
                 return $this->platform_spot->order()->postPlace($data);
             }
             case 'swap':{
-                return null;
+                return $this->platform_swap->account()->postOrder($data);
             }
         }
     }
@@ -128,7 +128,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
                 return $this->platform_spot->order()->postSubmitCancel($data);
             }
             case 'swap':{
-                return null;
+                return $this->platform_swap->account()->postCancel($data);
             }
         }
     }
@@ -158,7 +158,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
                 return $this->platform_spot->order()->get($data);
             }
             case 'swap':{
-                return null;
+                return $this->platform_swap->account()->postOrderInfo($data);
             }
         }
     }
@@ -175,7 +175,7 @@ class Huobi
 {
     protected $platform_future;
     protected $platform_spot;
-    protected $platform_swapt;
+    protected $platform_swap;
     
     function __construct($key,$secret,$host=''){
         $this->platform_future=new HuobiFuture($key,$secret,empty($host) ? 'https://api.hbdm.com' : $host);
@@ -186,15 +186,15 @@ class Huobi
     }
     
     function account(){
-        return new AccountHuobi($this->platform_future,$this->platform_spot,$this->platform_swapt);
+        return new AccountHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
     
     function market(){
-        return new MarketHuobi($this->platform_future,$this->platform_spot,$this->platform_swapt);
+        return new MarketHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
     
     function trader(){
-        return new TraderHuobi($this->platform_future,$this->platform_spot,$this->platform_swapt);
+        return new TraderHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
     
     function getPlatform(string $type=''){
