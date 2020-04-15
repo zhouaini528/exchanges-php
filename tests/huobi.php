@@ -490,7 +490,6 @@ switch ($action){
     
     //******************************Swap
     case 610:{
-        //It's the same as that  => case 411
         $result=$exchanges->trader()->buy([
             '_symbol'=>'ETH-USD',
             '_number'=>'1',
@@ -499,6 +498,32 @@ switch ($action){
         ]);
         break;
     }
+    case 611:{
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'ETH-USD',
+            '_order_id'=>'700034006594363392'
+        ]);
+        break;
+    }
+    
+    case 612:{
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'ETH-USD',
+            '_number'=>'1',
+            '_price'=>'100',
+            '_entry'=>true,//true:open  false:close
+        ]);
+        
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'ETH-USD',
+            '_order_id'=>$result['_order_id'],
+        ]);
+        break;
+    }
+    
+    
     
     
     case 1001:{

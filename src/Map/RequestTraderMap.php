@@ -442,6 +442,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         break;
                     }
                     case 'swap':{
+                        $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
                         unset($map['symbol']);
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                         break;
