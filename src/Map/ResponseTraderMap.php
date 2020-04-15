@@ -130,6 +130,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
                         break;
                     }
+                    case 'swap':{
+                        $map['_order_id']=$data['result']['data']['order_id'] ?? '';
+                        $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
+                        break;
+                    }
                     case 'spot':{
                         $map['_order_id']=$data['result']['data'] ?? '';
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
@@ -193,6 +198,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
                         break;
                     }
+                    case 'swap':{
+                        $map['_order_id']=$data['result']['data']['order_id'] ?? '';
+                        $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
+                        break;
+                    }
                     case 'spot':{
                         $map['_order_id']=$data['result']['data'] ?? '';
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
@@ -252,6 +262,10 @@ class ResponseTraderMap extends Base implements TraderInterface
             case 'huobi':{
                 switch ($this->checkType($data['request']['_symbol'] ?? '')){
                     case 'future':{
+                        $map['_order_id']=$data['result']['data']['successes'] ?? '';
+                        break;
+                    }
+                    case 'swap':{
                         $map['_order_id']=$data['result']['data']['successes'] ?? '';
                         break;
                     }
@@ -357,6 +371,15 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_price_avg']=$data['result']['data'][0]['trade_avg_price'];
                         $map['_filed_amount']=$data['result']['data'][0]['trade_turnover'];
                         $map['_status']=$this->huobi_status['future'][$data['result']['data'][0]['status']];
+                        break;
+                    }
+                    case 'swap':{
+                        $map['_order_id']=$data['result']['data'][0]['order_id'];
+                        $map['_client_id']=$data['result']['data'][0]['client_order_id'];
+                        $map['_filled_qty']=$data['result']['data'][0]['trade_volume'];
+                        $map['_price_avg']=$data['result']['data'][0]['trade_avg_price'];
+                        $map['_filed_amount']=$data['result']['data'][0]['trade_turnover'];
+                        $map['_status']=$this->huobi_status['swap'][$data['result']['data'][0]['status']];
                         break;
                     }
                 }
