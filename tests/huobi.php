@@ -264,9 +264,9 @@ switch ($action){
     case 398:{
         $_client_id=rand(10000,99999).rand(10000,99999);
         $result=$exchanges->trader()->sell([
-            '_symbol'=>'btcusdt',
-            '_number'=>'0.001',
-            '_price'=>'30000',
+            '_symbol'=>'eosusdt',
+            '_number'=>'10',
+            '_price'=>'3',
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
@@ -453,15 +453,15 @@ switch ($action){
     //TODO
     case 450:{
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'ETC191227',
+            '_symbol'=>'BCH200626',
             '_number'=>'1',
-            '_price'=>'1',
+            '_price'=>'100',
             '_entry'=>true,//true:open  false:close
         ]);
         print_r($result);
         
         $result=$exchanges->trader()->cancel([
-            '_symbol'=>'ETC191227',
+            '_symbol'=>'BCH200626',
             '_order_id'=>$result['_order_id'],
         ]);
         
@@ -484,6 +484,10 @@ switch ($action){
     }
     
     case 501:{
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BCH200626',
+            '_order_id'=>'700289577830793216',
+        ]);
         break;
     }
     
