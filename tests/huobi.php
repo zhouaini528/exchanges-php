@@ -523,8 +523,13 @@ switch ($action){
         break;
     }
     
-    
-    
+    case 613:{
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'ETH-USD',
+            '_order_id'=>'700280191934640128',
+        ]);
+        break;
+    }
     
     case 1001:{
         //Public API

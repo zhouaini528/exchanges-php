@@ -260,7 +260,8 @@ class ResponseTraderMap extends Base implements TraderInterface
 
         switch ($this->platform){
             case 'huobi':{
-                switch ($this->checkType($data['request']['_symbol'] ?? '')){
+                $type=$this->checkType($data['request']['_symbol'] ?? '');
+                switch ($type){
                     case 'future':{
                         $map['_order_id']=$data['result']['data']['successes'] ?? '';
                         break;
@@ -277,6 +278,13 @@ class ResponseTraderMap extends Base implements TraderInterface
                 }
                 
                 if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
+                
+                //合约交易撤单成功，再次撤相同ID单号会报1071
+                if(isset($data['result']['data']['errors'][0]['err_code']) && $data['result']['data']['errors'][0]['err_code']==1071) {
+                    $map['_status']='CANCELLED';
+                    $map['_order_id']=$data['result']['data']['errors'][0]['order_id'];
+                }
+                    
                 break;
             }
             case 'bitmex':{
