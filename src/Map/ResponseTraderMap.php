@@ -264,10 +264,12 @@ class ResponseTraderMap extends Base implements TraderInterface
                 switch ($type){
                     case 'future':{
                         $map['_order_id']=$data['result']['data']['successes'] ?? '';
+                        $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['client_order_id'] ?? '');
                         break;
                     }
                     case 'swap':{
                         $map['_order_id']=$data['result']['data']['successes'] ?? '';
+                        $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['client_order_id'] ?? '');
                         break;
                     }
                     case 'spot':{

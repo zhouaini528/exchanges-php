@@ -207,6 +207,35 @@ switch ($action){
         break;
     }
     
+    case 401:{
+        /* $result=$exchanges->trader()->show([
+            '_symbol'=>'XBTUSD',
+            '_order_id'=>'63d0550b-1f3f-9ea5-ec6c-32d416a3ee85',
+        ]); */
+        
+        /* $_client_id=rand(11111,99999).rand(11111,99999).rand(11111,99999);
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'XBTUSD',
+            '_number'=>'1',
+            '_price'=>100,
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'XBTUSD',
+            //'_order_id'=>$result['_order_id'],
+            '_client_id'=>$_client_id,
+        ]);  */
+        
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'XBTUSD',
+            '_order_id'=>'a0283eec-d6a9-a30f-08a2-1f9f250189bc',
+            //'_client_id'=>'971668136216134',
+        ]);
+        break;
+    }
+    
     //
     case 500:{
         //The original object，

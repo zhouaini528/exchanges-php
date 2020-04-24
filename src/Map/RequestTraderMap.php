@@ -439,12 +439,20 @@ class RequestTraderMap extends Base implements TraderInterface
                 switch ($this->checkType($map['symbol'])){
                     case 'future':{
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        
+                        if(empty($map['order_id'])) unset($map['order_id']);
+                        if(empty($map['client_order_id'])) unset($map['client_order_id']);
                         break;
                     }
                     case 'swap':{
                         $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
-                        unset($map['symbol']);
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
+                        $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
+                        
+                        if(empty($map['order_id'])) unset($map['order_id']);
+                        if(empty($map['client_order_id'])) unset($map['client_order_id']);
+                        unset($map['symbol']);
                         break;
                     }
                     case 'spot':{
