@@ -17,6 +17,10 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Kucoin](https://github.com/zhouaini528/kucoin-php)
 
+[Mxc](https://github.com/zhouaini528/mxc-php) Temporarily not connected to Exchanges SDK
+
+[Coinbase](https://github.com/zhouaini528/coinbase-php) Temporarily not connected to Exchanges SDK
+
 #### Install
 ```
 composer require linwj/exchanges

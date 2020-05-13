@@ -17,6 +17,10 @@
 
 [Kucoin](https://github.com/zhouaini528/kucoin-php)
 
+[Mxc](https://github.com/zhouaini528/mxc-php) 暂时未加入 Exchanges SDK
+
+[Coinbase](https://github.com/zhouaini528/coinbase-php) 暂时未加入 Exchanges SDK
+
 #### 安装方式
 ```
 composer require linwj/exchanges
