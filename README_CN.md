@@ -23,6 +23,8 @@
 
 [ZB](https://github.com/zhouaini528/zb-php) 暂时未加入 Exchanges SDK
 
+[Bitfinex](https://github.com/zhouaini528/zb-php) 暂时未加入 Exchanges SDK
+
 #### 安装方式
 ```
 composer require linwj/exchanges

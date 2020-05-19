@@ -24,6 +24,7 @@
         "linwj/kucoin":"*",
         "linwj/coinbase":"*",
         "linwj/mxc":"*",
-        "linwj/zb":"*"
+        "linwj/zb":"*",
+        "linwj/bitfinex":"*"
     }
 }

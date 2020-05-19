@@ -17,11 +17,13 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Kucoin](https://github.com/zhouaini528/kucoin-php)
 
-[Mxc](https://github.com/zhouaini528/mxc-php) Temporarily not connected to Exchanges SDK
+[Mxc](https://github.com/zhouaini528/mxc-php) 暂时未加入 Exchanges SDK
 
-[Coinbase](https://github.com/zhouaini528/coinbase-php) Temporarily not connected to Exchanges SDK
+[Coinbase](https://github.com/zhouaini528/coinbase-php) 暂时未加入 Exchanges SDK
 
-[ZB](https://github.com/zhouaini528/zb-php) Temporarily not connected to Exchanges SDK
+[ZB](https://github.com/zhouaini528/zb-php) 暂时未加入 Exchanges SDK
+
+[Bitfinex](https://github.com/zhouaini528/zb-php) 暂时未加入 Exchanges SDK
 
 #### Install
 ```
