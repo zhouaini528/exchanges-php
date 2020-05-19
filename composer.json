@@ -1,7 +1,7 @@
 {
     "name": "linwj/exchanges",
     "type": "library",
-    "description": "This is a simple integration SDK for multiple exchanges",
+    "description": "This is a virtual currency SDK that brings together multiple exchanges",
     "license": "MIT",
     "keywords": ["exchange","bitmex", "binance", "okex", "huobi","kucoin","kumex","coinbase","mxc","zb"],
     "authors": [
