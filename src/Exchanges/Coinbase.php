@@ -89,10 +89,10 @@ class Coinbase
 {
     protected $platform;
     
-    function __construct($key,$secret,$host=''){
+    function __construct($key,$secret,$passphrase,$host=''){
         $host=empty($host) ? 'https://api.pro.coinbase.com' : $host ;
         
-        $this->platform=new CoinbaseApi($key,$secret,$host);
+        $this->platform=new CoinbaseApi($key,$secret,$passphrase,$host);
     }
     
     function account(){

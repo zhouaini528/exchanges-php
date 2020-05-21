@@ -15,6 +15,7 @@ use Lin\Exchange\Exchanges\Ku;
 use Lin\Exchange\Exchanges\Bitfinex;
 use Lin\Exchange\Exchanges\Mxc;
 use Lin\Exchange\Exchanges\Coinbase;
+use Lin\Exchange\Exchanges\Zb;
 
 
 class Base
@@ -60,6 +61,10 @@ class Base
             }
             case 'coinbase':{
                 $this->platform=new Coinbase($key,$secret,$extra,$host);
+                break;
+            }
+            case 'zb':{
+                $this->platform=new Zb($key,$secret);
                 break;
             }
             default:{

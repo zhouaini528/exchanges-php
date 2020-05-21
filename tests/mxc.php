@@ -39,30 +39,21 @@ if(empty($action)) $action=intval($argv[1]);//cli pattern
 
 switch ($action){
     case 1:{
-        try {
-            $result=$exchanges->getPlatform()->account()->postInfoUser();
-            print_r($result);
-        }catch (\Exception $e){
-            print_r(json_decode($e->getMessage(),true));
-        }
-        
-        try {
-            $result=$exchanges->getPlatform()->account()->postLoginsHist();
-            print_r($result);
-        }catch (\Exception $e){
-            print_r(json_decode($e->getMessage(),true));
-        }
-        
-        try {
-            $result=$exchanges->getPlatform()->account()->postAuditHist();
-            print_r($result);
-        }catch (\Exception $e){
-            print_r(json_decode($e->getMessage(),true));
-        }
+        $result=$exchanges->getPlatform()->account()->postInfoUser();
         break;
     }
     
     case 2:{
+        $result=$exchanges->getPlatform()->account()->postLoginsHist();
+        break;
+    }
+    
+    case 3:{
+        $result=$exchanges->getPlatform()->account()->postAuditHist();
+        break;
+    }
+    
+    case 4:{
         try {
             $result=$exchanges->getPlatform()->order()->postSubmit([
                 //'cid'=>'',
@@ -123,3 +114,4 @@ switch ($action){
         //exit;
     }
 }
+print_r($result);
