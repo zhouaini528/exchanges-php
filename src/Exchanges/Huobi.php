@@ -221,5 +221,6 @@ class Huobi
     function setOptions(array $options=[]){
         $this->platform_future->setOptions($options);
         $this->platform_spot->setOptions($options);
+        $this->platform_swap->setOptions($options);
     }
 }

@@ -6,7 +6,7 @@
 namespace Lin\Exchange\Map;
 
 /**
- * 初始化映射对象
+ * Initialize the mapping object
  * */
 class Base
 {
@@ -25,9 +25,9 @@ class Base
     }
     
     /**
-     * 原生参数检测
-     * 只要检测数据没有`_`下划线 即为原生参数
-     * @return true 原生参数   false自定义参数
+     * Native parameter detection
+     * As long as the detection data does not have an underscore, it is a native parameter
+     * @return true Native parameters.   false Custom parameters
      * */
     protected function checkOriginalParam(array $data){
         foreach ($data as $k=>$v){
@@ -40,13 +40,13 @@ class Base
     }
     
     /**
-     * 检测交易类型
+     * Detect transaction type
      * @return string  spot future swap
      * */
     protected function checkType(string $symbol=''){
         switch ($this->platform){
             case 'huobi':{
-                //判断最后一位是否是数字
+                //Determine if the last digit is a number
                 if(is_numeric(substr($symbol,-1,1))) return 'future';
                 if(stristr($symbol,'-USD')) return 'swap';
                 break;
@@ -55,7 +55,7 @@ class Base
                 return 'future';
             }
             case 'okex':{
-                //可以通过判断  spot  future  swap
+                //Can be judged spot  future  swap
                 $temp=explode('-', $symbol);
                 if(count($temp)>2){
                     if(is_numeric($temp[2])) return 'future';

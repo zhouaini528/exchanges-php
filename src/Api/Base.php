@@ -5,13 +5,16 @@
 
 namespace Lin\Exchange\Api;
 
+use Lin\Exchange\Map\Map;
 use Lin\Exchange\Exchanges\Huobi;
 use Lin\Exchange\Exchanges\Bitmex;
 use Lin\Exchange\Exchanges\Okex;
 use Lin\Exchange\Exchanges\Binance;
 use Lin\Exchange\Exceptions\Exception;
-use Lin\Exchange\Map\Map;
 use Lin\Exchange\Exchanges\Ku;
+use Lin\Exchange\Exchanges\Bitfinex;
+use Lin\Exchange\Exchanges\Mxc;
+use Lin\Exchange\Exchanges\Coinbase;
 
 
 class Base
@@ -21,7 +24,7 @@ class Base
     protected $map;
     
     /**
-     * 初始化交易所
+     * 
      * */
     function __construct(string $platform,string $key,string $secret,string $extra='',string $host=''){
         $platform=strtolower($platform);
@@ -47,6 +50,18 @@ class Base
                 $this->platform=new Ku($key,$secret,$extra,$host);
                 break;
             }
+            case 'bitfinex':{
+                $this->platform=new Bitfinex($key,$secret,$host);
+                break;
+            }
+            case 'mxc':{
+                $this->platform=new Mxc($key,$secret,$host);
+                break;
+            }
+            case 'coinbase':{
+                $this->platform=new Coinbase($key,$secret,$extra,$host);
+                break;
+            }
             default:{
                 throw new Exception("Exchanges don't exist");
             }
@@ -61,7 +76,6 @@ class Base
      * @return array
      * */
     protected function error($msg){
-        //是否有请求超时的错误
         if(stripos($msg,'Connection timed out after')!==false){
             $httpcode=504;
         }
