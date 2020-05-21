@@ -110,7 +110,7 @@ class Mxc
                 return $this->platform_spot;
             }
             default:{
-                return null;
+                return $this->platform_spot;
             }
         }
     }
