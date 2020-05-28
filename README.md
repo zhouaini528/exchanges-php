@@ -25,6 +25,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Bitfinex](https://github.com/zhouaini528/bitfinex-php)
 
+[Bittrex](https://github.com/zhouaini528/bittrex-php)
+
 #### Install
 ```
 composer require linwj/exchanges

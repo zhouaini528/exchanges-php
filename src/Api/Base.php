@@ -16,6 +16,7 @@ use Lin\Exchange\Exchanges\Bitfinex;
 use Lin\Exchange\Exchanges\Mxc;
 use Lin\Exchange\Exchanges\Coinbase;
 use Lin\Exchange\Exchanges\Zb;
+use Lin\Exchange\Exchanges\Bittrex;
 
 
 class Base
@@ -65,6 +66,10 @@ class Base
             }
             case 'zb':{
                 $this->platform=new Zb($key,$secret);
+                break;
+            }
+            case 'bittrex':{
+                $this->platform=new Bittrex($key,$secret,$extra,$host);
                 break;
             }
             default:{
