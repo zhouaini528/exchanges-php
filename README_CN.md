@@ -27,6 +27,8 @@
 
 [Bittrex](https://github.com/zhouaini528/bittrex-php)
 
+[Kraken](https://github.com/zhouaini528/kraken-php)
+
 #### 安装方式
 ```
 composer require linwj/exchanges

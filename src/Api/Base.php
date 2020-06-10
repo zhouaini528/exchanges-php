@@ -17,6 +17,7 @@ use Lin\Exchange\Exchanges\Mxc;
 use Lin\Exchange\Exchanges\Coinbase;
 use Lin\Exchange\Exchanges\Zb;
 use Lin\Exchange\Exchanges\Bittrex;
+use Lin\Exchange\Exchanges\Kraken;
 
 
 class Base
@@ -70,6 +71,10 @@ class Base
             }
             case 'bittrex':{
                 $this->platform=new Bittrex($key,$secret,$extra,$host);
+                break;
+            }
+            case 'kraken':{
+                $this->platform=new Kraken($key,$secret,$host);
                 break;
             }
             default:{

@@ -27,6 +27,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Bittrex](https://github.com/zhouaini528/bittrex-php)
 
+[Kraken](https://github.com/zhouaini528/kraken-php)
+
 #### Install
 ```
 composer require linwj/exchanges
