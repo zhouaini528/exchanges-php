@@ -13,16 +13,28 @@ use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
 use Lin\Okex\OkexSwap;
 
+use Lin\Okex\OkexAccount;
+use Lin\Okex\OkexMargin;
+use Lin\Okex\OkexOption;
+
 class BaseOkex
 {
     protected $platform_future;
     protected $platform_spot;
     protected $platform_swap;
     
-    function __construct(OkexFuture $platform_future,OkexSpot $platform_spot,OkexSwap $platform_swap){
+    protected $platform_account;
+    protected $platform_margin;
+    protected $platform_option;
+    
+    function __construct(OkexFuture $platform_future,OkexSpot $platform_spot,OkexSwap $platform_swap,OkexAccount $platform_account,OkexMargin $platform_margin,OkexOption $platform_option){
         $this->platform_future=$platform_future;
         $this->platform_spot=$platform_spot;
         $this->platform_swap=$platform_swap;
+        
+        $this->platform_account= $platform_account;
+        $this->platform_margin= $platform_margin;
+        $this->platform_option= $platform_option;
     }
     
     protected function checkType($symbol){
@@ -53,6 +65,8 @@ class AccountOkex extends BaseOkex implements AccountInterface
                 return $this->platform_swap->position()->get($data);
             }
         }
+        
+        return [];
     }
 }
 
@@ -62,7 +76,7 @@ class MarketOkex extends BaseOkex implements MarketInterface
      *
      * */
     function depth(array $data){
-        
+        return [];
     }
 }
 
@@ -83,6 +97,8 @@ class TraderOkex extends BaseOkex implements TraderInterface
                 return $this->platform_swap->order()->post($data);
             }
         }
+        
+        return [];
     }
     
     /**
@@ -100,6 +116,8 @@ class TraderOkex extends BaseOkex implements TraderInterface
                 return $this->platform_swap->order()->post($data);
             }
         }
+        
+        return [];
     }
     
     /**
@@ -117,13 +135,15 @@ class TraderOkex extends BaseOkex implements TraderInterface
                 return $this->platform_swap->order()->postCancel($data);
             }
         }
+        
+        return [];
     }
     
     /**
      *
      * */
     function update(array $data){
-        
+        return [];
     }
     
     /**
@@ -141,6 +161,8 @@ class TraderOkex extends BaseOkex implements TraderInterface
                 return $this->platform_swap->order()->get($data);
             }
         }
+        
+        return [];
     }
     
     /**
@@ -157,6 +179,10 @@ class Okex
     protected $platform_spot;
     protected $platform_swap;
     
+    protected $platform_account;
+    protected $platform_margin;
+    protected $platform_option;
+    
     function __construct($key,$secret,$passphrase,$host=''){
         $host=empty($host) ? 'https://www.okex.com' : $host ;
         
@@ -165,18 +191,22 @@ class Okex
         $this->platform_spot=new OkexSpot($key,$secret,$passphrase,$host);
         
         $this->platform_swap=new OkexSwap($key,$secret,$passphrase,$host);
+        
+        $this->platform_account=new OkexAccount($key,$secret,$passphrase,$host);
+        $this->platform_margin=new OkexMargin($key,$secret,$passphrase,$host);
+        $this->platform_option=new OkexOption($key,$secret,$passphrase,$host);
     }
     
     function account(){
-        return new AccountOkex($this->platform_future,$this->platform_spot,$this->platform_swap);
+        return new AccountOkex($this->platform_future,$this->platform_spot,$this->platform_swap,$this->platform_account,$this->platform_margin,$this->platform_option);
     }
     
     function market(){
-        return new MarketOkex($this->platform_future,$this->platform_spot,$this->platform_swap);
+        return new MarketOkex($this->platform_future,$this->platform_spot,$this->platform_swap,$this->platform_account,$this->platform_margin,$this->platform_option);
     }
     
     function trader(){
-        return new TraderOkex($this->platform_future,$this->platform_spot,$this->platform_swap);
+        return new TraderOkex($this->platform_future,$this->platform_spot,$this->platform_swap,$this->platform_account,$this->platform_margin,$this->platform_option);
     }
     
     function getPlatform(string $type=''){
@@ -189,6 +219,15 @@ class Okex
             }
             case 'swap':{
                 return $this->platform_swap;
+            }
+            case 'account':{
+                return $this->platform_account;
+            }
+            case 'margin':{
+                return $this->platform_margin;
+            }
+            case 'option':{
+                return $this->platform_option;
             }
             default:{
                 return null;
@@ -203,5 +242,9 @@ class Okex
         $this->platform_future->setOptions($options);
         $this->platform_spot->setOptions($options);
         $this->platform_swap->setOptions($options);
+        
+        $this->platform_account->setOptions($options);
+        $this->platform_margin->setOptions($options);
+        $this->platform_option->setOptions($options);
     }
 }

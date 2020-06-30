@@ -24,7 +24,7 @@ $exchanges->setOptions([
     'timeout'=>10,
     
     //If you are developing locally and need an agent, you can set this
-    'proxy'=>true,
+    //'proxy'=>true,
     //More flexible Settings
     /* 'proxy'=>[
      'http'  => 'http://127.0.0.1:12333',
@@ -32,7 +32,7 @@ $exchanges->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    'verify'=>false,
+    //'verify'=>false,
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -632,6 +632,16 @@ switch ($action){
             'instrument_id'=>"BTC-USD-190920",
             "limit"=>15
         ]);
+        break;
+    }
+    
+    case 1003:{
+        $result=$exchanges->getPlatform('account')->wallet()->getAll();
+        break;
+    }
+    
+    case 1004:{
+        $result=$exchanges->getPlatform('account')->currencies()->get();
         break;
     }
     
