@@ -645,6 +645,11 @@ switch ($action){
         break;
     }
     
+    case 1005:{
+        $result=$exchanges->getPlatform('margin')->account()->getAvailabilityAll();
+        break;
+    }
+    
     default:{
         echo 'nothing';
         exit;
