@@ -29,6 +29,8 @@
 
 [Kraken](https://github.com/zhouaini528/kraken-php)
 
+[Gate](https://github.com/zhouaini528/gate-php)   支持 V2/V4
+
 #### 安装方式
 ```
 composer require linwj/exchanges

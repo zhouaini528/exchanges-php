@@ -29,6 +29,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Kraken](https://github.com/zhouaini528/kraken-php)
 
+[Gate](https://github.com/zhouaini528/gate-php)   Support V2/V4
+
 #### Install
 ```
 composer require linwj/exchanges

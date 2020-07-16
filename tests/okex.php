@@ -97,8 +97,9 @@ switch ($action){
     case 100:{
         $result=$exchanges->trader()->buy([
             //'_symbol'=>'DASH-USDT',
-            '_symbol'=>'ADA-USDT',
-            '_price'=>'0.5',
+            '_symbol'=>'btc-usdt',
+            //'_number'=>'0.001',
+            '_price'=>'100',
             //'_client_id'=>'custom ID',
         ]);
         break;
@@ -108,15 +109,15 @@ switch ($action){
         $result=$exchanges->trader()->buy([
             'instrument_id'=>'btc-usdt',
             'type'=>'market',
-            'notional'=>'10'
+            'notional'=>'0.01'
         ]);
         break;
     }
     
     case 102:{
         $result=$exchanges->trader()->sell([
-            '_symbol'=>'DASH-USDT',
-            '_number'=>'0.001',
+            '_symbol'=>'btc-usdt',
+            '_number'=>'0.0107869',
             //'_client_id'=>'custom ID',
         ]);
         break;
@@ -647,6 +648,40 @@ switch ($action){
     
     case 1005:{
         $result=$exchanges->getPlatform('margin')->account()->getAvailabilityAll();
+        break;
+    }
+    
+    case 1006:{
+        $result=$exchanges->getPlatform('spot')->instrument()->getTickerAll();
+        break;
+    }
+    
+    case 1007:{
+        $time=time();
+        
+        $s=date('Y-m-d\TH:i:s\Z', ($time-7200) - date('Z'));
+        $e=date('Y-m-d\TH:i:s\Z', $time - date('Z'));
+        echo $s.PHP_EOL;
+        $result=$exchanges->getPlatform('spot')->instrument()->getCandles([
+            'instrument_id'=>'BTC-USDT',
+            'start'=>$s,
+            'end'=>$e
+        ]);
+        break;
+    }
+    
+    case 1008:{
+        $result=$exchanges->getPlatform('spot')->trade()->getFee();
+        break;
+    }
+    
+    case 1009:{
+        $result=$exchanges->getPlatform('spot')->order()->get([
+            'instrument_id'=>'BTC-USDT',
+            //'order_id'=>'5247654509829120',
+            //'client_id'=>'84dd6c1ad1d42ef6e137430fb80d39a5',
+            //'state'=>'1',
+        ]);
         break;
     }
     
