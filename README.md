@@ -1,5 +1,5 @@
 ### Introduction
-This SDK brings together the APIs of the many exchanges currently trading the most, allowing developers to focus only on the business layer. It is based on [Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php) and so on, and these underlying APIs are encapsulated again. Its advantages support multiple platforms at the same time, support unified parameter input and output, also support native parameter input, and simple quantitative trading to fully meet your needs. Even if you have special requirements, you can use the method [getPlatform()](https://github.com/zhouaini528/exchanges-php/blob/master/README.md#the-original-object) to return the instance and call the underlying API.
+This SDK brings together the APIs of the many exchanges currently trading the most, allowing developers to focus only on the business layer. It is based on [Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php) and so on, and these underlying APIs are encapsulated again. Its advantages support multiple platforms at the same time, support unified parameter input and output, also support native parameter input, and simple quantitative trading to fully meet your needs. Even if you have special requirements, you can use the method [getPlatform()](https://github.com/zhouaini528/exchanges-php#support-for-original-parameters) to return the instance and call the underlying API.
 
 [中文文档](https://github.com/zhouaini528/exchanges-php/blob/master/README_CN.md)
 
@@ -436,6 +436,11 @@ $exchanges->account()->get([
 
 #### Support for original parameters
 Below is the call to the underlying API to initiate a new order instance
+
+The following is the call to the underlying API to initiate a new order instance. There are two ways to call the underlying API.
+
+Method 1: through $exchanges > getplatform ()
+
 ```php
 //binance
 $exchanges->getPlatform('spot')->trade()->postOrder([
@@ -511,6 +516,95 @@ $exchanges->getPlatform('future')->contract()->postOrder([
     //'client_order_id'=>'',//long  false   Clients fill and maintain themselves, and this time must be greater than last time
 ]);
 
+```
+
+Method 2: directly instantiate the underlying exchange. The following code is equivalent to mode 1.
+
+```php
+//binance
+$binance=new Binance($key,$secret);
+$binanc->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+
+$binance=new BinanceFuture($key,$secret);
+$binance->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+
+
+//bitmex
+$bitmex=new Bitmex($key,$secret);
+$bitmex->order()->post([
+    'symbol'=>'XBTUSD',
+    'price'=>'100',
+    'side'=>'Buy',
+    'orderQty'=>'1',
+    'ordType'=>'Limit',
+]);
+
+
+//okex
+$okex=new OkexSpot($key,$secret,$passphrase);
+$okex->order()->post([
+    'instrument_id'=>'btc-usdt',
+    'side'=>'buy',
+    'price'=>'100',
+    'size'=>'0.001',
+    //'type'=>'market',
+    //'notional'=>'100'
+]);
+
+$okex=new OkexFuture($key,$secret,$passphrase);
+$okex->order()->post([
+    'instrument_id'=>'btc-usd-190628',
+    'type'=>'1',
+    'price'=>'100',
+    'size'=>'1',
+]);
+
+$okex=new OkexSwap($key,$secret,$passphrase);
+$okex->order()->post([
+    'instrument_id'=>'BTC-USD-SWAP',
+    'type'=>'1',
+    'price'=>'5000',
+    'size'=>'1',
+]);
+
+
+//huobi
+$huobi=new HuobiSpot($key,$secret);
+$huobi->order()->postPlace([
+    'account-id'=>$account_id,
+    'symbol'=>'btcusdt',
+    'type'=>'buy-limit',
+    'amount'=>'0.001',
+    'price'=>'100',
+]);
+
+$huobi=new HuobiFuture($key,$secret);
+$huobi->contract()->postOrder([
+    'symbol'=>'XRP',//string    false   "BTC","ETH"...
+    'contract_type'=>'quarter',//   string  false   Contract Type ("this_week": "next_week": "quarter":)
+    'contract_code'=>'XRP190927',// string  false   BTC180914
+    'price'=>'0.3',//   decimal true    Price
+    'volume'=>'1',//    long    true    Numbers of orders (amount)
+    'direction'=>'buy',//   string  true    Transaction direction
+    'offset'=>'open',// string  true    "open", "close"
+    'order_price_type'=>'limit',//"limit", "opponent"
+    'lever_rate'=>20,//int  true    Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+    //'client_order_id'=>'',//long  false   Clients fill and maintain themselves, and this time must be greater than last time
+]);
 ```
 
 [More Tests](https://github.com/zhouaini528/exchanges-php/tree/master/tests)
