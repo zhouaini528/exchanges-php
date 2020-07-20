@@ -452,7 +452,10 @@ $exchanges->account()->get([
 #### 支持更底层API对象请求
 使用前建议先去看看这些[Bitmex](https://github.com/zhouaini528/bitmex-php) [Okex](https://github.com/zhouaini528/okex-php) [Huobi](https://github.com/zhouaini528/huobi-php) [Binance](https://github.com/zhouaini528/binance-php)底层已经封装过的SDK。
 
-以下是调用底层API的发起一个新的订单实例
+以下是调用底层API的发起一个新的订单实例，底层调用有两种方式。
+
+方式一：通过$exchanges->getPlatform() 
+
 ```php
 //binance
 $exchanges->getPlatform('spot')->trade()->postOrder([
@@ -529,6 +532,98 @@ $exchanges->getPlatform('future')->contract()->postOrder([
 ]);
 
 ```
+
+方式二：直接实例化底层交易所，以下代码与方式一等效。
+
+```php
+//binance
+$binance=new Binance($key,$secret);
+$binanc->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+
+$binance=new BinanceFuture($key,$secret);
+$binance->trade()->postOrder([
+    'symbol'=>'BTCUSDT',
+    'side'=>'BUY',
+    'type'=>'LIMIT',
+    'quantity'=>'0.01',
+    'price'=>'2000',
+    'timeInForce'=>'GTC',
+]);
+
+
+//bitmex
+$bitmex=new Bitmex($key,$secret);
+$bitmex->order()->post([
+    'symbol'=>'XBTUSD',
+    'price'=>'100',
+    'side'=>'Buy',
+    'orderQty'=>'1',
+    'ordType'=>'Limit',
+]);
+
+
+//okex
+$okex=new OkexSpot($key,$secret,$passphrase);
+$okex->order()->post([
+    'instrument_id'=>'btc-usdt',
+    'side'=>'buy',
+    'price'=>'100',
+    'size'=>'0.001',
+    //'type'=>'market',
+    //'notional'=>'100'
+]);
+
+$okex=new OkexFuture($key,$secret,$passphrase);
+$okex->order()->post([
+    'instrument_id'=>'btc-usd-190628',
+    'type'=>'1',
+    'price'=>'100',
+    'size'=>'1',
+]);
+
+$okex=new OkexSwap($key,$secret,$passphrase);
+$okex->order()->post([
+    'instrument_id'=>'BTC-USD-SWAP',
+    'type'=>'1',
+    'price'=>'5000',
+    'size'=>'1',
+]);
+
+
+//huobi
+$huobi=new HuobiSpot($key,$secret);
+$huobi->order()->postPlace([
+    'account-id'=>$account_id,
+    'symbol'=>'btcusdt',
+    'type'=>'buy-limit',
+    'amount'=>'0.001',
+    'price'=>'100',
+]);
+
+$huobi=new HuobiFuture($key,$secret);
+$huobi->contract()->postOrder([
+    'symbol'=>'XRP',//string    false   "BTC","ETH"...
+    'contract_type'=>'quarter',//   string  false   Contract Type ("this_week": "next_week": "quarter":)
+    'contract_code'=>'XRP190927',// string  false   BTC180914
+    'price'=>'0.3',//   decimal true    Price
+    'volume'=>'1',//    long    true    Numbers of orders (amount)
+    'direction'=>'buy',//   string  true    Transaction direction
+    'offset'=>'open',// string  true    "open", "close"
+    'order_price_type'=>'limit',//"limit", "opponent"
+    'lever_rate'=>20,//int  true    Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
+    //'client_order_id'=>'',//long  false   Clients fill and maintain themselves, and this time must be greater than last time
+]);
+```
+
+
+
 
 
 更多用例请查看 [more](https://github.com/zhouaini528/exchanges-php/tree/master/tests)
