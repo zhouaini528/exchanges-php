@@ -18,6 +18,7 @@ use Lin\Exchange\Exchanges\Coinbase;
 use Lin\Exchange\Exchanges\Zb;
 use Lin\Exchange\Exchanges\Bittrex;
 use Lin\Exchange\Exchanges\Kraken;
+use Lin\Exchange\Exchanges\Gate;
 
 
 class Base
@@ -75,6 +76,10 @@ class Base
             }
             case 'kraken':{
                 $this->platform=new Kraken($key,$secret,$host);
+                break;
+            }
+            case 'gate':{
+                $this->platform=new Gate($key,$secret,$host);
                 break;
             }
             default:{
