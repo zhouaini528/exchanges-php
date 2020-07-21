@@ -22,11 +22,11 @@ class BaseGate
     protected $platform_delivery;
     protected $platform_spot;
     protected $platform_spot_v2;
-    
-    
+
+
     protected $platform_margin;
     protected $platform_wallet;
-    
+
     function __construct(
         GateFuture $platform_future,
         GateDelivery $platform_delivery,
@@ -38,7 +38,7 @@ class BaseGate
         $this->platform_delivery=$platform_delivery;
         $this->platform_spot=$platform_spot;
         $this->platform_spot_v2=$platform_spot_v2;
-        
+
         $this->platform_margin= $platform_margin;
         $this->platform_wallet= $platform_wallet;
     }
@@ -72,35 +72,35 @@ class TraderGate extends BaseGate implements TraderInterface
     function sell(array $data){
         return [];
     }
-    
+
     /**
      *
      * */
     function buy(array $data){
         return [];
     }
-    
+
     /**
      *
      * */
     function cancel(array $data){
         return [];
     }
-    
+
     /**
      *
      * */
     function update(array $data){
         return [];
     }
-    
+
     /**
      *
      * */
     function show(array $data){
         return [];
     }
-    
+
     /**
      *
      * */
@@ -114,24 +114,24 @@ class Gate
     private $key;
     private $secret;
     private $host;
-    
+
     protected $type;
-    
+
     protected $platform_future;
     protected $platform_delivery;
     protected $platform_spot;
     protected $platform_spot_v2;
-    
-    
+
+
     protected $platform_margin;
     protected $platform_wallet;
-    
+
     function __construct($key,$secret,$host){
         $this->key=$key;
         $this->secret=$secret;
         $this->host=empty($host) ? 'https://api.gateio.ws' : '';
     }
-    
+
     function account(){
         return new AccountGate(
             $this->platform_future,
@@ -141,7 +141,7 @@ class Gate
             $this->platform_margin,
             $this->platform_wallet);
     }
-    
+
     function market(){
         return new MarketGate($this->platform_future,
             $this->platform_delivery,
@@ -150,7 +150,7 @@ class Gate
             $this->platform_margin,
             $this->platform_wallet);
     }
-    
+
     function trader(){
         return new TraderGate($this->platform_future,
             $this->platform_delivery,
@@ -159,42 +159,36 @@ class Gate
             $this->platform_margin,
             $this->platform_wallet);
     }
-    
+
     function getPlatform(string $type=''){
         $this->type=strtolower($type);
-        
+
         switch ($this->type){
             case 'spot':{
-                $this->platform_spot=new GateSpot($this->key,$this->secret,$this->host);
-                return $this->platform_spot;
+                return $this->platform_spot=new GateSpot($this->key,$this->secret,$this->host);;
             }
             case 'spot_v2':{
                 $this->host='https://api.gateio.la';
-                $this->platform_spot_v2=new GateSpotV2($this->key,$this->secret,$this->host);
-                return $this->platform_spot_v2;
+                return $this->platform_spot_v2=new GateSpotV2($this->key,$this->secret,$this->host);;
             }
             case 'future':{
-                $this->platform_future=new GateFuture($this->key,$this->secret,$this->host);
-                return $this->platform_future;
+                return $this->platform_future=new GateFuture($this->key,$this->secret,$this->host);;
             }
             case 'margin':{
-                $this->platform_margin=new GateMargin($this->key,$this->secret,$this->host);
-                return $this->platform_margin;
+                return $this->platform_margin=new GateMargin($this->key,$this->secret,$this->host);;
             }
             case 'delivery':{
-                $this->platform_delivery=new GateDelivery($this->key,$this->secret,$this->host);
-                return $this->platform_delivery;
+                return $this->platform_delivery=new GateDelivery($this->key,$this->secret,$this->host);;
             }
             case 'wallet':{
-                $this->platform_wallet=new GateWallet($this->key,$this->secret,$this->host);
-                return $this->platform_wallet;
+                return $this->platform_wallet=new GateWallet($this->key,$this->secret,$this->host);;
             }
             default:{
                 return null;
             }
         }
     }
-    
+
     /**
      * Support for more request Settings
      * */
@@ -202,24 +196,30 @@ class Gate
         switch ($this->type){
             case 'spot':{
                 $this->platform_spot->setOptions($options);
+                break;
             }
             case 'spot_v2':{
                 $this->platform_spot_v2->setOptions($options);
+                break;
             }
             case 'future':{
                 $this->platform_future->setOptions($options);
+                break;
             }
             case 'margin':{
                 $this->platform_margin->setOptions($options);
+                break;
             }
             case 'delivery':{
                 $this->platform_delivery->setOptions($options);
+                break;
             }
             case 'wallet':{
                 $this->platform_wallet->setOptions($options);
+                break;
             }
             default:{
-                
+
             }
         }
     }
