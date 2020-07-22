@@ -14,21 +14,21 @@ use Lin\Exchange\Interfaces\TraderInterface;
 
 class BaseKu
 {
-    protected $platform_kucoin;
     protected $platform_kumex;
+    protected $platform_kucoin;
     protected $host;
-    
-    function __construct(Kumex $platform_kumex,Kucoin $platform_kucoin,$host){
+
+    function __construct(Kumex $platform_kumex=null,Kucoin $platform_kucoin=null,$host){
         $this->platform_kumex=$platform_kumex;
         $this->platform_kucoin=$platform_kucoin;
         $this->host=$host;
     }
-    
+
     protected function checkType(){
         if(stripos($this->host,'kumex')!==false){
             return 'kumex';
         }
-        
+
         return 'kucoin';
     }
 }
@@ -84,7 +84,7 @@ class TraderKu extends BaseKu implements TraderInterface
             }
         }
     }
-    
+
     /**
      *
      * */
@@ -98,7 +98,7 @@ class TraderKu extends BaseKu implements TraderInterface
             }
         }
     }
-    
+
     /**
      *
      * */
@@ -112,7 +112,7 @@ class TraderKu extends BaseKu implements TraderInterface
             }
         }
     }
-    
+
     /**
      *
      * */
@@ -126,7 +126,7 @@ class TraderKu extends BaseKu implements TraderInterface
             }
         }
     }
-    
+
     /**
      *
      * */
@@ -140,7 +140,7 @@ class TraderKu extends BaseKu implements TraderInterface
             }
         }
     }
-    
+
     /**
      *
      * */
@@ -158,52 +158,72 @@ class TraderKu extends BaseKu implements TraderInterface
 
 class Ku
 {
+    private $key;
+    private $secret;
+    private $passphrase;
+    private $host;
+
+    protected $type;
+
     protected $platform_kucoin;
     protected $platform_kumex;
-    protected $host;
-    
+
     function __construct($key,$secret,$passphrase,$host=''){
+        $this->key=$key;
+        $this->secret=$secret;
+        $this->passphrase=$passphrase;
         $this->host=empty($host) ? 'https://api.kucoin.com' : $host ;
-        
-        $this->platform_kucoin=new Kucoin($key,$secret,$passphrase,$this->host);
-        
-        $this->platform_kumex=new Kumex($key,$secret,$passphrase,$this->host);
+
+        $this->getPlatform();
     }
-    
+
     function account(){
         return new AccountKu($this->platform_kumex,$this->platform_kucoin,$this->host);
     }
-    
+
     function market(){
         return new MarketKu($this->platform_kumex,$this->platform_kucoin,$this->host);
     }
-    
+
     function trader(){
         return new TraderKu($this->platform_kumex,$this->platform_kucoin,$this->host);
     }
-    
+
     function getPlatform(string $type=''){
-        switch (strtolower($type)){
+        $this->type=strtolower($type);
+
+        switch ($this->type){
             case 'kucoin':{
-                return $this->platform_kucoin;
+                return $this->platform_kucoin=new Kucoin($this->key,$this->secret,$this->passphrase,$this->host);
             }
             case 'kumex':{
-                return $this->platform_kumex;
+                return $this->platform_kumex=new Kumex($this->key,$this->secret,$this->passphrase,$this->host);
             }
             default:{
                 if(stripos($this->host,'kumex')!==false){
-                    return $this->platform_kumex;
+                    $this->type='kumex';
+                    return $this->platform_kumex=new Kumex($this->key,$this->secret,$this->passphrase,$this->host);
                 }
-                return $this->platform_kucoin;
+                $this->type='kucoin';
+                return $this->platform_kucoin=new Kucoin($this->key,$this->secret,$this->passphrase,$this->host);
             }
         }
     }
-    
+
     /**
      * Support for more request Settings
      * */
     function setOptions(array $options=[]){
-        $this->platform_kucoin->setOptions($options);
-        $this->platform_kumex->setOptions($options);
+
+        switch ($this->type){
+            case 'kucoin':{
+                $this->platform_kucoin->setOptions($options);
+                break;
+            }
+            case 'kumex':{
+                $this->platform_kumex->setOptions($options);
+                break;
+            }
+        }
     }
 }
