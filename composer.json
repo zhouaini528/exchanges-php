@@ -3,7 +3,7 @@
     "type": "library",
     "description": "This is a virtual currency SDK that brings together multiple exchanges",
     "license": "MIT",
-    "keywords": ["exchange","bitmex", "binance", "okex", "huobi","kucoin","kumex","coinbase","mxc","zb","bitfinex","bittrex","kraken"],
+    "keywords": ["exchange","bitmex", "binance", "okex", "huobi","kucoin","kumex","coinbase","mxc","zb","bitfinex","bittrex","kraken","gate"],
     "authors": [
         {
             "name": "linwenjun",
