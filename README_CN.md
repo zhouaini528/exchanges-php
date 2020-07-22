@@ -15,7 +15,7 @@
 
 [Binance](https://github.com/zhouaini528/binance-php)
 
-[Kucoin](https://github.com/zhouaini528/kucoin-php)
+[Kucoin/Kumex](https://github.com/zhouaini528/kucoin-php)
 
 [Mxc](https://github.com/zhouaini528/mxc-php)
 
