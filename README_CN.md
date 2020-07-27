@@ -458,6 +458,7 @@ $exchanges->account()->get([
 
 ```php
 //binance
+$exchanges=new Exchanges('binance',$key,$secret);
 $exchanges->getPlatform('spot')->trade()->postOrder([
     'symbol'=>'BTCUSDT',
     'side'=>'BUY',
@@ -477,6 +478,7 @@ $exchanges->getPlatform('future')->trade()->postOrder([
 
 
 //bitmex
+$exchanges=new Exchanges('bitmex',$key,$secret);
 $exchanges->getPlatform()->order()->post([
     'symbol'=>'XBTUSD',
     'price'=>'100',
@@ -487,6 +489,7 @@ $exchanges->getPlatform()->order()->post([
 
 
 //okex
+$exchanges=new Exchanges('okex',$key,$secret);
 $exchanges->getPlatform('spot')->order()->post([
     'instrument_id'=>'btc-usdt',
     'side'=>'buy',
@@ -510,6 +513,7 @@ $result=$exchanges->getPlatform('swap')->order()->post([
 
 
 //huobi
+$exchanges=new Exchanges('huobi',$key,$secret);
 $exchanges->getPlatform('spot')->order()->postPlace([
     'account-id'=>$account_id,
     'symbol'=>'btcusdt',
