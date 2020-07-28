@@ -542,7 +542,7 @@ $exchanges->getPlatform('future')->contract()->postOrder([
 ```php
 //binance
 $binance=new Binance($key,$secret);
-$binanc->trade()->postOrder([
+$binance->trade()->postOrder([
     'symbol'=>'BTCUSDT',
     'side'=>'BUY',
     'type'=>'LIMIT',

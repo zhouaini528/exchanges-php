@@ -527,7 +527,7 @@ Method 2: directly instantiate the underlying exchange. The following code is eq
 ```php
 //binance
 $binance=new Binance($key,$secret);
-$binanc->trade()->postOrder([
+$binance->trade()->postOrder([
     'symbol'=>'BTCUSDT',
     'side'=>'BUY',
     'type'=>'LIMIT',
