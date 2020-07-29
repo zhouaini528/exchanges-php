@@ -28,6 +28,7 @@
         "linwj/bitfinex":"*",
         "linwj/bittrex":"*",
         "linwj/kraken":"*",
-        "linwj/gate":"*"
+        "linwj/gate":"*",
+        "linwj/bigone":"*"
     }
 }

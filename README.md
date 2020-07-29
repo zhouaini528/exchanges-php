@@ -31,6 +31,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Gate](https://github.com/zhouaini528/gate-php)   Support V2/V4
 
+[Bigone](https://github.com/zhouaini528/bigone-php)   
+
 #### Install
 ```
 composer require linwj/exchanges
