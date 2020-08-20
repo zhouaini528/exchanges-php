@@ -5,6 +5,7 @@
 
 namespace Lin\Exchange\Api;
 
+use Lin\Exchange\Exchanges\Crex;
 use Lin\Exchange\Map\Map;
 use Lin\Exchange\Exchanges\Huobi;
 use Lin\Exchange\Exchanges\Bitmex;
@@ -81,6 +82,11 @@ class Base
             }
             case 'gate':{
                 $this->platform=new Gate($key,$secret,$host);
+                break;
+            }
+            case 'crex':
+            case 'crex24':{
+                $this->platform=new Crex($key,$secret,$host);
                 break;
             }
             default:{
