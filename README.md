@@ -33,6 +33,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Bigone](https://github.com/zhouaini528/bigone-php)   
 
+[Crex24](https://github.com/zhouaini528/crex24-php)   
+
 #### Install
 ```
 composer require linwj/exchanges
