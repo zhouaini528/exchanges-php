@@ -35,6 +35,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Crex24](https://github.com/zhouaini528/crex24-php)   
 
+**If you don't find the exchange SDK you want, you can tell me and I'll join them.**
+
 #### Install
 ```
 composer require linwj/exchanges
