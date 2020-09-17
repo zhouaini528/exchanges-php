@@ -35,6 +35,8 @@
 
 [Crex24](https://github.com/zhouaini528/crex24-php)   
 
+[Bybit](https://github.com/zhouaini528/bybit-php)   
+
 **如果没有找到你想要的交易所SDK你可以告诉我，我来加入它们。**
 
 #### 安装方式

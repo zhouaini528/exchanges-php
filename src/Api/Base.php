@@ -5,6 +5,7 @@
 
 namespace Lin\Exchange\Api;
 
+use Lin\Exchange\Exchanges\Bybit;
 use Lin\Exchange\Exchanges\Crex;
 use Lin\Exchange\Map\Map;
 use Lin\Exchange\Exchanges\Huobi;
@@ -87,6 +88,12 @@ class Base
             case 'crex':
             case 'crex24':{
                 $this->platform=new Crex($key,$secret,$host);
+                break;
+            }
+            case 'bybit':
+            case 'bybitlinear':
+            case 'bybitinverse':{
+                $this->platform=new Bybit($key,$secret,$host);
                 break;
             }
             default:{
