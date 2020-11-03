@@ -13,7 +13,7 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Huobi](https://github.com/zhouaini528/huobi-php)
 
-[Binance](https://github.com/zhouaini528/binance-php)
+[Binance](https://github.com/zhouaini528/binance-php) Support[Websocket](https://github.com/zhouaini528/binance-php/blob/master/README_CN.md#Websocket)
 
 [Kucoin/Kumex](https://github.com/zhouaini528/kucoin-php)
 
