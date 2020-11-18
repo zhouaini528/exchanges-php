@@ -2,7 +2,7 @@
 
 /**
  * @author lin <465382251@qq.com>
- * 
+ *
  * Most of them are unfinished and need your help
  * https://github.com/zhouaini528/bitmex-php.git
  * */
@@ -22,7 +22,7 @@ $exchanges=new Exchanges('okex',$key,$secret,$passphrase);
 $exchanges->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
-    
+
     //If you are developing locally and need an agent, you can set this
     //'proxy'=>true,
     //More flexible Settings
@@ -47,7 +47,7 @@ switch ($action){
             '_symbol'=>'exception testing',
             '_price'=>'10',
         ]);
-        
+
         /*
         Array
         (
@@ -63,13 +63,13 @@ switch ($action){
          */
         break;
     }
-    
+
     case 2:{
         //If you are developing locally and need an agent, you can set this
         $exchanges->setOptions([
             'proxy'=>true,
         ]);
-        
+
         //More flexible Settings
         $exchanges->setOptions([
             'proxy'=>[
@@ -78,20 +78,20 @@ switch ($action){
                 'no'    =>  ['.cn']
             ],
         ]);
-        
+
         //Get the information of holding positions of a contract.
         $result=$exchanges->account()->get([
             '_symbol'=>'BTC-USD-190927',
         ]);
         print_r($result);
-        
+
         //This endpoint supports getting the balance, amount available/on hold of a token in spot account.
         $result=$exchanges->account()->get([
             '_symbol'=>'BTC',
         ]);
         break;
     }
-    
+
     //******************************Spot
     //***********Spot Market
     case 100:{
@@ -113,7 +113,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 102:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'btc-usdt',
@@ -131,7 +131,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Spot Limit
     case 150:{
         $result=$exchanges->trader()->buy([
@@ -142,7 +142,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 151:{
         //The original parameters
         $result=$exchanges->trader()->buy([
@@ -153,7 +153,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 152:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USDT',
@@ -163,7 +163,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 153:{
         //The original parameters
         $_client_id=md5(rand(1,999999999));//custom ID
@@ -175,26 +175,26 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 160:{
         $result=$exchanges->trader()->show([
             '_symbol'=>'BTC-USDT',
             '_order_id'=>'2671215997495296',
         ]);
-        
+
         break;
     }
-    
+
     case 161:{
         //The original parameters
         $result=$exchanges->trader()->show([
             'instrument_id'=>'BTC-USDT',
             'order_id'=>'2671215997495296',
         ]);
-        
+
         break;
     }
-    
+
     case 170:{
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTC-USDT',
@@ -202,7 +202,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 171:{
         //The original parameters
         $result=$exchanges->trader()->cancel([
@@ -211,7 +211,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 180:{
         //This endpoint supports getting the balance, amount available/on hold of a token in spot account.
         $result=$exchanges->account()->get([
@@ -219,7 +219,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 181:{
         //Place an Order
         $result=$exchanges->getPlatform('spot')->order()->post([
@@ -227,18 +227,18 @@ switch ($action){
             'side'=>'buy',
             'price'=>'100',
             'size'=>'0.001',
-            
+
             //'type'=>'market',
             //'notional'=>'100'
         ]);
         break;
     }
-    
-    
+
+
     //***Complete spot flow
     case 400:{
         $_client_id=md5(rand(1,999999999));//custom ID
-        
+
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USDT',
             '_number'=>'0.001',
@@ -246,15 +246,15 @@ switch ($action){
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTC-USDT',
             '_client_id'=>$_client_id,
         ]);
         break;
     }
-    
-    
+
+
     //******************************Future
     //***********Future Market
     case 200:{
@@ -266,7 +266,7 @@ switch ($action){
             '_entry'=>true,//open long
             //'_client_id'=>'custom ID',
         ]);
-        
+
         /* $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USD-190927',
             '_number'=>'1',
@@ -283,7 +283,7 @@ switch ($action){
             '_entry'=>false,//open short
             //'_client_id'=>'custom ID',
         ]);
-        
+
         /* $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USD-190927',
             '_number'=>'1',
@@ -292,11 +292,11 @@ switch ($action){
         ]); */
         break;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     case 203:{
         //It's the opposite of that  => case 204
         $result=$exchanges->trader()->sell([
@@ -317,7 +317,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 211:{
         //It's the same as that  => case 200
         //The original parameters
@@ -333,7 +333,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 221:{
         //The original parameters
         $result=$exchanges->trader()->sell([
@@ -348,7 +348,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 203:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USD-190927',
@@ -358,7 +358,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Future Limit
     case 250:{
         $result=$exchanges->trader()->buy([
@@ -380,7 +380,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 261:{
         //The original parameters
         $result=$exchanges->trader()->buy([
@@ -395,8 +395,8 @@ switch ($action){
         ]);
         break;
     }
-    
-    
+
+
     case 252:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USD-190927',
@@ -417,7 +417,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 301:{
         $result=$exchanges->trader()->show([
             '_symbol'=>'BTC-USD-190927',
@@ -433,7 +433,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 303:{
         //The original parameters
         $result=$exchanges->trader()->cancel([
@@ -442,7 +442,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 304:{
         //Get the information of holding positions of a contract.
         $result=$exchanges->account()->get([
@@ -450,7 +450,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 305:{
         //Place an Order
         $result=$exchanges->getPlatform('future')->order()->post([
@@ -461,18 +461,18 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 306:{
         $result=$exchanges->getPlatform('future')->position()->get();
         break;
     }
-    
-    
-    
+
+
+
     //***Complete future flow
     case 450:{
         $_client_id=md5(rand(1,999999999));//custom ID
-        
+
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTC-USD-190927',
             '_number'=>'1',
@@ -481,15 +481,15 @@ switch ($action){
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTC-USD-190927',
             '_client_id'=>$_client_id,
         ]);
-        
+
         break;
     }
-    
+
     //******************************Swap
     //***********Swap Market
     //Complete swap flow
@@ -501,15 +501,15 @@ switch ($action){
             '_entry'=>true,//open long
             //'_client_id'=>'custom ID',
         ]);
-        print_r($result); 
-        
+        print_r($result);
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTC-USD-SWAP',
             '_order_id'=>$result['_order_id'],
         ]);
         break;
     }
-    
+
     case 501:{
         $result=$exchanges->trader()->show([
             '_symbol'=>'BTC-USD-SWAP',
@@ -517,7 +517,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 502:{
         //Get the information of holding positions of a contract.
         $result=$exchanges->account()->get([
@@ -525,7 +525,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 503:{
         $result=$exchanges->trader()->buy([
             'instrument_id'=>'BTC-USD-SWAP',
@@ -539,7 +539,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 504:{
         //It's the opposite of that  => case 505
         $result=$exchanges->trader()->sell([
@@ -549,7 +549,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 505:{
         //It's the opposite of that  => case 504
         $result=$exchanges->trader()->buy([
@@ -559,7 +559,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 506:{
         //It's the opposite of that  => case 507
         $result=$exchanges->trader()->buy([
@@ -569,7 +569,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 507:{
         //It's the opposite of that  => case 506
         $result=$exchanges->trader()->sell([
@@ -579,7 +579,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Swap Limit
     case 510:{
         $result=$exchanges->trader()->buy([
@@ -590,7 +590,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 511:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USD-SWAP',
@@ -600,7 +600,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 600:{
         //Place an Order
         $result=$exchanges->getPlatform('swap')->order()->post([
@@ -611,8 +611,8 @@ switch ($action){
         ]);
         break;
     }
-    
-    
+
+
     case 1001:{
         //Public API
         $exchanges=new Exchanges('okex');
@@ -627,7 +627,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 1002:{
         $result=$exchanges->getPlatform('future')->fill()->get([
             'instrument_id'=>"BTC-USD-190920",
@@ -635,30 +635,30 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 1003:{
         $result=$exchanges->getPlatform('account')->wallet()->getAll();
         break;
     }
-    
+
     case 1004:{
         $result=$exchanges->getPlatform('account')->currencies()->get();
         break;
     }
-    
+
     case 1005:{
         $result=$exchanges->getPlatform('margin')->account()->getAvailabilityAll();
         break;
     }
-    
+
     case 1006:{
         $result=$exchanges->getPlatform('spot')->instrument()->getTickerAll();
         break;
     }
-    
+
     case 1007:{
         $time=time();
-        
+
         $s=date('Y-m-d\TH:i:s\Z', ($time-7200) - date('Z'));
         $e=date('Y-m-d\TH:i:s\Z', $time - date('Z'));
         echo $s.PHP_EOL;
@@ -669,12 +669,12 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 1008:{
         $result=$exchanges->getPlatform('spot')->trade()->getFee();
         break;
     }
-    
+
     case 1009:{
         $result=$exchanges->getPlatform('spot')->order()->get([
             'instrument_id'=>'BTC-USDT',
@@ -684,7 +684,37 @@ switch ($action){
         ]);
         break;
     }
-    
+
+    case 1010:{
+        /*$result=$exchanges->trader()->sell([
+            '_price'=>'10',
+            '_symbol'=>'eos-usdt',
+            '_number'=>'3',
+            //'_client_id'=>'custom ID',
+        ]);*/
+
+
+        /*$result=$exchanges->trader()->cancel([
+            '_symbol'=>'eos-usdt',
+            '_order_id'=>'5881438902511617',
+        ]);
+
+        sleep(2);*/
+
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'eos-usdt',
+            '_order_id'=>'5881438902511617',
+        ]);
+
+        /*$result=$exchanges->getPlatform('spot')->order()->get([
+            'instrument_id'=>'BTC-USDT',
+            //'order_id'=>'5247654509829120',
+            //'client_id'=>'84dd6c1ad1d42ef6e137430fb80d39a5',
+            //'state'=>'1',
+        ]);*/
+        break;
+    }
+
     default:{
         echo 'nothing';
         exit;
