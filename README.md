@@ -7,7 +7,7 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Exchanges](https://github.com/zhouaini528/exchanges-php) It includes all of the following exchanges and is highly recommended.
 
-[Bitmex](https://github.com/zhouaini528/bitmex-php)
+[Bitmex](https://github.com/zhouaini528/bitmex-php) Support [Websocket](https://github.com/zhouaini528/bitmex-php/blob/master/README.md#Websocket)
 
 [Okex](https://github.com/zhouaini528/okex-php) Support [Websocket](https://github.com/zhouaini528/okex-php/blob/master/README.md#Websocket)
 
