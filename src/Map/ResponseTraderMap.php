@@ -31,7 +31,7 @@ class ResponseTraderMap extends Base implements TraderInterface
             'canceling'=>'CANCELING',
             'cancelled'=>'CANCELLED',
             'failure'=>'FAILURE', */
-            
+
             //订单状态("-2":失败,"-1":撤单成功,"0":等待成交 ,"1":部分成交, "2":完全成交,"3":下单中,"4":撤单中,）
             '-2'=>'FAILURE',
             '-1'=>'CANCELLED',
@@ -278,15 +278,15 @@ class ResponseTraderMap extends Base implements TraderInterface
                         break;
                     }
                 }
-                
+
                 if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
-                
+
                 //合约交易撤单成功，再次撤相同ID单号会报1071
                 if(isset($data['result']['data']['errors'][0]['err_code']) && $data['result']['data']['errors'][0]['err_code']==1071) {
                     $map['_status']='CANCELLED';
                     $map['_order_id']=$data['result']['data']['errors'][0]['order_id'];
                 }
-                    
+
                 break;
             }
             case 'bitmex':{
@@ -319,7 +319,7 @@ class ResponseTraderMap extends Base implements TraderInterface
             }
             case 'kucoin':{
                 $map['_order_id']=$data['request']['_order_id'] ?? '';
-                
+
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
                 if(isset($data['result']['data']['totalNum'])) $map['_status']='FAILURE';
                 break;
@@ -358,17 +358,16 @@ class ResponseTraderMap extends Base implements TraderInterface
      * */
     function show(array $data){
         if(empty($data['result'])) return array_merge($data['result'],['_status'=>'FAILURE','msg'=>'Something went wrong last time']);;
-        
+
         $map=[];
         switch ($this->platform){
             case 'huobi':{
-                
                 //判断是期货还是现货
                 switch ($this->checkType($data['request']['_symbol'] ?? '')){
                     case 'spot':{
                         $map['_order_id']=$data['result']['data']['id'];
                         $map['_filled_qty']=$data['result']['data']['field-amount'];
-                        $data['result']['data']['field-amount'] == 0 ? $map['_price_avg']=0:$map['_price_avg']=bcdiv(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-amount']),16);
+                        $map['_price_avg']=$data['result']['data']['field-amount'] == 0 ? 0 : bcdiv(bcadd(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-fees'])),strval($data['result']['data']['field-amount']),16);
                         $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
                         $map['_filed_amount']=$data['result']['data']['field-cash-amount'];
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
@@ -413,11 +412,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 //判断是期货还是现货
                 switch ($this->checkType($data['result']['instrument_id'])){
                     case 'spot':{
-                        //okex 小币种 精度又丢失的情况  不如dash-usdt  filled_notional:只精度到0.1位  所以采用倒推的方式  filled_notional=price_avg*filled_size 
+                        //okex 小币种 精度又丢失的情况  不如dash-usdt  filled_notional:只精度到0.1位  所以采用倒推的方式  filled_notional=price_avg*filled_size
                         $map['_filed_amount']=bcmul(strval($data['result']['price_avg']),strval($data['result']['filled_size']),16);
-                        
+
                         $map['_filled_qty']=$data['result']['filled_size'];
-                        $data['result']['filled_size']==0 ? $map['_price_avg']=0 : $map['_price_avg']=bcdiv(strval($map['_filed_amount']),strval($data['result']['filled_size']),16);
+                        $map['_price_avg']=$data['result']['filled_size']==0 ? 0 : bcdiv(strval($map['_filed_amount']),strval($data['result']['filled_size']),16);
                         $map['_status']=$this->okex_status['spot'][$data['result']['state']];
                         break;
                     }
@@ -443,7 +442,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 $map['_filled_qty']=$data['result']['executedQty'];
                 $map['_status']=$this->binance_status[$data['result']['status']];
-                
+
                 switch ($this->checkType()){
                     case 'future':{
                         $map['_price_avg']=$data['result']['avgPrice'];
@@ -451,7 +450,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         break;
                     }
                     case 'spot':{
-                        $data['result']['executedQty']==0 ? $map['_price_avg']=0 : $map['_price_avg']=bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
+                        $map['_price_avg']=$data['result']['executedQty']==0 ? 0 : bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
                         $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];
                         break;
                     }
