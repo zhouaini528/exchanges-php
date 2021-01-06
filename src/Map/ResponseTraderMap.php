@@ -366,10 +366,13 @@ class ResponseTraderMap extends Base implements TraderInterface
                 switch ($this->checkType($data['request']['_symbol'] ?? '')){
                     case 'spot':{
                         $map['_order_id']=$data['result']['data']['id'];
+
                         $map['_filled_qty']=$data['result']['data']['field-amount'];
-                        $map['_price_avg']=$data['result']['data']['field-amount'] == 0 ? 0 : bcdiv(bcadd(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-fees'])),strval($data['result']['data']['field-amount']),16);
-                        $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
                         $map['_filed_amount']=$data['result']['data']['field-cash-amount'];
+
+                        $map['_price_avg']=bcdiv(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-amount']),16);
+
+                        $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
                         break;
                     }
@@ -412,11 +415,9 @@ class ResponseTraderMap extends Base implements TraderInterface
                 //判断是期货还是现货
                 switch ($this->checkType($data['result']['instrument_id'])){
                     case 'spot':{
-                        //okex 小币种 精度又丢失的情况  不如dash-usdt  filled_notional:只精度到0.1位  所以采用倒推的方式  filled_notional=price_avg*filled_size
-                        $map['_filed_amount']=bcmul(strval($data['result']['price_avg']),strval($data['result']['filled_size']),16);
-
+                        $map['_filed_amount']=$data['result']['filled_notional'];
                         $map['_filled_qty']=$data['result']['filled_size'];
-                        $map['_price_avg']=$data['result']['filled_size']==0 ? 0 : bcdiv(strval($map['_filed_amount']),strval($data['result']['filled_size']),16);
+                        $map['_price_avg']=$data['result']['price_avg'];
                         $map['_status']=$this->okex_status['spot'][$data['result']['state']];
                         break;
                     }
