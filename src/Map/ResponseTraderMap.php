@@ -370,7 +370,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_filled_qty']=$data['result']['data']['field-amount'];
                         $map['_filed_amount']=$data['result']['data']['field-cash-amount'];
 
-                        $map['_price_avg']=bcdiv(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-amount']),16);
+                        $map['_price_avg']=$data['result']['data']['field-amount'] == 0 ? 0 : bcdiv(strval($data['result']['data']['field-cash-amount']),strval($data['result']['data']['field-amount']),16);
 
                         $map['_status']=$this->huobi_status['spot'][$data['result']['data']['state']];
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['clientOrderId'] ?? '');
