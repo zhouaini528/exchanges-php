@@ -35,7 +35,9 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Crex24](https://github.com/zhouaini528/crex24-php)   
 
-[Bybit](https://github.com/zhouaini528/bybit-php)   
+[Bybit](https://github.com/zhouaini528/bybit-php)  
+
+[Coinbene](https://github.com/zhouaini528/coinbene-php)   Support V3 
 
 **If you don't find the exchange SDK you want, you can tell me and I'll join them.**
 

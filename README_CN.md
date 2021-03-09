@@ -37,7 +37,9 @@ QQ交流群：668421169
 
 [Crex24](https://github.com/zhouaini528/crex24-php)   
 
-[Bybit](https://github.com/zhouaini528/bybit-php)   
+[Bybit](https://github.com/zhouaini528/bybit-php)  
+
+[Coinbene](https://github.com/zhouaini528/coinbene-php)   支持V3 
 
 **如果没有找到你想要的交易所SDK你可以告诉我，我来加入它们。**
 
