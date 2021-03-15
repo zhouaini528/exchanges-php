@@ -37,7 +37,9 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Bybit](https://github.com/zhouaini528/bybit-php)  
 
-[Coinbene](https://github.com/zhouaini528/coinbene-php)   Support V3 
+[Coinbene](https://github.com/zhouaini528/coinbene-php)   Support V3
+
+[Bitget](https://github.com/zhouaini528/bitget-php)   Support SwapV3 SpotV1
 
 **If you don't find the exchange SDK you want, you can tell me and I'll join them.**
 
