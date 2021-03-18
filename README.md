@@ -41,6 +41,8 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Bitget](https://github.com/zhouaini528/bitget-php)   Support SwapV3 SpotV1
 
+[Poloniex](https://github.com/zhouaini528/poloniex-php)
+
 **If you don't find the exchange SDK you want, you can tell me and I'll join them.**
 
 #### Install
