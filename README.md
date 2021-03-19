@@ -29,7 +29,7 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Kraken](https://github.com/zhouaini528/kraken-php)
 
-[Gate](https://github.com/zhouaini528/gate-php)   Support V2/V4
+[Gate](https://github.com/zhouaini528/gate-php)   
 
 [Bigone](https://github.com/zhouaini528/bigone-php)   
 
@@ -37,9 +37,9 @@ This SDK brings together the APIs of the many exchanges currently trading the mo
 
 [Bybit](https://github.com/zhouaini528/bybit-php)  
 
-[Coinbene](https://github.com/zhouaini528/coinbene-php)   Support V3
+[Coinbene](https://github.com/zhouaini528/coinbene-php)   
 
-[Bitget](https://github.com/zhouaini528/bitget-php)   Support SwapV3 SpotV1
+[Bitget](https://github.com/zhouaini528/bitget-php)   
 
 [Poloniex](https://github.com/zhouaini528/poloniex-php)
 

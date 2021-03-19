@@ -31,7 +31,7 @@ QQ交流群：668421169
 
 [Kraken](https://github.com/zhouaini528/kraken-php)
 
-[Gate](https://github.com/zhouaini528/gate-php)   支持 V2/V4
+[Gate](https://github.com/zhouaini528/gate-php)   
 
 [Bigone](https://github.com/zhouaini528/bigone-php)   
 
@@ -39,9 +39,9 @@ QQ交流群：668421169
 
 [Bybit](https://github.com/zhouaini528/bybit-php)  
 
-[Coinbene](https://github.com/zhouaini528/coinbene-php)   支持V3 
+[Coinbene](https://github.com/zhouaini528/coinbene-php)   
 
-[Bitget](https://github.com/zhouaini528/bitget-php)   支持SwapV3 SpotV1 
+[Bitget](https://github.com/zhouaini528/bitget-php)   
 
 [Poloniex](https://github.com/zhouaini528/poloniex-php)
 
