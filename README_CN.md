@@ -17,7 +17,7 @@ QQ交流群：668421169
 
 [Binance](https://github.com/zhouaini528/binance-php) 支持[Websocket](https://github.com/zhouaini528/binance-php/blob/master/README_CN.md#Websocket)
 
-[Kucoin/Kumex](https://github.com/zhouaini528/kucoin-php)
+[Kucoin](https://github.com/zhouaini528/kucoin-php)
 
 [Mxc](https://github.com/zhouaini528/mxc-php)
 
