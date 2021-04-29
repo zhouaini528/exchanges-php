@@ -132,16 +132,11 @@ $exchanges->setOptions([
     //设置请求超时时间，默认60s
     'timeout'=>10,
     
-    //如果您正在本地开发需要代理，您可以这样设置
-    'proxy'=>true,
-    //更灵活的代理设置
-    /* 'proxy'=>[
-     'http'  => 'http://127.0.0.1:12333',
-     'https' => 'http://127.0.0.1:12333',
-     'no'    =>  ['.cn']
-     ], */
-    //是否开启证书
-    //'verify'=>false,
+    //https://github.com/guzzle/guzzle
+    'proxy'=>[],
+
+    //https://www.php.net/manual/en/book.curl.php
+    'curl'=>[],
 ]);
 ```
 
@@ -173,6 +168,7 @@ $exchanges->trader()->buy([
     'type'=>'market',
     'notional'=>'10'
 ]);
+
 
 //huobi
 //统一提交参数
