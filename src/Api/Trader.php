@@ -53,7 +53,7 @@ class Trader extends Base implements TraderInterface
             if(!$show) return $trader;
 
             //如果交易所返回订单不存在抛出异常
-            if(empty($trader['_order_id'])) throw new \Exception('Order does not exist.');
+            if(empty($trader['_order_id'])) throw new \Exception('Buy Failed');
 
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
@@ -113,7 +113,7 @@ class Trader extends Base implements TraderInterface
             if(!$show) return $trader;
 
             //如果交易所返回订单不存在抛出异常
-            if(empty($trader['_order_id'])) throw new \Exception('Order does not exist.');
+            if(empty($trader['_order_id'])) throw new \Exception('Sell Failed');
 
             //交易所是撮合交易，所以查询需要间隔时间
             sleep(Exchanges::$TRADER_SHOW_TIME);
