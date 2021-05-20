@@ -155,7 +155,7 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             }
             case 'spot':{
                 //order-id
-                if(isset($data['order-id'])) return $this->platform_spot->order()->get($data);
+                if(isset($data['order-id']) && !empty($data['order-id'])) return $this->platform_spot->order()->get($data);
                 return $this->platform_spot->order()->getClientOrder($data);
             }
             case 'swap':{
