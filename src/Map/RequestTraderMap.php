@@ -487,6 +487,8 @@ class RequestTraderMap extends Base implements TraderInterface
 
                 if(empty($map['orderId'])) unset($map['orderId']);
                 if(empty($map['origClientOrderId'])) unset($map['origClientOrderId']);
+                else $map['newClientOrderId']=$map['origClientOrderId'];
+
 
                 break;
             }
