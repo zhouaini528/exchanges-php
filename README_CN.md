@@ -45,6 +45,8 @@ QQ交流群：668421169
 
 [Poloniex](https://github.com/zhouaini528/poloniex-php)
 
+[Coinex](https://github.com/zhouaini528/coinex-php)
+
 **如果没有找到你想要的交易所SDK你可以告诉我，我来加入它们。**
 
 #### 安装方式
