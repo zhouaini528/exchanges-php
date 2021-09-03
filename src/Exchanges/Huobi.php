@@ -178,6 +178,9 @@ class Huobi
     protected $platform_spot;
     protected $platform_swap;
 
+    protected $platform='';
+    protected $version='';
+
     function __construct($key,$secret,$host=''){
         $this->platform_future=new HuobiFuture($key,$secret,empty($host) ? 'https://api.hbdm.com' : $host);
 
@@ -213,6 +216,22 @@ class Huobi
                 return null;
             }
         }
+    }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform;
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
     }
 
 

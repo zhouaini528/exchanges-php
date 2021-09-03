@@ -2,7 +2,7 @@
 
 /**
  * @author lin <465382251@qq.com>
- * 
+ *
  * Most of them are unfinished and need your help
  * https://github.com/zhouaini528/huobi-php.git
  * */
@@ -23,7 +23,7 @@ $exchanges=new Exchanges('huobi',$key,$secret,$account_id,$host);
 $exchanges->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
-    
+
     //If you are developing locally and need an agent, you can set this
     //'proxy'=>true,
     //More flexible Settings
@@ -48,7 +48,7 @@ switch ($action){
             '_symbol'=>'exception testing',
             //'_price'=>'10',
         ]);
-        
+
         /*
         Array
         (
@@ -57,7 +57,7 @@ switch ($action){
                     [status] => error
                     [err-code] => api-signature-not-valid
                     [err-msg] => Signature not valid: Incorrect Access key [Access key错误]
-                    [data] => 
+                    [data] =>
                     [_method] => POST
                     [_url] => https://api.huobi.pro/v1/order/orders/place
                     [_httpcode] => 200
@@ -66,13 +66,13 @@ switch ($action){
          */
         break;
     }
-    
+
     case 2:{
         //If you are developing locally and need an agent, you can set this
         $exchanges->setOptions([
             'proxy'=>true,
         ]);
-        
+
         //More flexible Settings
         $exchanges->setOptions([
             'proxy'=>[
@@ -81,14 +81,14 @@ switch ($action){
                 'no'    =>  ['.cn']
             ],
         ]);
-        
+
         //bargaining transaction
         $result=$exchanges->account()->get([
             '_symbol'=>'btcusdt',
         ]);
         break;
     }
-    
+
     //******************************Spot
     //***********Spot Market
     case 99:{
@@ -120,11 +120,12 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 101:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'btcusdt',
             '_number'=>'0.001',
+
         ]);
         break;
     }
@@ -177,14 +178,14 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 300:{
         $result=$exchanges->trader()->show([
             '_order_id'=>'44997280257',
         ]);
         break;
     }
-    
+
     case 301:{
         //The original parameters
         $result=$exchanges->trader()->show([
@@ -199,14 +200,14 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 303:{
         $result=$exchanges->account()->get([
             '_symbol'=>'btcusdt',
         ]);
         break;
     }
-    
+
     case 304:{
         $result=$exchanges->getPlatform('spot')->order()->postPlace([
             'account-id'=>$account_id,
@@ -217,7 +218,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***Complete spot flow
     case 391:{
         echo $_client_id='abc'.rand(10000,99999).rand(10000,99999);
@@ -229,22 +230,22 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 392:{
         $result=$exchanges->trader()->show([
             '_client_id'=>'abc7083059759',
         ]);
         break;
     }
-    
+
     case 393:{
         $result=$exchanges->trader()->cancel([
             '_client_id'=>'abc7083059759',
         ]);
         break;
     }
-    
-    
+
+
     case 397:{
         $_client_id=rand(10000,99999).rand(10000,99999);
         $result=$exchanges->trader()->buy([
@@ -254,11 +255,11 @@ switch ($action){
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_client_id'=>$_client_id,
         ]);
-        
+
         break;
     }
     case 398:{
@@ -270,46 +271,48 @@ switch ($action){
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_client_id'=>$_client_id,
         ]);
-        
+
         break;
     }
-    
+
     case 399:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'btcusdt',
             '_number'=>'0.001',
             '_price'=>'2000',
+
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_order_id'=>$result['data']['id'],
         ]);
-        
+
         break;
     }
-    
+
     case 400:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'eosusdt',
-            '_number'=>'0.1',
+            '_number'=>'1',
             '_price'=>'20',
+            '_client_id'=>'GTJgthdf45'.rand(1,99999)
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_order_id'=>$result['data']['id'],
         ]);
-        
+
         break;
     }
-    
-    
-    
+
+
+
     //******************************Future
     //***********Future Market
     case 401:{
@@ -320,7 +323,7 @@ switch ($action){
             '_number'=>'1',
             '_entry'=>true,//true:open  false:close
         ]);
-        
+
         break;
     }
     case 402:{
@@ -336,7 +339,7 @@ switch ($action){
             'order_price_type'=>'opponent',//"limit", "opponent"
             'lever_rate'=>20,//int	true	Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate
         ]);
-        
+
         break;
     }
     case 403:{
@@ -346,10 +349,10 @@ switch ($action){
             '_number'=>'1',
             '_entry'=>false,//true:open  false:close
         ]);
-        
+
         break;
     }
-    
+
     case 404:{
         //It's the opposite of that  => case 405
         $result=$exchanges->trader()->sell([
@@ -357,10 +360,10 @@ switch ($action){
             '_number'=>'1',
             '_entry'=>true,//true:open  false:close
         ]);
-        
+
         break;
     }
-    
+
     case 405:{
         //It's the opposite of that  => case 404
         $result=$exchanges->trader()->buy([
@@ -368,10 +371,10 @@ switch ($action){
             '_number'=>'1',
             '_entry'=>false,//true:open  false:close
         ]);
-        
+
         break;
     }
-    
+
     //***********Future Limit
     case 410:{
         //It's the same as that  => case 411
@@ -383,7 +386,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 411:{
         //It's the same as that  => case 410
         $result=$exchanges->trader()->buy([
@@ -399,7 +402,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 412:{
         //It's the same as that  => case 413
         $result=$exchanges->trader()->sell([
@@ -425,7 +428,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 420:{
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'XRP190927',
@@ -433,41 +436,41 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 421:{
         $result=$exchanges->trader()->show([
-            '_symbol'=>'XRP190927',
-            '_order_id'=>'2715696586',
+            '_symbol'=>'eosusdt',
+            '_order_id'=>'281619715329336',
         ]);
         break;
     }
-    
+
     case 430:{
         $result=$exchanges->account()->get([
             '_symbol'=>'XRP190927',
         ]);
         break;
     }
-    
+
     //***Complete future flow
     //TODO
     case 450:{
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'BCH200626',
+            '_symbol'=>'ETH210924',
             '_number'=>'1',
             '_price'=>'100',
             '_entry'=>true,//true:open  false:close
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
-            '_symbol'=>'BCH200626',
+            '_symbol'=>'ETH210924',
             '_order_id'=>$result['_order_id'],
         ]);
-        
+
         break;
     }
-    
+
     case 500:{
         $result=$exchanges->getPlatform('future')->contract()->postOrder([
             'symbol'=>'XRP',//string	false	"BTC","ETH"...
@@ -482,7 +485,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 501:{
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BCH200626',
@@ -490,8 +493,8 @@ switch ($action){
         ]);
         break;
     }
-    
-    
+
+
     //******************************Swap
     case 610:{
         $result=$exchanges->trader()->buy([
@@ -509,7 +512,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 612:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'ETH-USD',
@@ -517,16 +520,16 @@ switch ($action){
             '_price'=>'100',
             '_entry'=>true,//true:open  false:close
         ]);
-        
+
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'ETH-USD',
             '_order_id'=>$result['_order_id'],
         ]);
         break;
     }
-    
+
     case 613:{
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'ETH-USD',
@@ -534,7 +537,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 1001:{
         //Public API
         $exchanges=new Exchanges('huobi');
@@ -548,7 +551,30 @@ switch ($action){
         ]);
         break;
     }
-    
+
+    case 1099:{
+        $exchanges->account()->get();
+        break;
+    }
+
+    case 4000:{
+        $exchanges->setPlatform('future');
+
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'eosusdt',
+            '_number'=>'1',
+            '_price'=>'20',
+            '_client_id'=>'GTJgthdf45'.rand(1,99999)
+        ]);
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_order_id'=>$result['data']['id'],
+        ]);
+
+        break;
+    }
+
     default:{
         echo 'nothing';
         exit;

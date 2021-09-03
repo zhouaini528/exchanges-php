@@ -25,75 +25,79 @@ use Lin\Exchange\Exchanges\Gate;
 
 class Base
 {
-    protected $platform;
+    protected $exchange;
 
     protected $map;
+
+    protected $platform='';
+
+    protected $version='';
 
     /**
      *
      * */
-    function __construct(string $platform,string $key,string $secret,string $extra='',string $host=''){
-        $platform=strtolower($platform);
+    function __construct(string $exchange,string $key,string $secret,string $extra='',string $host=''){
+        $exchange=strtolower($exchange);
 
-        switch ($platform){
+        switch ($exchange){
             case 'huobi':{
-                $this->platform=new Huobi($key,$secret,$host);
+                $this->exchange=new Huobi($key,$secret,$host);
                 break;
             }
             case 'bitmex':{
-                $this->platform=new Bitmex($key,$secret,$host);
+                $this->exchange=new Bitmex($key,$secret,$host);
                 break;
             }
             case 'okex':{
-                $this->platform=new Okex($key,$secret,$extra,$host);
+                $this->exchange=new Okex($key,$secret,$extra,$host);
                 break;
             }
             case 'binance':{
-                $this->platform=new Binance($key,$secret,$host);
+                $this->exchange=new Binance($key,$secret,$host);
                 break;
             }
             case 'kumex':{}
             case 'kucoin':{
-                $this->platform=new Ku($key,$secret,$extra,$host);
+                $this->exchange=new Ku($key,$secret,$extra,$host);
                 break;
             }
             case 'bitfinex':{
-                $this->platform=new Bitfinex($key,$secret,$host);
+                $this->exchange=new Bitfinex($key,$secret,$host);
                 break;
             }
             case 'mxc':{
-                $this->platform=new Mxc($key,$secret,$host);
+                $this->exchange=new Mxc($key,$secret,$host);
                 break;
             }
             case 'coinbase':{
-                $this->platform=new Coinbase($key,$secret,$extra,$host);
+                $this->exchange=new Coinbase($key,$secret,$extra,$host);
                 break;
             }
             case 'zb':{
-                $this->platform=new Zb($key,$secret);
+                $this->exchange=new Zb($key,$secret);
                 break;
             }
             case 'bittrex':{
-                $this->platform=new Bittrex($key,$secret,$extra,$host);
+                $this->exchange=new Bittrex($key,$secret,$extra,$host);
                 break;
             }
             case 'kraken':{
-                $this->platform=new Kraken($key,$secret,$host);
+                $this->exchange=new Kraken($key,$secret,$host);
                 break;
             }
             case 'gate':{
-                $this->platform=new Gate($key,$secret,$host);
+                $this->exchange=new Gate($key,$secret,$host);
                 break;
             }
             case 'crex':
             case 'crex24':{
-                $this->platform=new Crex($key,$secret,$host);
+                $this->exchange=new Crex($key,$secret,$host);
                 break;
             }
             case 'bybit':
             case 'bybitlinear':
             case 'bybitinverse':{
-                $this->platform=new Bybit($key,$secret,$host);
+                $this->exchange=new Bybit($key,$secret,$host);
                 break;
             }
             default:{
@@ -101,7 +105,7 @@ class Base
             }
         }
 
-        $this->map=new Map($platform,$key,$secret,$extra,$host);
+        $this->map=new Map($exchange,$key,$secret,$extra,$host);
     }
 
     /**
@@ -129,13 +133,35 @@ class Base
      * Returns the underlying instance object
      * */
     function getPlatform(string $type=''){
-        return $this->platform->getPlatform($type);
+        return $this->exchange->getPlatform($type);
+    }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->exchange->setPlatform($platform);
+
+        $this->map->setPlatform($platform);
+
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->exchange->setVersion($version);
+
+        $this->map->setVersion($version);
+
+        return $this;
     }
 
     /**
      * Support for more request Settings
      * */
     function setOptions(array $options=[]){
-        $this->platform->setOptions($options);
+        $this->exchange->setOptions($options);
     }
 }

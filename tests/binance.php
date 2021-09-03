@@ -2,7 +2,7 @@
 
 /**
  * @author lin <465382251@qq.com>
- * 
+ *
  * Most of them are unfinished and need your help
  * https://github.com/zhouaini528/binance-php.git
  * */
@@ -24,7 +24,7 @@ $exchanges=new Exchanges('binance',$key,$secret,$spot_host);
 $exchanges->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
-    
+
     //If you are developing locally and need an agent, you can set this
     //'proxy'=>true,
     //More flexible Settings
@@ -48,7 +48,7 @@ switch ($action){
             '_symbol'=>'exception testing',
             '_number'=>'0.01',
         ]);
-        
+
         /*
         return Array
         (
@@ -69,7 +69,7 @@ switch ($action){
         $exchanges->setOptions([
             'proxy'=>true,
         ]);
-        
+
         //More flexible Settings
         $exchanges->setOptions([
             'proxy'=>[
@@ -78,12 +78,12 @@ switch ($action){
                 'no'    =>  ['.cn']
             ],
         ]);
-        
+
         //Get current account information.
         $result=$exchanges->account()->get();
         break;
     }
-    
+
     //******************************Spot
     //***********Spot Market
     case 100:{
@@ -102,7 +102,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 102:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTCUSDT',
@@ -119,14 +119,14 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Spot Limit
     case 150:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
             '_number'=>'0.01',
             '_price'=>'2000',
-        ]); 
+        ]);
         break;
     }
     case 151:{
@@ -142,7 +142,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 152:{
         $result=$exchanges->trader()->sell([
             '_symbol'=>'BTCUSDT',
@@ -164,13 +164,20 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 300:{
         $result=$exchanges->trader()->show([
-            '_symbol'=>'BTCUSDT',
-            '_order_id'=>'324314658',
+            '_symbol'=>'ETHUSDT',
+            //'_order_id'=>'324314658',
             //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
+
+            '_order_id'=>'4135060190',
+            '_client_id'=>'b383abd88086f623e762c35727455b9a',
+
+
         ]);
+
+
         break;
     }
     case 301:{
@@ -181,7 +188,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 302:{
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',
@@ -197,46 +204,59 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 304:{
         //Get current account information.
         $result=$exchanges->account()->get();
         break;
     }
-    
-    
+
+
     //******************************Complete spot flow
     case 400:{
         $_client_id=md5(rand(1,999999999));//custom ID
-        $result=$exchanges->trader()->sell([
+        $result=$exchanges->trader()->buy([
             '_symbol'=>'ETHUSDT',
-            '_number'=>'0.1',
-            '_price'=>'500',
+            '_number'=>'0.01',
+            '_price'=>'1000',
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
-        
+
        $result=$exchanges->trader()->cancel([
             '_symbol'=>'ETHUSDT',
             //'_order_id'=>$result['orderId'],
             '_client_id'=>$_client_id,
         ]);
-        
+
         break;
     }
-    
+
     //******************************Complete future flow
     case 450:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
-        
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
             '_number'=>'0.001',
             '_price'=>'6500',
         ]);
-        
+
+
+        //mode=>  spot
+        $exchanges->version();
+        $result=$exchanges->trader(['mode'=>'spot'])->buy([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'0.001',
+            '_price'=>'6500',
+        ]);
+
+
+
+
+
+
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTCUSDT',
             '_order_id'=>$result['orderId'],
@@ -244,28 +264,28 @@ switch ($action){
         ]);
         break;
     }
-    
-    
+
+
     case 461:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
-        
+
         $result=$exchanges->account()->get();
         break;
     }
-    
+
     case 462:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
-        
+
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
             '_number'=>'0.001',
         ]);
         break;
     }
-    
+
     case 463:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
-        
+
         $result=$exchanges->trader()->buy([
             'symbol'=>'BTCUSDT',
             'quantity'=>'0.001',
@@ -275,10 +295,10 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 463:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
-        
+
         $result=$exchanges->trader()->buy([
             'symbol'=>'BTCUSDT',
             'quantity'=>'0.001',
@@ -288,17 +308,17 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 464:{
         $exchanges=new Exchanges('binance',$key,$secret,$future_host);
-        
+
         $result=$exchanges->trader()->show([
             '_symbol'=>'BTCUSDT',
             '_order_id'=>'487693783',
         ]);
         break;
     }
-    
+
     case 1001:{
         //Public API
         $exchanges=new Exchanges('binance');
@@ -312,7 +332,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     default:{
         echo 'nothing';
         exit;

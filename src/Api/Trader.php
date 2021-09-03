@@ -41,7 +41,7 @@ class Trader extends Base implements TraderInterface
     function buy(array $data,bool $show=true){
         try {
             $map=$this->map->request_trader()->buy($data);
-            $result=$this->platform->trader()->buy($map);
+            $result=$this->exchange->trader()->buy($map);
             $trader=$this->map->response_trader()->buy(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
@@ -100,7 +100,7 @@ class Trader extends Base implements TraderInterface
     function sell(array $data,bool $show=true){
         try {
             $map=$this->map->request_trader()->sell($data);
-            $result=$this->platform->trader()->sell($map);
+            $result=$this->exchange->trader()->sell($map);
             $trader=$this->map->response_trader()->sell(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
@@ -158,7 +158,7 @@ class Trader extends Base implements TraderInterface
     function cancel(array $data,bool $show=true){
         try {
             $map=$this->map->request_trader()->cancel($data);
-            $result=$this->platform->trader()->cancel($map);
+            $result=$this->exchange->trader()->cancel($map);
             $trader=$this->map->response_trader()->cancel(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
@@ -212,7 +212,7 @@ class Trader extends Base implements TraderInterface
     function show(array $data){
         try {
             $map=$this->map->request_trader()->show($data);
-            $result=$this->platform->trader()->show($map);
+            $result=$this->exchange->trader()->show($map);
             $trader=$this->map->response_trader()->show(['result'=>$result,'request'=>$data]);
 
             if(isset($trader['_status'])) {
