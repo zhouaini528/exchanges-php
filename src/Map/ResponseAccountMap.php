@@ -17,8 +17,8 @@ class ResponseAccountMap extends Base implements AccountInterface
      * */
     function get(array $data){
         $map=[];
-        
-        switch ($this->platform){
+
+        switch ($this->exchange){
             case 'huobi':{
                 break;
             }
@@ -35,7 +35,7 @@ class ResponseAccountMap extends Base implements AccountInterface
                 break;
             }
         }
-        
+
         return array_merge($data['result'],$map);
     }
 }

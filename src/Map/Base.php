@@ -10,20 +10,20 @@ namespace Lin\Exchange\Map;
  * */
 class Base
 {
-    protected $platform;
+    protected $exchange;
     protected $key;
     protected $secret;
     protected $extra;
     protected $host;
-    
-    function __construct(string $platform,string $key,string $secret,string $extra,string $host){
-        $this->platform=$platform;
+
+    function __construct(string $exchange,string $key,string $secret,string $extra,string $host){
+        $this->exchange=$exchange;
         $this->key=$key;
         $this->secret=$secret;
         $this->extra=$extra;
         $this->host=$host;
     }
-    
+
     /**
      * Native parameter detection
      * As long as the detection data does not have an underscore, it is a native parameter
@@ -35,16 +35,16 @@ class Base
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * Detect transaction type
      * @return string  spot future swap
      * */
     protected function checkType(string $symbol=''){
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 //Determine if the last digit is a number
                 if(is_numeric(substr($symbol,-1,1))) return 'future';
@@ -71,7 +71,7 @@ class Base
                 }
             }
         }
-        
+
         return 'spot';
     }
 }

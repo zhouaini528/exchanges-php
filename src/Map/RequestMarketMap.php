@@ -17,8 +17,8 @@ class RequestMarketMap extends Base implements MarketInterface
      * */
     function depth(array $data){
         $map=[];
-        
-        switch ($this->platform){
+
+        switch ($this->exchange){
             case 'huobi':{
                 break;
             }
@@ -32,7 +32,7 @@ class RequestMarketMap extends Base implements MarketInterface
                 break;
             }
         }
-        
+
         return $map;
     }
 }

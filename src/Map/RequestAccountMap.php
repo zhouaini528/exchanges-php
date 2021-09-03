@@ -18,11 +18,11 @@ class RequestAccountMap extends Base implements AccountInterface
      * */
     function get(array $data){
         $map=[];
-        
-        switch ($this->platform){
+
+        switch ($this->exchange){
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
-                
+
                 //判断是期货还是现货
                 switch ($this->checkType($map['symbol'])){
                     case 'spot':{
@@ -30,23 +30,23 @@ class RequestAccountMap extends Base implements AccountInterface
                         break;
                     }
                     case 'future':{
-                        
+
                         break;
                     }
                 }
-                
+
                 break;
             }
             case 'bitmex':{
                 $symbol=$data['_symbol'] ?? ($data['symbol'] ?? '');
-                
+
                 if(!empty($symbol)) $map['filter']=json_encode(['symbol'=>$symbol]);
-                
+
                 break;
             }
             case 'okex':{
                 $temp=$data['_symbol'] ?? ($data['instrument_id'] ?? $data['currency']);
-                
+
                 switch ($this->checkType($temp)){
                     case 'spot':{
                         $map['currency']=$temp;
@@ -61,7 +61,7 @@ class RequestAccountMap extends Base implements AccountInterface
                         break;
                     }
                 }
-                
+
                 break;
             }
             case 'binance':{
@@ -69,7 +69,7 @@ class RequestAccountMap extends Base implements AccountInterface
             }
             case 'kucoin':{
                 $temp=$data['_symbol'] ?? ($data['accountId'] ?? ($data['symbol'] ?? ''));
-                
+
                 if(!empty($temp)){
                     switch ($this->checkType()){
                         case 'spot':{
@@ -85,10 +85,10 @@ class RequestAccountMap extends Base implements AccountInterface
                 break;
             }
         }
-        
+
         //检测是否原生参数
         if($this->checkOriginalParam($data)) return $data;
-        
+
         return $map;
     }
 }

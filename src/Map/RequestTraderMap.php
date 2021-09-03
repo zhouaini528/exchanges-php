@@ -18,7 +18,7 @@ class RequestTraderMap extends Base implements TraderInterface
     function buy(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
 
@@ -233,7 +233,7 @@ class RequestTraderMap extends Base implements TraderInterface
     function sell(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
 
@@ -430,7 +430,7 @@ class RequestTraderMap extends Base implements TraderInterface
      * */
     function cancel(array $data){
         $map=[];
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 $map['symbol']=$data['_symbol'] ?? ($data['symbol'] ?? '');
 
@@ -519,7 +519,7 @@ class RequestTraderMap extends Base implements TraderInterface
     function update(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 break;
             }
@@ -546,7 +546,7 @@ class RequestTraderMap extends Base implements TraderInterface
     function show(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 switch ($this->checkType($data['_symbol'] ?? ($data['symbol'] ?? ($data['contract_code'] ?? '')))){
                     case 'future':{
@@ -625,7 +625,7 @@ class RequestTraderMap extends Base implements TraderInterface
     function showAll(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 break;
             }

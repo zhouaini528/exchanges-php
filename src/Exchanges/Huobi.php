@@ -189,6 +189,7 @@ class Huobi
         $this->platform_swap=new HuobiSwap($key,$secret,empty($host) ? 'https://api.hbdm.com' : $host);
     }
 
+
     function account(){
         return new AccountHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
@@ -197,8 +198,13 @@ class Huobi
         return new MarketHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
     }
 
-    function trader(){
-        return new TraderHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
+    function trader(array $data){
+        $trader = new TraderHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
+
+        print_r($data);
+        print_r($this->platform);
+        die;
+        return $trader;
     }
 
     function getPlatform(string $type=''){

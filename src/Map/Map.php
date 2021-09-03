@@ -10,14 +10,18 @@ namespace Lin\Exchange\Map;
  * */
 class Map
 {
-    protected $platform;
+
+    protected $exchange;
     protected $key;
     protected $secret;
     protected $extra;
     protected $host;
 
-    function __construct(string $platform,string $key,string $secret,string $extra,string $host){
-        $this->platform=$platform;
+    protected $platform='';
+    protected $version='';
+
+    function __construct(string $exchange,string $key,string $secret,string $extra,string $host){
+        $this->exchange=$exchange;
         $this->key=$key;
         $this->secret=$secret;
         $this->extra=$extra;
@@ -25,27 +29,27 @@ class Map
     }
 
     function request_account(){
-        return new RequestAccountMap($this->platform,$this->key,$this->secret,$this->extra,$this->host);
+        return new RequestAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
     }
 
     function request_market(){
-        return new RequestMarketMap($this->platform,$this->key,$this->secret,$this->extra,$this->host);
+        return new RequestMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
     }
 
     function request_trader(){
-        return new RequestTraderMap($this->platform,$this->key,$this->secret,$this->extra,$this->host);
+        return new RequestTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
     }
 
     function response_account(){
-        return new ResponseAccountMap($this->platform,$this->key,$this->secret,$this->extra,$this->host);
+        return new ResponseAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
     }
 
     function response_market(){
-        return new ResponseMarketMap($this->platform,$this->key,$this->secret,$this->extra,$this->host);
+        return new ResponseMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
     }
 
     function response_trader(){
-        return new ResponseTraderMap($this->platform,$this->key,$this->secret,$this->extra,$this->host);
+        return new ResponseTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
     }
 
     public function setPlatform(string $platform=''){

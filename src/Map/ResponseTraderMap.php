@@ -190,7 +190,7 @@ class ResponseTraderMap extends Base implements TraderInterface
     function sell(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 switch ($this->checkType($data['request']['contract_code'] ?? ($data['request']['_symbol'] ?? ''))){
                     case 'future':{
@@ -258,7 +258,7 @@ class ResponseTraderMap extends Base implements TraderInterface
     function cancel(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 $type=$this->checkType($data['request']['_symbol'] ?? '');
                 switch ($type){
@@ -335,7 +335,7 @@ class ResponseTraderMap extends Base implements TraderInterface
     function update(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 break;
             }
@@ -360,7 +360,7 @@ class ResponseTraderMap extends Base implements TraderInterface
         if(empty($data['result'])) return array_merge($data['result'],['_status'=>'FAILURE','msg'=>'Something went wrong last time']);;
 
         $map=[];
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 //判断是期货还是现货
                 switch ($this->checkType($data['request']['_symbol'] ?? '')){
@@ -478,7 +478,7 @@ class ResponseTraderMap extends Base implements TraderInterface
     function showAll(array $data){
         $map=[];
 
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 break;
             }
