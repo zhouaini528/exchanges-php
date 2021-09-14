@@ -23,9 +23,9 @@ class Account extends Base implements AccountInterface
      * */
     function get(array $data=[]){
         try {
-            $map=$this->map->request_account()->get($data);
+            $map=$this->map->requestAccount()->get($data);
             $result=$this->exchange->account()->get($map);
-            return $this->map->response_account()->get(['result'=>$result,'request'=>$data]);
+            return $this->map->responseAccount()->get(['result'=>$result,'request'=>$data]);
         }catch (\Exception $e){
             return $this->error($e->getMessage());
         }

@@ -40,9 +40,9 @@ class Trader extends Base implements TraderInterface
      * */
     function buy(array $data,bool $show=true){
         try {
-            $map=$this->map->request_trader()->buy($data);
+            $map=$this->map->requestTrader()->buy($data);
             $result=$this->exchange->trader()->buy($map);
-            $trader=$this->map->response_trader()->buy(['result'=>$result,'request'=>$data]);
+            $trader=$this->map->responseTrader()->buy(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status'])) {
@@ -99,9 +99,9 @@ class Trader extends Base implements TraderInterface
      * */
     function sell(array $data,bool $show=true){
         try {
-            $map=$this->map->request_trader()->sell($data);
+            $map=$this->map->requestTrader()->sell($data);
             $result=$this->exchange->trader($data)->sell($map);
-            $trader=$this->map->response_trader()->sell(['result'=>$result,'request'=>$data]);
+            $trader=$this->map->responseTrader()->sell(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
             //bitmex 存在可能
@@ -157,9 +157,9 @@ class Trader extends Base implements TraderInterface
      * */
     function cancel(array $data,bool $show=true){
         try {
-            $map=$this->map->request_trader()->cancel($data);
+            $map=$this->map->requestTrader()->cancel($data);
             $result=$this->exchange->trader()->cancel($map);
-            $trader=$this->map->response_trader()->cancel(['result'=>$result,'request'=>$data]);
+            $trader=$this->map->responseTrader()->cancel(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status'])) {
@@ -211,9 +211,9 @@ class Trader extends Base implements TraderInterface
      * */
     function show(array $data){
         try {
-            $map=$this->map->request_trader()->show($data);
+            $map=$this->map->requestTrader()->show($data);
             $result=$this->exchange->trader()->show($map);
-            $trader=$this->map->response_trader()->show(['result'=>$result,'request'=>$data]);
+            $trader=$this->map->responseTrader()->show(['result'=>$result,'request'=>$data]);
 
             if(isset($trader['_status'])) {
                 if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];

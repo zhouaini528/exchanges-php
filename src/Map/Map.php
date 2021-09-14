@@ -28,37 +28,37 @@ class Map
         $this->host=$host;
     }
 
-    function request_account(){
+    function requestAccount(){
         $RequestAccountMap=new RequestAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $RequestAccountMap->setPlatform($this->platform)->setVersion($this->version);
         return $RequestAccountMap;
     }
 
-    function request_market(){
+    function requestMarket(){
         $RequestMarketMap = new RequestMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $RequestMarketMap->setPlatform($this->platform)->setVersion($this->version);
         return $RequestMarketMap;
     }
 
-    function request_trader(){
+    function requestTrader(){
         $RequestTraderMap = new RequestTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $RequestTraderMap->setPlatform($this->platform)->setVersion($this->version);
         return $RequestTraderMap;
     }
 
-    function response_account(){
+    function responseAccount(){
         $ResponseAccountMap = new ResponseAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $ResponseAccountMap->setPlatform($this->platform)->setVersion($this->version);
         return $ResponseAccountMap;
     }
 
-    function response_market(){
+    function responseMarket(){
         $ResponseMarketMap = new ResponseMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $ResponseMarketMap->setPlatform($this->platform)->setVersion($this->version);
         return $ResponseMarketMap;
     }
 
-    function response_trader(){
+    function responseTrader(){
         $ResponseTraderMap = new ResponseTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $ResponseTraderMap->setPlatform($this->platform)->setVersion($this->version);
         return $ResponseTraderMap;
