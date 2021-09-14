@@ -16,6 +16,9 @@ class Base
     protected $extra;
     protected $host;
 
+    protected $platform='';
+    protected $version='';
+
     function __construct(string $exchange,string $key,string $secret,string $extra,string $host){
         $this->exchange=$exchange;
         $this->key=$key;
@@ -47,8 +50,20 @@ class Base
         switch ($this->exchange){
             case 'huobi':{
                 //Determine if the last digit is a number
-                if(is_numeric(substr($symbol,-1,1))) return 'future';
-                if(stristr($symbol,'-USD')) return 'swap';
+                if(empty($this->platform)) {
+                    if(is_numeric(substr($symbol,-1,1))) return 'future';
+                    if(stristr($symbol,'-USD')) return 'swap';
+                }else{
+                    switch ($this->platform){
+                        case 'spot':return 'spot';
+                        case 'margin':return 'margin';
+                        case 'future':return 'future';
+                        case 'swap':{
+                            if(stristr($symbol,'-USDT')) return 'swap';
+                            return 'linear';
+                        }
+                    }
+                }
                 break;
             }
             case 'bitmex':{
@@ -73,6 +88,16 @@ class Base
         }
 
         return 'spot';
+    }
+
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform;
+        return $this;
+    }
+
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
     }
 }
 

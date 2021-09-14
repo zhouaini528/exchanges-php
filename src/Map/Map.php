@@ -6,7 +6,7 @@
 namespace Lin\Exchange\Map;
 
 /**
- * 初始化映射对象
+ * Initialize mapping object
  * */
 class Map
 {
@@ -29,27 +29,39 @@ class Map
     }
 
     function request_account(){
-        return new RequestAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $RequestAccountMap=new RequestAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $RequestAccountMap->setPlatform($this->platform)->setVersion($this->version);
+        return $RequestAccountMap;
     }
 
     function request_market(){
-        return new RequestMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $RequestMarketMap = new RequestMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $RequestMarketMap->setPlatform($this->platform)->setVersion($this->version);
+        return $RequestMarketMap;
     }
 
     function request_trader(){
-        return new RequestTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $RequestTraderMap = new RequestTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $RequestTraderMap->setPlatform($this->platform)->setVersion($this->version);
+        return $RequestTraderMap;
     }
 
     function response_account(){
-        return new ResponseAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $ResponseAccountMap = new ResponseAccountMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $ResponseAccountMap->setPlatform($this->platform)->setVersion($this->version);
+        return $ResponseAccountMap;
     }
 
     function response_market(){
-        return new ResponseMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $ResponseMarketMap = new ResponseMarketMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $ResponseMarketMap->setPlatform($this->platform)->setVersion($this->version);
+        return $ResponseMarketMap;
     }
 
     function response_trader(){
-        return new ResponseTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $ResponseTraderMap = new ResponseTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
+        $ResponseTraderMap->setPlatform($this->platform)->setVersion($this->version);
+        return $ResponseTraderMap;
     }
 
     public function setPlatform(string $platform=''){
