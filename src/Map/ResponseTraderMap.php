@@ -121,8 +121,7 @@ class ResponseTraderMap extends Base implements TraderInterface
      * */
     function buy(array $data){
         $map=[];
-
-        switch ($this->platform){
+        switch ($this->exchange){
             case 'huobi':{
                 switch ($this->checkType($data['request']['contract_code'] ?? ($data['request']['_symbol'] ?? ''))){
                     case 'future':{
@@ -142,6 +141,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         break;
                     }
                 }
+
                 if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
                 break;
             }

@@ -280,10 +280,6 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
 
 class Huobi
 {
-    protected $platform_future;
-    protected $platform_spot;
-    protected $platform_swap;
-
     protected $platform='';
     protected $version='';
     protected $options=[];
@@ -291,6 +287,8 @@ class Huobi
     protected $key;
     protected $secret;
     protected $host='';
+
+    protected $exchange=null;
 
     function __construct($key,$secret,$host=''){
         $this->key=$key;
@@ -300,38 +298,26 @@ class Huobi
 
 
     function account(){
-        $account=new AccountHuobi($this->key,$this->secret,$this->host);
-        $account->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
-        return $account;
+        $this->exchange=new AccountHuobi($this->key,$this->secret,$this->host);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
 
     function market(){
-        $market=new MarketHuobi($this->key,$this->secret,$this->host);
-        $market->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
-        return $market;
+        $this->exchange=new MarketHuobi($this->key,$this->secret,$this->host);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
 
     function trader(){
-        $trader = new TraderHuobi($this->key,$this->secret,$this->host);
-        $trader->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
-        return $trader;
+        $this->exchange = new TraderHuobi($this->key,$this->secret,$this->host);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
 
     function getPlatform(string $type=''){
-        switch (strtolower($type)){
-            case 'spot':{
-                return $this->platform_spot;
-            }
-            case 'future':{
-                return $this->platform_future;
-            }
-            case 'swap':{
-                return $this->platform_swap;
-            }
-            default:{
-                return null;
-            }
-        }
+        if($this->exchange==null) $this->exchange=$this->trader();
+        return $this->exchange->getPlatform($type);
     }
 
     /**
