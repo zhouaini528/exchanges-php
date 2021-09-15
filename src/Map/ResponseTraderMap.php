@@ -130,6 +130,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['_order_id']=$data['result']['data']['order_id'] ?? '';
                         $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
@@ -198,6 +199,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['_order_id']=$data['result']['data']['order_id'] ?? '';
                         $map['_symbol']=$data['request']['_symbol'] ?? $data['request']['contract_code'];
@@ -209,6 +211,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         break;
                     }
                 }
+
                 if(!isset($data['result']['status']) || $data['result']['status']!='ok') $map['_status']='FAILURE';
                 break;
             }
@@ -267,6 +270,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['client_order_id'] ?? '');
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['_order_id']=$data['result']['data']['successes'] ?? '';
                         $map['_client_id']=$data['request']['_client_id'] ?? ($data['request']['client_order_id'] ?? '');
@@ -387,6 +391,7 @@ class ResponseTraderMap extends Base implements TraderInterface
                         $map['_status']=$this->huobi_status['future'][$data['result']['data'][0]['status']];
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['_order_id']=$data['result']['data'][0]['order_id'];
                         $map['_client_id']=$data['result']['data'][0]['client_order_id'];

@@ -558,7 +558,9 @@ switch ($action){
     }
 
     case 4000:{
-        $exchanges->setPlatform('future');
+        //$exchanges->setPlatform('future');
+
+        //$exchanges->setPlatform('spot')->setVersion('v1');
 
         $result=$exchanges->trader()->sell([
             '_symbol'=>'eosusdt',
@@ -570,6 +572,68 @@ switch ($action){
 
         $result=$exchanges->trader()->cancel([
             '_order_id'=>$result['data']['id'],
+        ]);
+
+        break;
+    }
+
+    case 4001:{
+        $exchanges->setPlatform('future')->setVersion('v1');
+
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'EOS211231',
+            '_number'=>'1',
+            '_price'=>'7',
+            '_entry'=>true,//true:open  false:close
+        ]);
+
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'EOS211231',
+            '_order_id'=>$result['_order_id'],
+        ]);
+
+        break;
+    }
+
+    case 4002:{
+        $exchanges->setPlatform('swap')->setVersion('v1');
+
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'EOS-USD',
+            '_number'=>'1',
+            '_price'=>'7',
+            '_entry'=>true,//true:open  false:close
+            'lever_rate'=>'5',
+        ]);
+
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'EOS-USD',
+            '_order_id'=>$result['_order_id'],
+        ]);
+
+        break;
+    }
+
+    case 4003:{
+        $exchanges->setPlatform('swap')->setVersion('v1');
+
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'EOS-USDT',
+            '_number'=>'1',
+            '_price'=>'7',
+            '_entry'=>true,//true:open  false:close
+            'lever_rate'=>'5',
+        ]);
+
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'EOS-USDT',
+            '_order_id'=>$result['_order_id'],
         ]);
 
         break;

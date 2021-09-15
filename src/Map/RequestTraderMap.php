@@ -24,7 +24,6 @@ class RequestTraderMap extends Base implements TraderInterface
 
                 if(isset($data['contract_code'])) $map['symbol']=$data['contract_code'];
 
-                //判断是期货还是现货
                 switch ($this->checkType($map['symbol'])){
                     case 'future':{
                         $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
@@ -35,7 +34,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
                         $map['lever_rate']=$data['lever_rate'] ?? 20;
 
-                        //市价单与限价单的参数映射
                         if(isset($data['_price'])){
                             $map['price']=$data['_price'];
                             $map['order_price_type']='limit';
@@ -44,6 +42,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
                         unset($map['symbol']);
@@ -51,9 +50,8 @@ class RequestTraderMap extends Base implements TraderInterface
                         $data['direction']=$map['direction']='buy';
                         $map['offset']=$data['offset'] ?? ($data['_entry'] ? 'open' : 'close');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
-                        $map['lever_rate']=$data['lever_rate'] ?? 20;
+                        $map['lever_rate']=$data['lever_rate'] ?? 5;
 
-                        //市价单与限价单的参数映射
                         if(isset($data['_price'])){
                             $map['price']=$data['_price'];
                             $map['order_price_type']='limit';
@@ -66,7 +64,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['account-id']=$data['account-id'] ?? $this->extra;
                         $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
 
-                        //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
                             $map['price']=$data['_price'];
                             $map['type']=$data['type'] ?? 'buy-limit';
@@ -86,7 +83,6 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['orderQty']=$data['_number'] ?? $data['orderQty'];
                 $map['side']='Buy';
 
-                //市价单与限价单的参数映射
                 if(isset($data['_number']) && isset($data['_price'])){
                     $map['price']=$data['_price'];
                     $map['ordType']=$data['ordType'] ?? 'Limit';
@@ -239,8 +235,21 @@ class RequestTraderMap extends Base implements TraderInterface
 
                 if(isset($data['contract_code'])) $map['symbol']=$data['contract_code'];
 
-                //判断是期货还是现货
                 switch ($this->checkType($map['symbol'])){
+                    case 'spot':{
+                        $map['account-id']=$data['account-id'] ?? $this->extra;
+                        $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
+
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['price']=$data['_price'];
+                            $map['type']=$data['type'] ?? 'sell-limit';
+                            $map['amount']=$data['_number'] ?? $data['amount'];
+                        }else {
+                            $map['type']=$data['type'] ?? 'sell-market';
+                            $map['amount']=$data['_number'] ?? $data['amount'];//市价卖单时表示卖多少币
+                        }
+                        break;
+                    }
                     case 'future':{
                         $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
                         unset($map['symbol']);
@@ -250,7 +259,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
                         $map['lever_rate']=$data['lever_rate'] ?? 20;
 
-                        //市价单与限价单的参数映射
                         if(isset($data['_price'])){
                             $map['price']=$data['_price'];
                             $map['order_price_type']='limit';
@@ -259,6 +267,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
                         unset($map['symbol']);
@@ -268,27 +277,11 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
                         $map['lever_rate']=$data['lever_rate'] ?? 20;
 
-                        //市价单与限价单的参数映射
                         if(isset($data['_price'])){
                             $map['price']=$data['_price'];
                             $map['order_price_type']='limit';
                         }else {
                             $map['order_price_type']='optimal_20';
-                        }
-                        break;
-                    }
-                    case 'spot':{
-                        $map['account-id']=$data['account-id'] ?? $this->extra;
-                        $map['client-order-id']=$data['_client_id'] ?? ($data['client-order-id'] ?? '');
-
-                        //市价单与限价单的参数映射
-                        if(isset($data['_number']) && isset($data['_price'])){
-                            $map['price']=$data['_price'];
-                            $map['type']=$data['type'] ?? 'sell-limit';
-                            $map['amount']=$data['_number'] ?? $data['amount'];
-                        }else {
-                            $map['type']=$data['type'] ?? 'sell-market';
-                            $map['amount']=$data['_number'] ?? $data['amount'];//市价卖单时表示卖多少币
                         }
                         break;
                     }
@@ -445,6 +438,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         if(empty($map['client_order_id'])) unset($map['client_order_id']);
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['contract_code']=$data['contract_code'] ?? $map['symbol'];
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
@@ -555,6 +549,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['symbol']=$data['_symbol'] ?? ($data['symbol'] ?? '');
                         break;
                     }
+                    case 'linear':
                     case 'swap':{
                         $map['order_id']=$data['_order_id'] ?? ($data['order_id'] ?? '');
                         $map['client_order_id']=$data['_client_id'] ?? ($data['client_order_id'] ?? '');
@@ -613,7 +608,7 @@ class RequestTraderMap extends Base implements TraderInterface
             }
         }
 
-        //检测是否原生参数
+        //Detect whether the parameter is native
         if($this->checkOriginalParam($data)) return $data;
 
         return $map;
@@ -640,7 +635,7 @@ class RequestTraderMap extends Base implements TraderInterface
             }
         }
 
-        //检测是否原生参数
+        //Detect whether the parameter is native
         if($this->checkOriginalParam($data)) return $data;
 
         return $map;

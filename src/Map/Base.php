@@ -59,8 +59,8 @@ class Base
                         case 'margin':return 'margin';
                         case 'future':return 'future';
                         case 'swap':{
-                            if(stristr($symbol,'-USDT')) return 'swap';
-                            return 'linear';
+                            if(stristr($symbol,'-USDT')) return 'linear';
+                            return 'swap';
                         }
                     }
                 }

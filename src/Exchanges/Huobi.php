@@ -8,6 +8,7 @@ namespace Lin\Exchange\Exchanges;
 use Lin\Huobi\HuobiSpot;
 use Lin\Huobi\HuobiFuture;
 use Lin\Huobi\HuobiSwap;
+use Lin\Huobi\HuobiLinear;
 use Lin\Exchange\Interfaces\AccountInterface;
 use Lin\Exchange\Interfaces\MarketInterface;
 use Lin\Exchange\Interfaces\TraderInterface;
@@ -17,6 +18,7 @@ class BaseHuobi
     protected $platform_future=null;
     protected $platform_spot=null;
     protected $platform_swap=null;
+    protected $platform_linear=null;
 
     protected $platform='';
     protected $version='';
@@ -42,8 +44,8 @@ class BaseHuobi
                 case 'margin':return 'margin';
                 case 'future':return 'future';
                 case 'swap':{
-                    if(stristr($symbol,'-USDT')) return 'swap';
-                    return 'linear';
+                    if(stristr($symbol,'-USDT')) return 'linear';
+                    return 'swap';
                 }
             }
         }
@@ -82,15 +84,23 @@ class BaseHuobi
         switch (strtolower($type)){
             case 'spot':{
                 if($this->platform_spot == null) $this->platform_spot=new HuobiSpot($this->key,$this->secret,empty($this->host) ? 'https://api.huobi.pro' : $this->host);
+                $this->platform_spot->setOptions($this->options);
                 return $this->platform_spot;
             }
             case 'future':{
                 if($this->platform_future == null) $this->platform_future=new HuobiFuture($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                $this->platform_future->setOptions($this->options);
                 return $this->platform_future;
             }
             case 'swap':{
                 if($this->platform_swap == null) $this->platform_swap=new HuobiSwap($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                $this->platform_swap->setOptions($this->options);
                 return $this->platform_swap;
+            }
+            case 'linear':{
+                if($this->platform_linear == null) $this->platform_linear=new HuobiLinear($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                $this->platform_linear->setOptions($this->options);
+                return $this->platform_linear;
             }
         }
 
@@ -154,8 +164,13 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             }
             case 'swap':{
                 $this->platform_swap=$this->getPlatform('swap');
-                return $this->platform_swap->account()->postOrder($data);
+                return $this->platform_swap->trade()->postOrder($data);
             }
+            case 'linear':{
+                $this->platform_linear=$this->getPlatform('linear');
+                return $this->platform_linear->trade()->postOrder($data);
+            }
+
         }
     }
 
@@ -178,7 +193,11 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             }
             case 'swap':{
                 $this->platform_swap=$this->getPlatform('swap');
-                return $this->platform_swap->account()->postOrder($data);
+                return $this->platform_swap->trade()->postOrder($data);
+            }
+            case 'linear':{
+                $this->platform_linear=$this->getPlatform('linear');
+                return $this->platform_linear->trade()->postOrder($data);
             }
         }
     }
@@ -204,7 +223,11 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             }
             case 'swap':{
                 $this->platform_swap=$this->getPlatform('swap');
-                return $this->platform_swap->account()->postCancel($data);
+                return $this->platform_swap->trade()->postCancel($data);
+            }
+            case 'linear':{
+                $this->platform_linear=$this->getPlatform('linear');
+                return $this->platform_linear->trade()->postCancel($data);
             }
         }
     }
@@ -238,7 +261,11 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
             }
             case 'swap':{
                 $this->platform_swap=$this->getPlatform('swap');
-                return $this->platform_swap->account()->postOrderInfo($data);
+                return $this->platform_swap->trade()->postOrderInfo($data);
+            }
+            case 'linear':{
+                $this->platform_linear=$this->getPlatform('linear');
+                return $this->platform_linear->trade()->postOrderInfo($data);
             }
         }
     }
