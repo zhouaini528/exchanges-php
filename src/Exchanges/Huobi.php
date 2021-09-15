@@ -14,20 +14,87 @@ use Lin\Exchange\Interfaces\TraderInterface;
 
 class BaseHuobi
 {
-    protected $platform_future;
-    protected $platform_spot;
-    protected $platform_swap;
+    protected $platform_future=null;
+    protected $platform_spot=null;
+    protected $platform_swap=null;
 
-    function __construct(HuobiFuture $platform_future,HuobiSpot $platform_spot,HuobiSwap $platform_swap){
-        $this->platform_future=$platform_future;
-        $this->platform_spot=$platform_spot;
-        $this->platform_swap=$platform_swap;
+    protected $platform='';
+    protected $version='';
+    protected $options='';
+
+    protected $key;
+    protected $secret;
+    protected $host='';
+
+    function __construct($key,$secret,$host=''){
+        $this->key=$key;
+        $this->secret=$secret;
+        $this->host=$host;
     }
 
     protected function checkType($symbol){
-        if(is_numeric(substr($symbol,-1,1))) return 'future';
-        if(stristr($symbol,'-USD')) return 'swap';
+        if(empty($this->platform)) {
+            if(is_numeric(substr($symbol,-1,1))) return 'future';
+            if(stristr($symbol,'-USD')) return 'swap';
+        }else{
+            switch ($this->platform){
+                case 'spot':return 'spot';
+                case 'margin':return 'margin';
+                case 'future':return 'future';
+                case 'swap':{
+                    if(stristr($symbol,'-USDT')) return 'swap';
+                    return 'linear';
+                }
+            }
+        }
+
         return 'spot';
+    }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform;
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
+    }
+
+    /**
+     * Support for more request Settings
+     * */
+    function setOptions(array $options=[]){
+        $this->options=$options;
+        return $this;
+    }
+
+    /***
+     *Initialize exchange
+     */
+    function getPlatform(string $type=''){
+        switch (strtolower($type)){
+            case 'spot':{
+                if($this->platform_spot == null) $this->platform_spot=new HuobiSpot($this->key,$this->secret,empty($this->host) ? 'https://api.huobi.pro' : $this->host);
+                return $this->platform_spot;
+            }
+            case 'future':{
+                if($this->platform_future == null) $this->platform_future=new HuobiFuture($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                return $this->platform_future;
+            }
+            case 'swap':{
+                if($this->platform_swap == null) $this->platform_swap=new HuobiSwap($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                return $this->platform_swap;
+            }
+        }
+
+        return null;
     }
 }
 
@@ -78,12 +145,15 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
 
         switch ($this->checkType($temp)){
             case 'future':{
+                $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->contract()->postOrder($data);
             }
             case 'spot':{
+                $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->order()->postPlace($data);
             }
             case 'swap':{
+                $this->platform_swap=$this->getPlatform('swap');
                 return $this->platform_swap->account()->postOrder($data);
             }
         }
@@ -99,12 +169,15 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
 
         switch ($this->checkType($temp)){
             case 'future':{
+                $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->contract()->postOrder($data);
             }
             case 'spot':{
+                $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->order()->postPlace($data);
             }
             case 'swap':{
+                $this->platform_swap=$this->getPlatform('swap');
                 return $this->platform_swap->account()->postOrder($data);
             }
         }
@@ -120,14 +193,17 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
 
         switch ($this->checkType($temp)){
             case 'future':{
+                $this->platform_future=$this->getPlatform('future');
                 $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
                 return $this->platform_future->contract()->postCancel($data);
             }
             case 'spot':{
+                $this->platform_spot=$this->getPlatform('spot');
                 if(isset($data['client-order-id'])) return $this->platform_spot->order()->postSubmitCancelClientOrder($data);
                 return $this->platform_spot->order()->postSubmitCancel($data);
             }
             case 'swap':{
+                $this->platform_swap=$this->getPlatform('swap');
                 return $this->platform_swap->account()->postCancel($data);
             }
         }
@@ -150,15 +226,18 @@ class TraderHuobi extends BaseHuobi implements TraderInterface
 
         switch ($this->checkType($temp)){
             case 'future':{
+                $this->platform_future=$this->getPlatform('future');
                 $data['symbol']=preg_replace("/\\d+/",'', $data['symbol']);
                 return $this->platform_future->contract()->postOrderInfo($data);
             }
             case 'spot':{
+                $this->platform_spot=$this->getPlatform('spot');
                 //order-id
                 if(isset($data['order-id']) && !empty($data['order-id'])) return $this->platform_spot->order()->get($data);
                 return $this->platform_spot->order()->getClientOrder($data);
             }
             case 'swap':{
+                $this->platform_swap=$this->getPlatform('swap');
                 return $this->platform_swap->account()->postOrderInfo($data);
             }
         }
@@ -180,30 +259,34 @@ class Huobi
 
     protected $platform='';
     protected $version='';
+    protected $options=[];
+
+    protected $key;
+    protected $secret;
+    protected $host='';
 
     function __construct($key,$secret,$host=''){
-        $this->platform_future=new HuobiFuture($key,$secret,empty($host) ? 'https://api.hbdm.com' : $host);
-
-        $this->platform_spot=new HuobiSpot($key,$secret,empty($host) ? 'https://api.huobi.pro' : $host);
-
-        $this->platform_swap=new HuobiSwap($key,$secret,empty($host) ? 'https://api.hbdm.com' : $host);
+        $this->key=$key;
+        $this->secret=$secret;
+        $this->host=$host;
     }
 
 
     function account(){
-        return new AccountHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
+        $account=new AccountHuobi($this->key,$this->secret,$this->host);
+        $account->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $account;
     }
 
     function market(){
-        return new MarketHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
+        $market=new MarketHuobi($this->key,$this->secret,$this->host);
+        $market->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $market;
     }
 
-    function trader(array $data){
-        $trader = new TraderHuobi($this->platform_future,$this->platform_spot,$this->platform_swap);
-
-        print_r($data);
-        print_r($this->platform);
-        die;
+    function trader(){
+        $trader = new TraderHuobi($this->key,$this->secret,$this->host);
+        $trader->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
         return $trader;
     }
 
@@ -245,8 +328,7 @@ class Huobi
      * Support for more request Settings
      * */
     function setOptions(array $options=[]){
-        $this->platform_future->setOptions($options);
-        $this->platform_spot->setOptions($options);
-        $this->platform_swap->setOptions($options);
+        $this->options=$options;
+        return $this;
     }
 }

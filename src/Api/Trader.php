@@ -100,7 +100,7 @@ class Trader extends Base implements TraderInterface
     function sell(array $data,bool $show=true){
         try {
             $map=$this->map->requestTrader()->sell($data);
-            $result=$this->exchange->trader($data)->sell($map);
+            $result=$this->exchange->trader()->sell($map);
             $trader=$this->map->responseTrader()->sell(['result'=>$result,'request'=>$data]);
 
             //如果交易默认完成，则不用再查询
