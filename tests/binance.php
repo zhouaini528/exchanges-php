@@ -221,12 +221,14 @@ switch ($action){
             '_price'=>'1000',
             '_client_id'=>$_client_id,
         ]);
+
         print_r($result);
 
        $result=$exchanges->trader()->cancel([
             '_symbol'=>'ETHUSDT',
             //'_order_id'=>$result['orderId'],
             '_client_id'=>$_client_id,
+            //'_client_id'=>'cd0986e64b3faca04724b82a3ca279f2'
         ]);
 
         break;
@@ -332,6 +334,95 @@ switch ($action){
         ]);
         break;
     }
+
+
+    case 4000:{
+        $_client_id=md5(rand(1,999999999));//custom ID
+        $exchanges->setPlatform('spot')->setVersion('v1');
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'ETHUSDT',
+            '_number'=>'0.01',
+            '_price'=>'1000',
+            '_client_id'=>$_client_id,
+        ]);
+
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'ETHUSDT',
+            //'_order_id'=>$result['orderId'],
+            '_client_id'=>$_client_id,
+            //'_client_id'=>'cd0986e64b3faca04724b82a3ca279f2'
+        ]);
+
+        break;
+    }
+
+    case 4001:{
+
+        //Send in a new order.
+        try {
+            $result=$exchanges->getPlatform('spot')->trade()->postOrder([
+                'symbol'=>'ETHUSDT',
+                'side'=>'BUY',
+                'type'=>'LIMIT',
+                'quantity'=>'0.01',
+                'price'=>'1000',
+                'timeInForce'=>'GTC',
+            ]);
+            print_r($result);
+        }catch (\Exception $e){
+            print_r(json_decode($e->getMessage(),true));
+        }
+
+        //Check an order's status.
+        try {
+            $result=$exchanges->getPlatform('spot')->user()->getOrder([
+                'symbol'=>'ETHUSDT',
+                'orderId'=>$result['orderId'],
+            ]);
+            print_r($result);
+        }catch (\Exception $e){
+            print_r(json_decode($e->getMessage(),true));
+        }
+
+        //Cancel an active order.
+        try {
+            $result=$exchanges->getPlatform('spot')->trade()->deleteOrder([
+                'symbol'=>'ETHUSDT',
+                'orderId'=>$result['orderId'],
+                //'origClientOrderId'=>'1111111',
+            ]);
+            print_r($result);
+        }catch (\Exception $e){
+            print_r(json_decode($e->getMessage(),true));
+        }
+
+        break;
+    }
+
+    case 4002:{
+        $_client_id=md5(rand(1,999999999));//custom ID
+        $exchanges->setPlatform('future')->setVersion('v1');
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'ETHUSDT',
+            '_number'=>'0.01',
+            '_price'=>'1000',
+            '_client_id'=>$_client_id,
+        ]);
+
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'ETHUSDT',
+            //'_order_id'=>$result['orderId'],
+            '_client_id'=>$_client_id,
+            //'_client_id'=>'cd0986e64b3faca04724b82a3ca279f2'
+        ]);
+
+        break;
+    }
+
 
     default:{
         echo 'nothing';

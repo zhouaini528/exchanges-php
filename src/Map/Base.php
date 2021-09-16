@@ -78,7 +78,17 @@ class Base
                 }
             }
             case 'binance':{
-                if(stristr($this->host,"fapi")!==false) return 'future';
+                if(empty($this->platform)) {
+                    if(stristr($this->host,"fapi")!==false) return 'future';
+                    if(stristr($this->host,"dapi")!==false) return 'swap';
+                }else{
+                    switch ($this->platform){
+                        case 'spot':return 'spot';
+                        case 'margin':return 'margin';
+                        case 'future':return 'future';
+                        case 'swap':return 'swap';
+                    }
+                }
             }
             case 'kucoin':{
                 if(stripos($this->host,'kumex')!==false){
