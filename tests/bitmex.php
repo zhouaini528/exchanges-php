@@ -2,7 +2,7 @@
 
 /**
  * @author lin <465382251@qq.com>
- * 
+ *
  * Most of them are unfinished and need your help
  * https://github.com/zhouaini528/bitmex-php.git
  * */
@@ -22,7 +22,7 @@ $exchanges=new Exchanges('bitmex',$key,$secret,$host);
 $exchanges->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
-    
+
     //If you are developing locally and need an agent, you can set this
     //'proxy'=>true,
     //More flexible Settings
@@ -46,7 +46,7 @@ switch ($action){
             '_symbol'=>'exception testing',
             '_number'=>'1',
         ]);
-        
+
         /*
          Array
         (
@@ -65,7 +65,7 @@ switch ($action){
          */
         break;
     }
-    
+
     case 2:{
         //Default return all
         $result=$exchanges->account()->get([
@@ -73,7 +73,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Trader Market
     case 100:{
         $result=$exchanges->trader()->buy([
@@ -91,7 +91,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 110:{
         //The original parameters
         $result=$exchanges->trader()->buy([
@@ -110,7 +110,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Trader Limit
     case 200:{
         $result=$exchanges->trader()->buy([
@@ -130,7 +130,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 211:{
         //The original parameters
         $result=$exchanges->trader()->buy([
@@ -141,7 +141,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 212:{
         //The original parameters
         $result=$exchanges->trader()->sell([
@@ -152,7 +152,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 300:{
         $result=$exchanges->trader()->show([
             '_symbol'=>'XBTUSD',
@@ -161,7 +161,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 301:{
         //The original parameters
         $result=$exchanges->trader()->show([
@@ -170,7 +170,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 302:{
         //The original parameters
         $result=$exchanges->trader()->cancel([
@@ -179,7 +179,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 303:{
         //bargaining transaction
         $result=$exchanges->account()->get([
@@ -187,32 +187,32 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //***********Complete flow
     case 400:{
         $result=$exchanges->trader()->buy([
             '_symbol'=>'XBTUSD',
-            '_number'=>'1',
-            '_price'=>100
+            '_number'=>'100',
+            '_price'=>40000
             //'_client_id'=>'custom ID',
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'XBTUSD',
             '_order_id'=>$result['_order_id'],
             //'_client_id'=>'custom ID',
         ]);
-        
+
         break;
     }
-    
+
     case 401:{
         /* $result=$exchanges->trader()->show([
             '_symbol'=>'XBTUSD',
             '_order_id'=>'63d0550b-1f3f-9ea5-ec6c-32d416a3ee85',
         ]); */
-        
+
         /* $_client_id=rand(11111,99999).rand(11111,99999).rand(11111,99999);
         $result=$exchanges->trader()->buy([
             '_symbol'=>'XBTUSD',
@@ -221,13 +221,13 @@ switch ($action){
             '_client_id'=>$_client_id,
         ]);
         print_r($result);
-        
+
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'XBTUSD',
             //'_order_id'=>$result['_order_id'],
             '_client_id'=>$_client_id,
         ]);  */
-        
+
         $result=$exchanges->trader()->show([
             '_symbol'=>'XBTUSD',
             '_order_id'=>'a0283eec-d6a9-a30f-08a2-1f9f250189bc',
@@ -235,7 +235,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     //
     case 500:{
         //The original object，
@@ -248,7 +248,7 @@ switch ($action){
         ]);
         break;
     }
-    
+
     case 1001:{
         //Public API
         $exchanges=new Exchanges('bitmex');
@@ -263,8 +263,8 @@ switch ($action){
         ]);
         break;
     }
-    
-    
+
+
     default:{
         echo 'nothing';
         //exit;

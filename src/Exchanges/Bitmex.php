@@ -75,7 +75,8 @@ class AccountBitmex extends BaseBitmex implements AccountInterface
      *
      * */
     function get(array $data){
-        return $this->platform->position()->get($data);
+        $this->platform_future=$this->getPlatform('future');
+        return $this->platform_future->position()->get($data);
     }
 }
 
@@ -95,21 +96,24 @@ class TraderBitmex extends BaseBitmex implements TraderInterface
      *
      * */
     function sell(array $data){
-        return $this->platform->order()->post($data);
+        $this->platform_future=$this->getPlatform('future');
+        return $this->platform_future->order()->post($data);
     }
 
     /**
      *
      * */
     function buy(array $data){
-        return $this->platform->order()->post($data);
+        $this->platform_future=$this->getPlatform('future');
+        return $this->platform_future->order()->post($data);
     }
 
     /**
      *
      * */
     function cancel(array $data){
-        return current($this->platform->order()->delete($data));
+        $this->platform_future=$this->getPlatform('future');
+        return current($this->platform_future->order()->delete($data));
     }
 
     /**
@@ -123,7 +127,8 @@ class TraderBitmex extends BaseBitmex implements TraderInterface
      *
      * */
     function show(array $data){
-        return $this->platform->order()->getOne($data);
+        $this->platform_future=$this->getPlatform('future');
+        return $this->platform_future->order()->getOne($data);
     }
 
     /**
@@ -146,12 +151,6 @@ class Bitmex
 
     protected $exchange=null;
 
-    /*function __construct($key,$secret,$host=''){
-        $host=empty($host) ? 'https://www.bitmex.com' : $host ;
-
-        $this->platform=new BitmexApi($key,$secret,$host);
-    }*/
-
     function __construct($key,$secret,$host=''){
         $this->key=$key;
         $this->secret=$secret;
@@ -159,19 +158,19 @@ class Bitmex
     }
 
     function account(){
-        $this->exchange= new AccountBitmex($this->platform);
+        $this->exchange= new AccountBitmex($this->key,$this->secret,$this->host);
         $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
         return $this->exchange;
     }
 
     function market(){
-        $this->exchange= new MarketBitmex($this->platform);
+        $this->exchange= new MarketBitmex($this->key,$this->secret,$this->host);
         $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
         return $this->exchange;
     }
 
     function trader(){
-        $this->exchange= new TraderBitmex($this->platform);
+        $this->exchange= new TraderBitmex($this->key,$this->secret,$this->host);
         $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
         return $this->exchange;
     }
