@@ -474,7 +474,7 @@ switch ($action){
         $_client_id=md5(rand(1,999999999));//custom ID
 
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'BTC-USD-190927',
+            '_symbol'=>'BTC-USD-210924',
             '_number'=>'1',
             '_price'=>'2000',
             '_entry'=>true,//open long
@@ -483,7 +483,7 @@ switch ($action){
         print_r($result);
 
         $result=$exchanges->trader()->cancel([
-            '_symbol'=>'BTC-USD-190927',
+            '_symbol'=>'BTC-USD-210924',
             '_client_id'=>$_client_id,
         ]);
 
@@ -630,7 +630,7 @@ switch ($action){
 
     case 1002:{
         $result=$exchanges->getPlatform('future')->fill()->get([
-            'instrument_id'=>"BTC-USD-190920",
+            'instrument_id'=>"BTC-USD-210924",
             "limit"=>15
         ]);
         break;
