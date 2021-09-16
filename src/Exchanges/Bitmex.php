@@ -13,10 +13,59 @@ use Lin\Exchange\Interfaces\TraderInterface;
 
 class BaseBitmex
 {
-    protected $platform;
-    
-    function __construct(BitmexApi $platform){
+    protected $platform_future=null;
+
+    protected $platform='';
+    protected $version='';
+    protected $options='';
+
+    protected $key;
+    protected $secret;
+    protected $host='';
+
+    function __construct($key,$secret,$host=''){
+        $this->key=$key;
+        $this->secret=$secret;
+        $this->host=$host;
+    }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
         $this->platform=$platform;
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
+    }
+
+    /**
+     * Support for more request Settings
+     * */
+    function setOptions(array $options=[]){
+        $this->options=$options;
+        return $this;
+    }
+
+    /***
+     *Initialize exchange
+     */
+    function getPlatform(string $type=''){
+        switch (strtolower($type)){
+            case 'future':{
+                if($this->platform_future == null) $this->platform_future=new BitmexApi($this->key,$this->secret,empty($this->host) ? 'https://www.bitmex.com' : $this->host);
+                $this->platform_future->setOptions($this->options);
+                return $this->platform_future;
+            }
+        }
+
+        return null;
     }
 }
 
@@ -48,35 +97,35 @@ class TraderBitmex extends BaseBitmex implements TraderInterface
     function sell(array $data){
         return $this->platform->order()->post($data);
     }
-    
+
     /**
      *
      * */
     function buy(array $data){
         return $this->platform->order()->post($data);
     }
-    
+
     /**
      *
      * */
     function cancel(array $data){
         return current($this->platform->order()->delete($data));
     }
-    
+
     /**
      *
      * */
     function update(array $data){
         return [];
     }
-    
+
     /**
      *
      * */
     function show(array $data){
         return $this->platform->order()->getOne($data);
     }
-    
+
     /**
      *
      * */
@@ -87,34 +136,68 @@ class TraderBitmex extends BaseBitmex implements TraderInterface
 
 class Bitmex
 {
-    protected $platform;
-    
-    function __construct($key,$secret,$host=''){
+    protected $platform='';
+    protected $version='';
+    protected $options=[];
+
+    protected $key;
+    protected $secret;
+    protected $host='';
+
+    protected $exchange=null;
+
+    /*function __construct($key,$secret,$host=''){
         $host=empty($host) ? 'https://www.bitmex.com' : $host ;
-        
+
         $this->platform=new BitmexApi($key,$secret,$host);
+    }*/
+
+    function __construct($key,$secret,$host=''){
+        $this->key=$key;
+        $this->secret=$secret;
+        $this->host=$host;
     }
-    
+
     function account(){
-        return new AccountBitmex($this->platform);
+        $this->exchange= new AccountBitmex($this->platform);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
-    
+
     function market(){
-        return new MarketBitmex($this->platform);
+        $this->exchange= new MarketBitmex($this->platform);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
-    
+
     function trader(){
-        return new TraderBitmex($this->platform);
+        $this->exchange= new TraderBitmex($this->platform);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
-    
-    function getPlatform(string $type=''){
-        return $this->platform;
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform;
+        return $this;
     }
-    
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
+    }
+
+
     /**
      * Support for more request Settings
      * */
     function setOptions(array $options=[]){
-        $this->platform->setOptions($options);
+        $this->options=$options;
+        return $this;
     }
 }

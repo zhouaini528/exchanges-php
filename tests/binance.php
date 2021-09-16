@@ -236,26 +236,11 @@ switch ($action){
 
     //******************************Complete future flow
     case 450:{
-        $exchanges=new Exchanges('binance',$key,$secret,$future_host);
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSDT',
             '_number'=>'0.001',
             '_price'=>'6500',
         ]);
-
-
-        //mode=>  spot
-        $exchanges->version();
-        $result=$exchanges->trader(['mode'=>'spot'])->buy([
-            '_symbol'=>'BTCUSDT',
-            '_number'=>'0.001',
-            '_price'=>'6500',
-        ]);
-
-
-
-
-
 
         print_r($result);
 
