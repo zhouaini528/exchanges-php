@@ -97,12 +97,12 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'okex':{
                 $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
-                $map['order_type']=$data['order_type'] ?? 0;
 
                 switch ($this->checkType($map['instrument_id'])){
                     case 'spot':{
                         $data['side']=$map['side']='buy';
                         $map['margin_trading']=1;
+                        $map['order_type']=$data['order_type'] ?? 0;
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
@@ -127,6 +127,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     case 'future':{
                         //	1:开多2:开空3:平多4:平空
                         $map['type']=$data['type'] ?? ($data['_entry']?1:4);
+                        $map['order_type']=$data['order_type'] ?? 4;
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
@@ -310,12 +311,12 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'okex':{
                 $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                 $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
-                $map['order_type']=$data['order_type'] ?? 0;
 
                 switch ($this->checkType($map['instrument_id'])){
                     case 'spot':{
                         $data['side']=$map['side']='sell';
                         $map['margin_trading']=1;
+                        $map['order_type']=$data['order_type'] ?? 0;
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
@@ -338,6 +339,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'future':{
                         $map['type']=$data['type'] ?? ($data['_entry']?2:3);
+                        $map['order_type']=$data['order_type'] ?? 4;
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
