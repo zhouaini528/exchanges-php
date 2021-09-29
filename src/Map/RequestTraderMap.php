@@ -127,16 +127,17 @@ class RequestTraderMap extends Base implements TraderInterface
                     case 'future':{
                         //	1:开多2:开空3:平多4:平空
                         $map['type']=$data['type'] ?? ($data['_entry']?1:4);
-                        $map['order_type']=$data['order_type'] ?? 4;
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
-                            $map['match_price']=0;
                             $map['price']=$data['_price'];
                             $map['size']=$data['_number'] ?? 0;
+
+                            $map['order_type']=$data['order_type'] ?? 0;
                         }else{
-                            $map['match_price']=1;
                             $map['size']=$data['_number'] ?? 0;
+
+                            $map['order_type']=$data['order_type'] ?? 4;
                         }
 
                         $map['leverage']=$data['leverage'] ?? 10;
@@ -339,16 +340,15 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'future':{
                         $map['type']=$data['type'] ?? ($data['_entry']?2:3);
-                        $map['order_type']=$data['order_type'] ?? 4;
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
-                            $map['match_price']=0;
                             $map['price']=$data['_price'];
                             $map['size']=$data['_number'] ?? 0;
+                            $map['order_type']=$data['order_type'] ?? 0;
                         }else{
-                            $map['match_price']=1;
                             $map['size']=$data['_number'] ?? 0;
+                            $map['order_type']=$data['order_type'] ?? 4;
                         }
 
                         //判断是否是交割合约
