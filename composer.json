@@ -3,7 +3,7 @@
     "type": "library",
     "description": "This is a virtual currency SDK that brings together multiple exchanges",
     "license": "MIT",
-    "keywords": ["exchange","bitmex", "binance", "okex", "huobi","kucoin","kumex","coinbase","mxc","zb","bitfinex","bittrex","kraken","gate","bigone","crex24","bybit","coinbene","bitget","poloniex","coinex"],
+    "keywords": ["exchange","bitmex", "binance", "okex", "huobi","kucoin","kumex","coinbase","mxc","zb","bitfinex","bittrex","kraken","gate","bigone","crex24","bybit","coinbene","bitget","poloniex","coinex","ftx"],
     "authors": [
         {
             "name": "linwenjun",
@@ -35,6 +35,7 @@
         "linwj/coinbene":"*",
         "linwj/bitget":"*",
         "linwj/poloniex":"*",
-        "linwj/coinex":"*"
+        "linwj/coinex":"*",
+        "linwj/ftx":"*"
     }
 }
