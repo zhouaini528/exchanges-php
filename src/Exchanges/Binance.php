@@ -28,7 +28,7 @@ class BaseBinance
     function __construct($key,$secret,$host=''){
         $this->key=$key;
         $this->secret=$secret;
-        $this->host=$host;
+        $this->host=empty($host)?'https://api.binance.com':$host;
     }
 
     protected function checkType(){
