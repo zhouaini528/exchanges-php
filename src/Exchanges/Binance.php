@@ -67,11 +67,13 @@ class BaseBinance
     function getPlatform(string $type=''){
         switch (strtolower($type)){
             case 'spot':{
+                $this->host='https://api.binance.com';
                 if($this->platform_spot == null) $this->platform_spot=new BinanceApi($this->key,$this->secret,$this->host);;
                 $this->platform_spot->setOptions($this->options);
                 return $this->platform_spot;
             }
             case 'future':{
+                $this->host='https://fapi.binance.com';
                 if($this->platform_future == null) $this->platform_future=new BinanceFuture($this->key,$this->secret,$this->host);
                 $this->platform_future->setOptions($this->options);
                 return $this->platform_future;
@@ -235,7 +237,11 @@ class Binance
     }
 
     function getPlatform(string $type=''){
-        if($this->exchange==null) $this->exchange=$this->trader();
+        if($this->exchange==null) {
+            $this->setPlatform($type);
+
+            $this->exchange=$this->trader();
+        }
         return $this->exchange->getPlatform($type);
     }
 
