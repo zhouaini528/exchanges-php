@@ -149,17 +149,18 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'binance':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 $map['newClientOrderId']=$data['_client_id'] ?? ($data['newClientOrderId'] ?? '');
-                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                 $map['side']='BUY';
 
                 if(empty($map['newClientOrderId'])) unset($map['newClientOrderId']);
 
                 //市价单与限价单的参数映射
                 if(isset($data['_number']) && isset($data['_price'])){
+                    $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                     $map['timeInForce']=$data['timeInForce'] ?? 'GTC';
                     $map['price']=$data['_price'] ?? ($data['price'] ?? '');
                     $map['type']='LIMIT';
                 }else{
+                    $map['quoteOrderQty']=$data['_number'] ?? ($data['quoteOrderQty'] ?? '');
                     $map['type']='MARKET';
                 }
 
