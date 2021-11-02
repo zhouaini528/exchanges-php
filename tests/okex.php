@@ -774,6 +774,58 @@ switch ($action){
     }
 
 
+    //v5 future
+    case 10200:{
+        $exchanges->setOptions([
+            //Set the request timeout to 60 seconds by default
+            'timeout'=>10,
+            //set Demo Trading
+            'headers'=>['x-simulated-trading'=>1]
+        ]);
+        $exchanges->setPlatform('future')->setVersion('v5');
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-220325',
+            '_number'=>'1',
+            '_price'=>'20000',
+            //'_price'=>'100',
+            '_client_id'=>'xxxxx'.rand(10000,99999),
+            '_entry'=>true
+        ]);
+        print_r($result);
+
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTC-USD-220325',
+            //'_order_id'=>'',
+            '_client_id'=>$result['_client_id'],
+        ]);
+        break;
+    }
+    case 10201:{
+        $exchanges->setOptions([
+            //Set the request timeout to 60 seconds by default
+            'timeout'=>10,
+            //set Demo Trading
+            'headers'=>['x-simulated-trading'=>1]
+        ]);
+        $exchanges->setPlatform('future')->setVersion('v5');
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-220325',
+            '_number'=>'1',
+            '_entry'=>true
+        ]);
+        print_r($result);
+
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTC-USD-220325',
+            '_number'=>'1',
+            '_entry'=>false
+        ]);
+
+
+        print_r($result);
+        break;
+    }
+
     default:{
         echo 'nothing';
         exit;

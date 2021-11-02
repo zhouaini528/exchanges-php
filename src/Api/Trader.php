@@ -44,7 +44,7 @@ class Trader extends Base implements TraderInterface
             $map=$this->map->requestTrader()->buy($data);
             //print_r($map);//die;
             $result=$this->exchange->trader()->buy($map);
-            //print_r($result);//die;
+            //print_r($result);
             $trader=$this->map->responseTrader()->buy(['result'=>$result,'request'=>$data]);
             //print_r($trader);
 

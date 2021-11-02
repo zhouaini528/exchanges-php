@@ -120,12 +120,15 @@ class RequestTraderMap extends Base implements TraderInterface
                         case 'margin':{
                             break;
                         }
-                        case 'future':{
-                            $map['tdMode']=$data['tdMode'] ?? 'cross';
-                            break;
-                        }
+                        case 'future':
                         case 'swap':{
                             $map['tdMode']=$data['tdMode'] ?? 'cross';
+                            $map['posSide']='long';
+                            $map['sz']=$data['_number'] ?? 0;
+
+                            //平多
+                            if(!$data['_entry']) $map['side']='sell';
+
                             break;
                         }
                     }
@@ -374,12 +377,14 @@ class RequestTraderMap extends Base implements TraderInterface
                         case 'margin':{
                             break;
                         }
-                        case 'future':{
-                            $map['tdMode']=$data['tdMode'] ?? 'cross';
-                            break;
-                        }
+                        case 'future':
                         case 'swap':{
                             $map['tdMode']=$data['tdMode'] ?? 'cross';
+                            $map['posSide']='short';
+                            $map['sz']=$data['_number'] ?? 0;
+                            //平空
+                            if(!$data['_entry']) $map['side']='buy';
+
                             break;
                         }
                     }
