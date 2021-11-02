@@ -16,6 +16,7 @@ use Lin\Okex\OkexSwap;
 use Lin\Okex\OkexAccount;
 use Lin\Okex\OkexMargin;
 use Lin\Okex\OkexOption;
+use Lin\Okex\OkexV5;
 
 class BaseOkex
 {
@@ -26,6 +27,8 @@ class BaseOkex
     protected $platform_account=null;
     protected $platform_margin=null;
     protected $platform_option=null;
+
+    protected $platform_exchange_v5=null;
 
     protected $platform='';
     protected $version='';
@@ -89,33 +92,34 @@ class BaseOkex
      *Initialize exchange
      */
     function getPlatform(string $type=''){
-        /*$this->platform_swap=new OkexSwap($key,$secret,$passphrase,$host);
-        $this->platform_account=new OkexAccount($key,$secret,$passphrase,$host);
-        $this->platform_margin=new OkexMargin($key,$secret,$passphrase,$host);
-        $this->platform_option=new OkexOption($key,$secret,$passphrase,$host);*/
-
-        switch (strtolower($type)){
-            case 'margin':
-            case 'spot':{
-                if($this->platform_spot == null) $this->platform_spot=$this->platform_spot=new OkexSpot($this->key,$this->secret,$this->passphrase,$this->host);
-                $this->platform_spot->setOptions($this->options);
-                return $this->platform_spot;
+        if($this->version=='v5'){
+            if($this->platform_exchange_v5==null) $this->platform_exchange_v5=new OkexV5($this->key,$this->secret,$this->passphrase,$this->host);
+            $this->platform_exchange_v5->setOptions($this->options);
+            return $this->platform_exchange_v5;
+        }else{
+            switch (strtolower($type)){
+                case 'margin':
+                case 'spot':{
+                    if($this->platform_spot == null) $this->platform_spot=new OkexSpot($this->key,$this->secret,$this->passphrase,$this->host);
+                    $this->platform_spot->setOptions($this->options);
+                    return $this->platform_spot;
+                }
+                case 'future':{
+                    if($this->platform_future == null) $this->platform_future=new OkexFuture($this->key,$this->secret,$this->passphrase,$this->host);
+                    $this->platform_future->setOptions($this->options);
+                    return $this->platform_future;
+                }
+                /*case 'swap':{
+                    if($this->platform_swap == null) $this->platform_swap=new HuobiSwap($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                    $this->platform_swap->setOptions($this->options);
+                    return $this->platform_swap;
+                }
+                case 'linear':{
+                    if($this->platform_linear == null) $this->platform_linear=new HuobiLinear($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
+                    $this->platform_linear->setOptions($this->options);
+                    return $this->platform_linear;
+                }*/
             }
-            case 'future':{
-                if($this->platform_future == null) $this->platform_future=new OkexFuture($this->key,$this->secret,$this->passphrase,$this->host);
-                $this->platform_future->setOptions($this->options);
-                return $this->platform_future;
-            }
-            /*case 'swap':{
-                if($this->platform_swap == null) $this->platform_swap=new HuobiSwap($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
-                $this->platform_swap->setOptions($this->options);
-                return $this->platform_swap;
-            }
-            case 'linear':{
-                if($this->platform_linear == null) $this->platform_linear=new HuobiLinear($this->key,$this->secret,empty($this->host) ? 'https://api.hbdm.com' : $this->host);
-                $this->platform_linear->setOptions($this->options);
-                return $this->platform_linear;
-            }*/
         }
 
         return null;
@@ -163,18 +167,23 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function sell(array $data){
-        switch ($this->checkType($data['instrument_id'] ?? '')){
-            case 'future':{
-                $this->platform_future=$this->getPlatform('future');
-                return $this->platform_future->order()->post($data);
-            }
-            case 'spot':{
-                $this->platform_spot=$this->getPlatform('spot');
-                return $this->platform_spot->order()->post($data);
-            }
-            case 'swap':{
-                $this->platform_swap=$this->getPlatform('spot');
-                return $this->platform_swap->order()->post($data);
+        if($this->version=='v5'){
+            $this->platform_exchange_v5=$this->getPlatform();
+            return $this->platform_exchange_v5->trade()->postOrder($data);
+        }else{
+            switch ($this->checkType($data['instrument_id'] ?? '')){
+                case 'future':{
+                    $this->platform_future=$this->getPlatform('future');
+                    return $this->platform_future->order()->post($data);
+                }
+                case 'spot':{
+                    $this->platform_spot=$this->getPlatform('spot');
+                    return $this->platform_spot->order()->post($data);
+                }
+                case 'swap':{
+                    $this->platform_swap=$this->getPlatform('spot');
+                    return $this->platform_swap->order()->post($data);
+                }
             }
         }
 
@@ -185,18 +194,23 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function buy(array $data){
-        switch ($this->checkType($data['instrument_id'] ?? '')){
-            case 'future':{
-                $this->platform_future=$this->getPlatform('future');
-                return $this->platform_future->order()->post($data);
-            }
-            case 'spot':{
-                $this->platform_spot=$this->getPlatform('spot');
-                return $this->platform_spot->order()->post($data);
-            }
-            case 'swap':{
-                $this->platform_swap=$this->getPlatform('spot');
-                return $this->platform_swap->order()->post($data);
+        if($this->version=='v5'){
+            $this->platform_exchange_v5=$this->getPlatform();
+            return $this->platform_exchange_v5->trade()->postOrder($data);
+        }else{
+            switch ($this->checkType($data['instrument_id'] ?? '')){
+                case 'future':{
+                    $this->platform_future=$this->getPlatform('future');
+                    return $this->platform_future->order()->post($data);
+                }
+                case 'spot':{
+                    $this->platform_spot=$this->getPlatform('spot');
+                    return $this->platform_spot->order()->post($data);
+                }
+                case 'swap':{
+                    $this->platform_swap=$this->getPlatform('spot');
+                    return $this->platform_swap->order()->post($data);
+                }
             }
         }
 
@@ -207,20 +221,26 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function cancel(array $data){
-        switch ($this->checkType($data['instrument_id'] ?? '')){
-            case 'future':{
-                $this->platform_future=$this->getPlatform('future');
-                return $this->platform_future->order()->postCancel($data);
-            }
-            case 'spot':{
-                $this->platform_spot=$this->getPlatform('spot');
-                return $this->platform_spot->order()->postCancel($data);
-            }
-            case 'swap':{
-                $this->platform_swap=$this->getPlatform('spot');
-                return $this->platform_swap->order()->postCancel($data);
+        if($this->version=='v5'){
+            $this->platform_exchange_v5=$this->getPlatform();
+            return $this->platform_exchange_v5->trade()->postCancelOrder($data);
+        }else{
+            switch ($this->checkType($data['instrument_id'] ?? '')){
+                case 'future':{
+                    $this->platform_future=$this->getPlatform('future');
+                    return $this->platform_future->order()->postCancel($data);
+                }
+                case 'spot':{
+                    $this->platform_spot=$this->getPlatform('spot');
+                    return $this->platform_spot->order()->postCancel($data);
+                }
+                case 'swap':{
+                    $this->platform_swap=$this->getPlatform('spot');
+                    return $this->platform_swap->order()->postCancel($data);
+                }
             }
         }
+
 
         return [];
     }
@@ -236,18 +256,23 @@ class TraderOkex extends BaseOkex implements TraderInterface
      *
      * */
     function show(array $data){
-        switch ($this->checkType($data['instrument_id'] ?? '')){
-            case 'future':{
-                $this->platform_future=$this->getPlatform('future');
-                return $this->platform_future->order()->get($data);
-            }
-            case 'spot':{
-                $this->platform_spot=$this->getPlatform('spot');
-                return $this->platform_spot->order()->get($data);
-            }
-            case 'swap':{
-                $this->platform_swap=$this->getPlatform('spot');
-                return $this->platform_swap->order()->get($data);
+        if($this->version=='v5'){
+            $this->platform_exchange_v5=$this->getPlatform();
+            return $this->platform_exchange_v5->trade()->getOrder($data);
+        }else{
+            switch ($this->checkType($data['instrument_id'] ?? '')){
+                case 'future':{
+                    $this->platform_future=$this->getPlatform('future');
+                    return $this->platform_future->order()->get($data);
+                }
+                case 'spot':{
+                    $this->platform_spot=$this->getPlatform('spot');
+                    return $this->platform_spot->order()->get($data);
+                }
+                case 'swap':{
+                    $this->platform_swap=$this->getPlatform('spot');
+                    return $this->platform_swap->order()->get($data);
+                }
             }
         }
 

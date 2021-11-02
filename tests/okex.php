@@ -474,7 +474,7 @@ switch ($action){
         $_client_id=md5(rand(1,999999999));//custom ID
 
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'BTC-USD-210924',
+            '_symbol'=>'BTC-USD-211231',
             '_number'=>'1',
             '_price'=>'2000',
             '_entry'=>true,//open long
@@ -483,7 +483,7 @@ switch ($action){
         print_r($result);
 
         $result=$exchanges->trader()->cancel([
-            '_symbol'=>'BTC-USD-210924',
+            '_symbol'=>'BTC-USD-211231',
             '_client_id'=>$_client_id,
         ]);
 
@@ -714,6 +714,65 @@ switch ($action){
         ]);*/
         break;
     }
+
+    //v5 spot
+    case 10100:{
+        $exchanges->setOptions([
+            //Set the request timeout to 60 seconds by default
+            'timeout'=>10,
+            //set Demo Trading
+            'headers'=>['x-simulated-trading'=>1]
+        ]);
+        $exchanges->setPlatform('spot')->setVersion('v5');
+        $rlt=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USDT',
+            '_number'=>'0.005',
+            //'_price'=>'80000',
+            //'_price'=>'100',
+            '_client_id'=>'xxxxx'.rand(10000,99999),
+        ]);
+        print_r($rlt);
+        die;
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTC-USDT',
+            '_client_id'=>$rlt['_client_id'],
+        ]);
+        break;
+    }
+
+    //v5 spot
+    case 10101:{
+        $exchanges->setOptions([
+            //Set the request timeout to 60 seconds by default
+            'timeout'=>10,
+            //set Demo Trading
+            'headers'=>['x-simulated-trading'=>1]
+        ]);
+        $exchanges->setPlatform('spot')->setVersion('v5');
+        $exchanges->trader()->show([
+            '_symbol'=>'BTC-USDT',
+            '_order_id'=>'375607157957472256',
+            '_client_id'=>'xxxxx72673',
+        ]);
+        break;
+    }
+
+    case 10102:{
+        $exchanges->setOptions([
+            //Set the request timeout to 60 seconds by default
+            'timeout'=>10,
+            //set Demo Trading
+            'headers'=>['x-simulated-trading'=>1]
+        ]);
+        $exchanges->setPlatform('spot')->setVersion('v5');
+        $exchanges->trader()->cancel([
+            '_symbol'=>'BTC-USDT',
+            '_order_id'=>'375610970823077892',
+            '_client_id'=>'xxxxx88799',
+        ]);
+        break;
+    }
+
 
     default:{
         echo 'nothing';

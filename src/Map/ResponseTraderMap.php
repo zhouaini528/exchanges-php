@@ -60,6 +60,13 @@ class ResponseTraderMap extends Base implements TraderInterface
             '2'=>'FILLED',
             '3'=>'NEW',
             '4'=>'CANCELING',
+        ],
+        'v5'=>[
+            //'-2'=>'FAILURE',
+            'canceled'=>'CANCELLED',
+            'live'=>'NEW',
+            'partially_filled'=>'PART_FILLED',
+            'filled'=>'FILLED',
         ]
     ];
 
@@ -156,16 +163,27 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'okex':{
-                $map['_order_id']=$data['result']['order_id'] ?? '';
-                $map['_client_id']=$data['result']['client_oid'] ?? '';
+                if($this->version=='v5'){
+                    $map['_order_id']=$data['result']['data'][0]['ordId'] ?? '';
+                    $map['_client_id']=$data['result']['data'][0]['clOrdId'] ?? '';
 
-                if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
-                if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+                    if(isset($data['result']['data'][0]) && $data['result']['data'][0]['sCode']!=0) $map['_status']='FAILURE';
+                    if(isset($data['result']['code']) && $data['result']['code']!=0) $map['_status']='FAILURE';
 
-                //目的支持原生
-                if(isset($data['request']['instrument_id'])) {
-                    $map['_symbol']=$data['request']['instrument_id'];
+                    $map['_symbol']=$data['request']['_symbol'];
+                }else{
+                    $map['_order_id']=$data['result']['order_id'] ?? '';
+                    $map['_client_id']=$data['result']['client_oid'] ?? '';
+
+                    if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
+                    if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+
+                    //目的支持原生
+                    if(isset($data['request']['instrument_id'])) {
+                        $map['_symbol']=$data['request']['instrument_id'];
+                    }
                 }
+
                 break;
             }
             case 'binance':{
@@ -226,16 +244,27 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'okex':{
-                $map['_order_id']=$data['result']['order_id'] ?? '';
-                $map['_client_id']=$data['result']['client_oid'] ?? '';
+                if($this->version=='v5'){
+                    $map['_order_id']=$data['result']['data'][0]['ordId'] ?? '';
+                    $map['_client_id']=$data['result']['data'][0]['clOrdId'] ?? '';
 
-                if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
-                if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+                    if(isset($data['result']['data'][0]) && $data['result']['data'][0]['sCode']!=0) $map['_status']='FAILURE';
+                    if(isset($data['result']['code']) && $data['result']['code']!=0) $map['_status']='FAILURE';
 
-                //目的支持原生
-                if(isset($data['request']['instrument_id'])) {
-                    $map['_symbol']=$data['request']['instrument_id'];
+                    $map['_symbol']=$data['request']['_symbol'];
+                }else{
+                    $map['_order_id']=$data['result']['order_id'] ?? '';
+                    $map['_client_id']=$data['result']['client_oid'] ?? '';
+
+                    if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
+                    if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+
+                    //目的支持原生
+                    if(isset($data['request']['instrument_id'])) {
+                        $map['_symbol']=$data['request']['instrument_id'];
+                    }
                 }
+
                 break;
             }
             case 'binance':{
@@ -302,16 +331,23 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'okex':{
-                $map['_order_id']=$data['result']['order_id'] ?? '';
-                $map['_client_id']=$data['result']['client_oid'] ?? '';
+                if($this->version=='v5'){
+                    $map=$data['request'];
 
-                if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
-                if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+                    if($data['result']['code']==1 && $data['result']['data'][0]['sCode']==51401) $map['_status']=$this->okex_status['v5']['canceled'];
+                }else{
+                    $map['_order_id']=$data['result']['order_id'] ?? '';
+                    $map['_client_id']=$data['result']['client_oid'] ?? '';
 
-                //目的支持原生
-                if(isset($data['request']['instrument_id'])) {
-                    $map['_symbol']=$data['request']['instrument_id'];
+                    if(isset($data['result']['error_code']) && !empty($data['result']['error_code'])) $map['_status']='FAILURE';
+                    if(isset($data['result']['code']) && !empty($data['result']['code'])) $map['_status']='FAILURE';
+
+                    //目的支持原生
+                    if(isset($data['request']['instrument_id'])) {
+                        $map['_symbol']=$data['request']['instrument_id'];
+                    }
                 }
+
                 break;
             }
             case 'binance':{
@@ -416,31 +452,43 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'okex':{
-                $map['_order_id']=$data['result']['order_id'];
-                $map['_client_id']=$data['result']['client_oid'];
+                if($this->version=='v5'){
+                    $map['_order_id']=$data['result']['data'][0]['ordId'];
+                    $map['_client_id']=$data['result']['data'][0]['clOrdId'];
+                    $map['_symbol']=$data['result']['data'][0]['instId'];
 
-                //判断是期货还是现货
-                switch ($this->checkType($data['result']['instrument_id'])){
-                    case 'spot':{
-                        $map['_filed_amount']=$data['result']['filled_notional'];
-                        $map['_filled_qty']=$data['result']['filled_size'];
-                        $map['_price_avg']=$data['result']['price_avg'];
-                        $map['_status']=$this->okex_status['spot'][$data['result']['state']];
-                        break;
-                    }
-                    case 'future':{
-                        $map['_filled_qty']=$data['result']['filled_qty'];
-                        $map['_price_avg']=$data['result']['price_avg'];
-                        $map['_filed_amount']=bcmul(strval($data['result']['filled_qty']),strval($data['result']['price_avg']),16);
-                        $map['_status']=$this->okex_status['future'][$data['result']['state']];
-                        break;
-                    }
-                    case 'swap':{
-                        $map['_filled_qty']=$data['result']['filled_qty'];
-                        $map['_price_avg']=$data['result']['price_avg'];
-                        $map['_filed_amount']=bcmul(strval($data['result']['filled_qty']),strval($data['result']['price_avg']),16);
-                        $map['_status']=$this->okex_status['swap'][$data['result']['state']];
-                        break;
+                    $map['_filed_amount']=$data['result']['data'][0]['fillPx'];
+                    $map['_filled_qty']=$data['result']['data'][0]['fillSz'];
+                    $map['_price_avg']=$data['result']['data'][0]['avgPx'];
+
+                    $map['_status']=$this->okex_status['v5'][$data['result']['data'][0]['state']];
+                }else{
+                    $map['_order_id']=$data['result']['order_id'];
+                    $map['_client_id']=$data['result']['client_oid'];
+
+                    //判断是期货还是现货
+                    switch ($this->checkType($data['result']['instrument_id'])){
+                        case 'spot':{
+                            $map['_filed_amount']=$data['result']['filled_notional'];
+                            $map['_filled_qty']=$data['result']['filled_size'];
+                            $map['_price_avg']=$data['result']['price_avg'];
+                            $map['_status']=$this->okex_status['spot'][$data['result']['state']];
+                            break;
+                        }
+                        case 'future':{
+                            $map['_filled_qty']=$data['result']['filled_qty'];
+                            $map['_price_avg']=$data['result']['price_avg'];
+                            $map['_filed_amount']=bcmul(strval($data['result']['filled_qty']),strval($data['result']['price_avg']),16);
+                            $map['_status']=$this->okex_status['future'][$data['result']['state']];
+                            break;
+                        }
+                        case 'swap':{
+                            $map['_filled_qty']=$data['result']['filled_qty'];
+                            $map['_price_avg']=$data['result']['price_avg'];
+                            $map['_filed_amount']=bcmul(strval($data['result']['filled_qty']),strval($data['result']['price_avg']),16);
+                            $map['_status']=$this->okex_status['swap'][$data['result']['state']];
+                            break;
+                        }
                     }
                 }
                 break;

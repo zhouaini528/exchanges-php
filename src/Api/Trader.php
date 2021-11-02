@@ -40,9 +40,13 @@ class Trader extends Base implements TraderInterface
      * */
     function buy(array $data,bool $show=true){
         try {
+            //print_r($data);
             $map=$this->map->requestTrader()->buy($data);
+            //print_r($map);//die;
             $result=$this->exchange->trader()->buy($map);
+            //print_r($result);//die;
             $trader=$this->map->responseTrader()->buy(['result'=>$result,'request'=>$data]);
+            //print_r($trader);
 
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status'])) {
@@ -100,8 +104,11 @@ class Trader extends Base implements TraderInterface
     function sell(array $data,bool $show=true){
         try {
             $map=$this->map->requestTrader()->sell($data);
+            print_r($map);
             $result=$this->exchange->trader()->sell($map);
+            //print_r($result);
             $trader=$this->map->responseTrader()->sell(['result'=>$result,'request'=>$data]);
+            //print_r($trader);die;
 
             //如果交易默认完成，则不用再查询
             //bitmex 存在可能
@@ -158,8 +165,11 @@ class Trader extends Base implements TraderInterface
     function cancel(array $data,bool $show=true){
         try {
             $map=$this->map->requestTrader()->cancel($data);
+            //print_r($map);
             $result=$this->exchange->trader()->cancel($map);
+            //print_r($result);
             $trader=$this->map->responseTrader()->cancel(['result'=>$result,'request'=>$data]);
+            //print_r($trader);
 
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status'])) {
@@ -212,9 +222,11 @@ class Trader extends Base implements TraderInterface
     function show(array $data){
         try {
             $map=$this->map->requestTrader()->show($data);
+            //print_r($map);
             $result=$this->exchange->trader()->show($map);
+            //print_r($result);
             $trader=$this->map->responseTrader()->show(['result'=>$result,'request'=>$data]);
-
+            //print_r($trader);
             if(isset($trader['_status'])) {
                 if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
             }
