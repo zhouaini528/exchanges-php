@@ -726,13 +726,13 @@ switch ($action){
         $exchanges->setPlatform('spot')->setVersion('v5');
         $rlt=$exchanges->trader()->sell([
             '_symbol'=>'BTC-USDT',
-            '_number'=>'0.005',
+            '_number'=>'0.002',
             //'_price'=>'80000',
             //'_price'=>'100',
             '_client_id'=>'xxxxx'.rand(10000,99999),
         ]);
         print_r($rlt);
-        die;
+        //die;
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'BTC-USDT',
             '_client_id'=>$rlt['_client_id'],

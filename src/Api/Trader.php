@@ -104,7 +104,7 @@ class Trader extends Base implements TraderInterface
     function sell(array $data,bool $show=true){
         try {
             $map=$this->map->requestTrader()->sell($data);
-            print_r($map);
+            //print_r($map);
             $result=$this->exchange->trader()->sell($map);
             //print_r($result);
             $trader=$this->map->responseTrader()->sell(['result'=>$result,'request'=>$data]);
