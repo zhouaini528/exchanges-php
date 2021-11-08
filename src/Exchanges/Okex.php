@@ -334,7 +334,7 @@ class Okex
     Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
      */
     public function setPlatform(string $platform=''){
-        $this->platform=$platform;
+        $this->platform=$platform ?? 'spot';
         return $this;
     }
 

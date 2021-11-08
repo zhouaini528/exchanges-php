@@ -112,11 +112,6 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
 
                     switch ($this->platform){
-                        case 'spot':{
-                            $map['tdMode']=$data['tdMode'] ?? 'cash';
-                            $map['tgtCcy']='quote_ccy';
-                            break;
-                        }
                         case 'margin':{
                             break;
                         }
@@ -131,8 +126,12 @@ class RequestTraderMap extends Base implements TraderInterface
 
                             break;
                         }
+                        case 'spot':
+                        default:{//spot
+                            $map['tdMode']=$data['tdMode'] ?? 'cash';
+                            $map['tgtCcy']='quote_ccy';
+                        }
                     }
-
                 }else{
                     //v3
                     $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
@@ -387,8 +386,12 @@ class RequestTraderMap extends Base implements TraderInterface
 
                             break;
                         }
+                        case 'spot':
+                        default:{//spot
+                            $map['tdMode']=$data['tdMode'] ?? 'cash';
+                            $map['tgtCcy']='base_ccy';
+                        }
                     }
-
                 }else{
                     $map['client_oid']=$data['_client_id'] ?? ($data['client_oid'] ?? '');
                     $map['instrument_id']=$data['_symbol'] ?? $data['instrument_id'];
