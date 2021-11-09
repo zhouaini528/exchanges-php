@@ -457,8 +457,8 @@ class ResponseTraderMap extends Base implements TraderInterface
                     $map['_client_id']=$data['result']['data'][0]['clOrdId'];
                     $map['_symbol']=$data['result']['data'][0]['instId'];
 
-                    $map['_filed_amount']=$data['result']['data'][0]['fillPx'];
-                    $map['_filled_qty']=$data['result']['data'][0]['fillSz'];
+                    $map['_filed_amount']=bcmul(strval($data['result']['data'][0]['accFillSz']),strval($data['result']['data'][0]['avgPx']),16);
+                    $map['_filled_qty']=$data['result']['data'][0]['accFillSz'];
                     $map['_price_avg']=$data['result']['data'][0]['avgPx'];
 
                     $map['_status']=$this->okex_status['v5'][$data['result']['data'][0]['state']];
