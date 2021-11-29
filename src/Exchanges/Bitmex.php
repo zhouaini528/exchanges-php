@@ -175,6 +175,11 @@ class Bitmex
         return $this->exchange;
     }
 
+    function getPlatform(string $type=''){
+        if($this->exchange==null) $this->exchange=$this->trader();
+        return $this->exchange->getPlatform($type);
+    }
+
     /**
     Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
      */
