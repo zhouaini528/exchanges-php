@@ -16,6 +16,7 @@ class ResponseTraderMap extends Base implements TraderInterface
         'Filled'=>'FILLED',
         'New'=>'NEW',
         'PartiallyFilled'=>'PART_FILLED',
+        'PendingCancel'=>'CANCELING',
         'Canceled'=>'CANCELLED',
         'SystemError'=>'FAILURE',
     ];
