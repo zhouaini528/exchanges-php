@@ -90,6 +90,10 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['ordType']=$data['ordType'] ?? 'Market';
                 }
 
+                if(isset($data['_entry'])){
+                    $map['side'] = $data['_entry'] ? 'Buy':'Sell' ;
+                }
+
                 //支持原生参数
                 $data['side']=$map['side'];
                 break;
@@ -343,6 +347,10 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['ordType']=$data['ordType'] ?? 'Limit';
                 }else{
                     $map['ordType']=$data['ordType'] ?? 'Market';
+                }
+
+                if(isset($data['_entry'])){
+                    $map['side'] = $data['_entry'] ? 'Sell':'Buy' ;
                 }
 
                 //支持原生参数
