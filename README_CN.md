@@ -160,7 +160,8 @@ $exchanges->trader()->buy([
     'quantity'=>'0.01',
 ]);
 
-//okex
+//okex 默认v3接口提交
+$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
@@ -207,7 +208,8 @@ $exchanges->trader()->buy([
     'timeInForce'=>'GTC',
 ]);
 
-//okex
+//okex 默认v3接口提交
+$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
@@ -266,13 +268,20 @@ $exchanges->trader()->buy([
     'ordType'=>'Market',
 ]);
 
-//okex
+//okex 默认v3接口提交
+$exchanges->setPlatform('future')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
-    '_entry'=>true,//open long
+    '_entry'=>true,//buy=true:开多  buy=false:平多
 ]);
+$exchanges->trader()->sell([
+    '_symbol'=>'BTC-USD-190628',
+    '_number'=>'1',
+    '_entry'=>true,//sell=true:开空  sell=false:平空
+]);
+
 //也支持原生参数，与上等同
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
@@ -336,13 +345,14 @@ $exchanges->trader()->buy([
     'ordType'=>'Limit',
 ]);
 
-//okex
+//okex 默认v3接口提交
+$exchanges->setPlatform('future')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
     '_price'=>'2000',
-    '_entry'=>true,//open long
+    '_entry'=>true,//buy=true:开多  buy=false:平多
 ]);
 //也支持原生参数，与上等同
 $exchanges->trader()->buy([
@@ -393,7 +403,8 @@ $exchanges->trader()->show([
     //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
 ]);
 
-//okex
+//okex 默认v3接口提交
+$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
 $exchanges->trader()->show([
     '_symbol'=>'BTC-USDT',
     '_order_id'=>'2671215997495296',
