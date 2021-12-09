@@ -161,7 +161,7 @@ $exchanges->trader()->buy([
 ]);
 
 //okex 默认v3接口提交
-$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
+//$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
@@ -209,7 +209,7 @@ $exchanges->trader()->buy([
 ]);
 
 //okex 默认v3接口提交
-$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
+//$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
@@ -269,7 +269,7 @@ $exchanges->trader()->buy([
 ]);
 
 //okex 默认v3接口提交
-$exchanges->setPlatform('future')->setVersion('v5');//开启v5接口提交
+//$exchanges->setPlatform('future')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
@@ -346,7 +346,7 @@ $exchanges->trader()->buy([
 ]);
 
 //okex 默认v3接口提交
-$exchanges->setPlatform('future')->setVersion('v5');//开启v5接口提交
+//$exchanges->setPlatform('future')->setVersion('v5');//开启v5接口提交
 //统一提交参数
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
@@ -404,7 +404,7 @@ $exchanges->trader()->show([
 ]);
 
 //okex 默认v3接口提交
-$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
+//$exchanges->setPlatform('spot')->setVersion('v5');//开启v5接口提交
 $exchanges->trader()->show([
     '_symbol'=>'BTC-USDT',
     '_order_id'=>'2671215997495296',

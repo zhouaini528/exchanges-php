@@ -155,7 +155,8 @@ $exchanges->trader()->buy([
     'quantity'=>'0.01',
 ]);
 
-//okex
+//okex default V3
+//$exchanges->setPlatform('spot')->setVersion('v5');// Use V5
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_price'=>'10',
@@ -198,7 +199,8 @@ $exchanges->trader()->buy([
     'timeInForce'=>'GTC',
 ]);
 
-//okex
+//okex default V3
+//$exchanges->setPlatform('spot')->setVersion('v5');// Use V5
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USDT',
     '_number'=>'0.001',
@@ -253,12 +255,22 @@ $exchanges->trader()->buy([
     'ordType'=>'Market',
 ]);
 
-//okex
+//okex default V3
+//$exchanges->setPlatform('future')->setVersion('v5');// Use V5
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
-    '_entry'=>true,//open long
+    '_entry'=>true,//buy=ture |  buy=false
 ]);
+$exchanges->trader()->sell([
+    '_symbol'=>'BTC-USD-190628',
+    '_number'=>'1',
+    '_entry'=>true,//sell=ture |  sell=false
+]);
+
+
+
+
 //Support for original parameters
 $exchanges->trader()->buy([
     'instrument_id'=>'BTC-USD-190628',
@@ -320,7 +332,8 @@ $exchanges->trader()->buy([
     'ordType'=>'Limit',
 ]);
 
-//okex
+//okex default V3
+//$exchanges->setPlatform('future')->setVersion('v5');// Use V5
 $exchanges->trader()->buy([
     '_symbol'=>'BTC-USD-190628',
     '_number'=>'1',
@@ -375,7 +388,8 @@ $exchanges->trader()->show([
     //'_client_id'=>'1bc3e974577a6ad9ce730006eafb5522',
 ]);
 
-//okex
+//okex default V3
+//$exchanges->setPlatform('spot')->setVersion('v5');// Use V5
 $exchanges->trader()->show([
     '_symbol'=>'BTC-USDT',
     '_order_id'=>'2671215997495296',
