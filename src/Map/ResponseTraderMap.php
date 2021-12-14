@@ -502,7 +502,7 @@ class ResponseTraderMap extends Base implements TraderInterface
 
                 switch ($this->checkType()){
                     case 'future':{
-                        $map['_price_avg']=$data['result']['avgPrice'];
+                        $map['_price_avg']=$data['result']['avgPrice'] ?? 0;
                         $map['_filed_amount']=bcmul(strval($data['result']['executedQty']),strval($data['result']['avgPrice']),16);
                         break;
                     }
