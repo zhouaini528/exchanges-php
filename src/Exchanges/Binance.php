@@ -6,6 +6,7 @@
 namespace Lin\Exchange\Exchanges;
 
 use Lin\Binance\Binance as BinanceApi;
+use Lin\Binance\BinanceDelivery;
 use Lin\Binance\BinanceFuture;
 
 use Lin\Exchange\Interfaces\AccountInterface;
@@ -16,6 +17,7 @@ class BaseBinance
 {
     protected $platform_future=null;
     protected $platform_spot=null;
+    protected $platform_delivery=null;
 
     protected $platform='';
     protected $version='';
@@ -78,6 +80,13 @@ class BaseBinance
                 $this->platform_future->setOptions($this->options);
                 return $this->platform_future;
             }
+            case 'delivery':{
+                if(empty($this->host)) $this->host='https://dapi.binance.com';
+                if($this->platform_delivery == null) $this->platform_delivery=new BinanceDelivery($this->key,$this->secret,$this->host);
+                $this->platform_delivery->setOptions($this->options);
+                return $this->platform_delivery;
+                return null;
+            }
             case 'swap':{
                 return null;
             }
@@ -104,6 +113,9 @@ class AccountBinance extends BaseBinance implements AccountInterface
             case 'spot':{
                 $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->user()->getAccount($data);
+            }
+            case 'delivery':{
+                return;
             }
         }
     }
@@ -134,6 +146,9 @@ class TraderBinance extends BaseBinance implements TraderInterface
                 $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->trade()->postOrder($data);
             }
+            case 'delivery':{
+                return;
+            }
         }
     }
 
@@ -150,6 +165,9 @@ class TraderBinance extends BaseBinance implements TraderInterface
                 $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->trade()->postOrder($data);
             }
+            case 'delivery':{
+                return;
+            }
         }
     }
 
@@ -165,6 +183,9 @@ class TraderBinance extends BaseBinance implements TraderInterface
             case 'spot':{
                 $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->trade()->deleteOrder($data);
+            }
+            case 'delivery':{
+                return;
             }
         }
     }
@@ -188,6 +209,9 @@ class TraderBinance extends BaseBinance implements TraderInterface
             case 'spot':{
                 $this->platform_spot=$this->getPlatform('spot');
                 return $this->platform_spot->user()->getOrder($data);
+            }
+            case 'delivery':{
+                return;
             }
         }
     }
