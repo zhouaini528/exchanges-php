@@ -204,7 +204,15 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['price']=$data['_price'] ?? ($data['price'] ?? '');
                     $map['type']='LIMIT';
                 }else{
-                    $map['quoteOrderQty']=$data['_number'] ?? ($data['quoteOrderQty'] ?? '');
+                    switch ($this->checkType()){
+                        case 'spot':{
+                            $map['quoteOrderQty']=$data['_number'] ?? ($data['quoteOrderQty'] ?? '');
+                            break;
+                        }
+                        default:{
+                            $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                        }
+                    }
                     $map['type']='MARKET';
                 }
 
