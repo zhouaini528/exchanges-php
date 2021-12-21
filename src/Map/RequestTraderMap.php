@@ -217,12 +217,13 @@ class RequestTraderMap extends Base implements TraderInterface
                 }
 
                 switch ($this->checkType()){
-                    case 'future':{
-                        break;
-                    }
                     case 'spot':{
                         $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                         break;
+                    }
+                    default:{
+                        $map['positionSide']='LONG';
+                        $map['side'] = $data['_entry'] ? 'BUY' : 'SELL';
                     }
                 }
 
@@ -479,12 +480,13 @@ class RequestTraderMap extends Base implements TraderInterface
                 }
 
                 switch ($this->checkType()){
-                    case 'future':{
-                        break;
-                    }
                     case 'spot':{
                         $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                         break;
+                    }
+                    default:{
+                        $map['positionSide']='SHORT';
+                        $map['side'] = $data['_entry'] ? 'BUY' : 'SELL';
                     }
                 }
 

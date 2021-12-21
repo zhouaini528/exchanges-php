@@ -210,7 +210,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
         switch ($this->checkType()){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
-                return $this->platform_future->trade()->getOrder($data);
+                return $this->platform_future->user()->getOrder($data);
             }
             case 'spot':{
                 $this->platform_spot=$this->getPlatform('spot');
@@ -218,7 +218,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
             }
             case 'delivery':{
                 $this->platform_delivery=$this->getPlatform('delivery');
-                return $this->platform_delivery->trade()->getOrder($data);
+                return $this->platform_delivery->user()->getOrder($data);
             }
         }
     }
