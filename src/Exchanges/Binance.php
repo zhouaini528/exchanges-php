@@ -27,6 +27,8 @@ class BaseBinance
     protected $secret;
     protected $host='';
 
+    protected $demo_host='';
+
     function __construct($key,$secret,$host=''){
         $this->key=$key;
         $this->secret=$secret;
@@ -71,23 +73,25 @@ class BaseBinance
     function getPlatform(string $type=''){
         switch (strtolower($type)){
             case 'spot':{
-                if(empty($this->host)) $this->host='https://api.binance.com';
+                $this->host('https://api.binance.com');
                 if($this->platform_spot == null) $this->platform_spot=new BinanceApi($this->key,$this->secret,$this->host);;
                 $this->platform_spot->setOptions($this->options);
+                $this->host='';
                 return $this->platform_spot;
             }
             case 'future':{
-                if(empty($this->host)) $this->host='https://fapi.binance.com';
+                $this->host('https://fapi.binance.com');
                 if($this->platform_future == null) $this->platform_future=new BinanceFuture($this->key,$this->secret,$this->host);
                 $this->platform_future->setOptions($this->options);
+                $this->host='';
                 return $this->platform_future;
             }
             case 'delivery':{
-                if(empty($this->host)) $this->host='https://dapi.binance.com';
+                $this->host('https://dapi.binance.com');
                 if($this->platform_delivery == null) $this->platform_delivery=new BinanceDelivery($this->key,$this->secret,$this->host);
                 $this->platform_delivery->setOptions($this->options);
+                $this->host='';
                 return $this->platform_delivery;
-                return null;
             }
             case 'swap':{
                 return null;
@@ -98,6 +102,15 @@ class BaseBinance
         }
 
         return null;
+    }
+
+    protected function host(string $host){
+        if(empty($this->demo_host)){
+            if(empty($this->host)) $this->host=$host;
+            else $this->demo_host=$this->host;
+        }else{
+            $this->host=$this->demo_host;
+        }
     }
 }
 
