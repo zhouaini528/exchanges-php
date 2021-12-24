@@ -81,6 +81,7 @@ class Base
                 if(empty($this->platform)) {
                     if(stristr($this->host,"fapi")!==false) return 'future';
                     if(stristr($this->host,"dapi")!==false) return 'swap';
+                    return 'spot';
                 }
                 return $this->platform;
             }
