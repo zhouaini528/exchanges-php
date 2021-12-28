@@ -112,7 +112,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['sz']=$data['_number'] ?? 0;
                     }else{
                         $map['ordType']='market';
-                        $map['sz']=$data['_price'] ?? 0;
                     }
 
                     switch ($this->platform){
@@ -133,7 +132,16 @@ class RequestTraderMap extends Base implements TraderInterface
                         case 'spot':
                         default:{//spot
                             $map['tdMode']=$data['tdMode'] ?? 'cash';
-                            $map['tgtCcy']='quote_ccy';
+
+                            if(isset($data['_number']) && $data['_number']>0 && $map['ordType']=='market'){
+                                $map['tgtCcy']='base_ccy';
+                                $map['sz']=$data['_number'];
+                            }
+
+                            if(isset($data['_price']) && $data['_price']>0 && $map['ordType']=='market'){
+                                $map['tgtCcy']='quote_ccy';
+                                $map['sz']=$data['_price'];
+                            }
                         }
                     }
                 }else{
@@ -381,15 +389,8 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['sz']=$data['_number'] ?? 0;
                     }else{
                         $map['ordType']='market';
-                        $map['sz']=$data['_number'] ?? 0;
                     }
-
                     switch ($this->platform){
-                        case 'spot':{
-                            $map['tdMode']=$data['tdMode'] ?? 'cash';
-                            $map['tgtCcy']='base_ccy';
-                            break;
-                        }
                         case 'margin':{
                             break;
                         }
@@ -406,7 +407,16 @@ class RequestTraderMap extends Base implements TraderInterface
                         case 'spot':
                         default:{//spot
                             $map['tdMode']=$data['tdMode'] ?? 'cash';
-                            $map['tgtCcy']='base_ccy';
+
+                            if(isset($data['_number']) && $data['_number']>0 && $map['ordType']=='market'){
+                                $map['tgtCcy']='base_ccy';
+                                $map['sz']=$data['_number'];
+                            }
+
+                            if(isset($data['_price']) && $data['_price']>0 && $map['ordType']=='market'){
+                                $map['tgtCcy']='quote_ccy';
+                                $map['sz']=$data['_price'];
+                            }
                         }
                     }
                 }else{
