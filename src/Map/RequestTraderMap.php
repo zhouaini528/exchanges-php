@@ -112,7 +112,7 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['sz']=$data['_number'] ?? 0;
                     }else{
                         $map['ordType']='market';
-                        $map['sz']=$data['_price'] ?? 0;
+                        $map['sz']=$data['_number'] ?? 0;
                     }
 
                     switch ($this->platform){
