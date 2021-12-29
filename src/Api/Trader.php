@@ -50,7 +50,7 @@ class Trader extends Base implements TraderInterface
 
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status'])) {
-                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
+                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader,'_status'=>'FAILURE'];
                 //if(in_array($trader['_status'],['CANCELLED'])) return $trader;
             }
 
@@ -113,7 +113,7 @@ class Trader extends Base implements TraderInterface
             //如果交易默认完成，则不用再查询
             //bitmex 存在可能
             if(isset($trader['_status'])) {
-                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
+                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader,'_status'=>'FAILURE'];
                 //if(in_array($trader['_status'],['CANCELLED'])) return $trader;
             }
 
@@ -173,7 +173,7 @@ class Trader extends Base implements TraderInterface
 
             //如果交易默认完成，则不用再查询
             if(isset($trader['_status'])) {
-                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
+                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader,'_status'=>'FAILURE'];
                 //if(in_array($trader['_status'],['CANCELLED'])) return $trader;
             }
 
@@ -228,7 +228,7 @@ class Trader extends Base implements TraderInterface
             $trader=$this->map->responseTrader()->show(['result'=>$result,'request'=>$data]);
             //print_r($trader);
             if(isset($trader['_status'])) {
-                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
+                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader,'_status'=>'FAILURE'];
             }
 
             return $trader;
