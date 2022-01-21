@@ -454,9 +454,10 @@ class ResponseTraderMap extends Base implements TraderInterface
             }
             case 'okex':{
                 if($this->version=='v5'){
-                    $map['_order_id']=$data['result']['data'][0]['ordId'];
-                    $map['_client_id']=$data['result']['data'][0]['clOrdId'];
-                    $map['_symbol']=$data['result']['data'][0]['instId'];
+                    $map['_order_id']=$data['result']['data'][0]['ordId'] ?? '';
+                    $map['_client_id']=$data['result']['data'][0]['clOrdId'] ?? $data['request']['_client_id'];
+                    $map['_symbol']=$data['result']['data'][0]['instId'] ?? $data['request']['_symbol'];
+                    if(!isset($data['result']['data'][0])) break;
 
                     $map['_filed_amount']=bcmul(strval($data['result']['data'][0]['accFillSz']),strval($data['result']['data'][0]['avgPx']),16);
                     $map['_filled_qty']=$data['result']['data'][0]['accFillSz'];
