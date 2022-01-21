@@ -63,7 +63,7 @@ class ResponseTraderMap extends Base implements TraderInterface
             '4'=>'CANCELING',
         ],
         'v5'=>[
-            //'-2'=>'FAILURE',
+            'failure'=>'FAILURE',
             'canceled'=>'CANCELLED',
             'live'=>'NEW',
             'partially_filled'=>'PART_FILLED',
@@ -457,7 +457,10 @@ class ResponseTraderMap extends Base implements TraderInterface
                     $map['_order_id']=$data['result']['data'][0]['ordId'] ?? '';
                     $map['_client_id']=$data['result']['data'][0]['clOrdId'] ?? $data['request']['_client_id'];
                     $map['_symbol']=$data['result']['data'][0]['instId'] ?? $data['request']['_symbol'];
-                    if(!isset($data['result']['data'][0])) break;
+                    if(!isset($data['result']['data'][0])) {
+                        $map['_status']=$this->okex_status['v5']['failure'];
+                        break;
+                    }
 
                     $map['_filed_amount']=bcmul(strval($data['result']['data'][0]['accFillSz']),strval($data['result']['data'][0]['avgPx']),16);
                     $map['_filled_qty']=$data['result']['data'][0]['accFillSz'];
