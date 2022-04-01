@@ -304,7 +304,7 @@ class Okex
         $this->key=$key;
         $this->secret=$secret;
         $this->passphrase=$passphrase;
-        $this->host= empty($host) ? 'https://www.okex.com' : $host ;
+        $this->host= empty($host) ? 'https://www.okx.com' : $host ;
     }
 
     function account(){
