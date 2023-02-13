@@ -121,12 +121,10 @@ class Base
         $temp=json_decode($msg,true);
         if(!empty($temp) && is_array($temp)) {
             if(isset($httpcode)) $temp['_httpcode']=$httpcode;
-            return ['_error'=>$temp];
+            return ['_error'=>$temp,'_status'=>'FAILURE'];
         }
 
-        return [
-            '_error'=>$msg,
-        ];
+        return ['_error'=>$msg,'_status'=>'FAILURE'];
     }
 
     /**
