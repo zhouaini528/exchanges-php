@@ -111,9 +111,10 @@ class Base
     /**
      *
      * @param
+     * @param string
      * @return array
      * */
-    protected function error($msg){
+    protected function error($msg,$status='FAILURE'){
         if(stripos($msg,'Connection timed out after')!==false){
             $httpcode=504;
         }
@@ -121,10 +122,10 @@ class Base
         $temp=json_decode($msg,true);
         if(!empty($temp) && is_array($temp)) {
             if(isset($httpcode)) $temp['_httpcode']=$httpcode;
-            return ['_error'=>$temp,'_status'=>'FAILURE'];
+            return ['_error'=>$temp,'_status'=>$status];
         }
 
-        return ['_error'=>$msg,'_status'=>'FAILURE'];
+        return ['_error'=>$msg,'_status'=>$status];
     }
 
     /**

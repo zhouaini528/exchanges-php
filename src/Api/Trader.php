@@ -228,12 +228,12 @@ class Trader extends Base implements TraderInterface
             $trader=$this->map->responseTrader()->show(['result'=>$result,'request'=>$data]);
             //print_r($trader);
             if(isset($trader['_status'])) {
-                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader,'_status'=>'FAILURE'];
+                if(in_array($trader['_status'],['FAILURE'])) return ['_error'=>$trader];
             }
 
             return $trader;
         }catch (\Exception $e){
-            return $this->error($e->getMessage());
+            return $this->error($e->getMessage(),'system error');
         }
     }
 
