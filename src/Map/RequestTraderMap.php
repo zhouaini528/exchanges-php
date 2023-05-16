@@ -212,6 +212,19 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['price']=$data['_price'] ?? ($data['price'] ?? '');
                     $map['type']='LIMIT';
                 }else{
+                    //quantity 的市价单
+                    //MARKET 明确的是用户想用市价单买入或卖出的数量。
+                    //BTCUSDT上下一个市价单,quantity用户指明能够买进或者卖出多少BTC。
+
+                    //quoteOrderQty 的市价单
+                    //MARKET 明确的是通过买入(或卖出)想要花费(或获取)的报价资产数量; 此时的正确报单数量将会以市场流动性和
+                    //quoteOrderQty被计算出来。
+
+                    //BTCUSDT为例,
+                    //quoteOrderQty=100:
+                    //下买单的时候, 订单会尽可能的买进价值100USDT的BTC.下卖单的时候, 订单会尽可能的卖出价值100USDT的BTC.
+
+                    //可以理解为以BTCUSDT  quantity处理BTC(交易币)   quoteOrderQty处理USDT(计价币)
                     switch ($this->checkType()){
                         case 'spot':{
                             $map['quoteOrderQty']=$data['_number'] ?? ($data['quoteOrderQty'] ?? '');
