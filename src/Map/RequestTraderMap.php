@@ -207,9 +207,9 @@ class RequestTraderMap extends Base implements TraderInterface
 
                 //市价单与限价单的参数映射
                 if(isset($data['_number']) && isset($data['_price'])){
-                    $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                     $map['timeInForce']=$data['timeInForce'] ?? 'GTC';
-                    $map['price']=$data['_price'] ?? ($data['price'] ?? '');
+                    $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                    $map['price']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
                     $map['type']='LIMIT';
                 }else{
                     //quantity 的市价单
@@ -225,9 +225,16 @@ class RequestTraderMap extends Base implements TraderInterface
                     //下买单的时候, 订单会尽可能的买进价值100USDT的BTC.下卖单的时候, 订单会尽可能的卖出价值100USDT的BTC.
 
                     //可以理解为以BTCUSDT  quantity处理BTC(交易币)   quoteOrderQty处理USDT(计价币)
+                    //TODO
                     switch ($this->checkType()){
                         case 'spot':{
-                            $map['quoteOrderQty']=$data['_number'] ?? ($data['quoteOrderQty'] ?? '');
+                            if(isset($data['_price'])){
+                                $map['quoteOrderQty']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
+                            }
+
+                            if(isset($data['_number'])){
+                                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                            }
                             break;
                         }
                         default:{
@@ -488,7 +495,6 @@ class RequestTraderMap extends Base implements TraderInterface
             case 'binance':{
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 $map['newClientOrderId']=$data['_client_id'] ?? ($data['newClientOrderId'] ?? '');
-                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                 $map['side']='SELL';
 
                 if(empty($map['newClientOrderId'])) unset($map['newClientOrderId']);
@@ -496,9 +502,26 @@ class RequestTraderMap extends Base implements TraderInterface
                 //市价单与限价单的参数映射
                 if(isset($data['_number']) && isset($data['_price'])){
                     $map['timeInForce']=$data['timeInForce'] ?? 'GTC';
-                    $map['price']=$data['_price'] ?? ($data['price'] ?? '');
+                    $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                    $map['price']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
                     $map['type']='LIMIT';
                 }else{
+                    switch ($this->checkType()){
+                        case 'spot':{
+                            if(isset($data['_price'])){
+                                $map['quoteOrderQty']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
+                            }
+
+                            if(isset($data['_number'])){
+                                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                            }
+                            $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                            break;
+                        }
+                        default:{
+                            $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                        }
+                    }
                     $map['type']='MARKET';
                 }
 
