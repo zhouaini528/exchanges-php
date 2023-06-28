@@ -112,6 +112,18 @@ class BaseBinance
             $this->host=$this->demo_host;
         }
     }
+
+    /***
+     *
+     */
+    function redata(array $data){
+        if(array_key_exists('exchanges_exptime',$this->options)){
+            $data['recvWindow']=$this->options['exchanges_exptime'];
+            unset($this->options['exchanges_exptime']);
+        }
+
+        return $data;
+    }
 }
 
 class AccountBinance extends BaseBinance implements AccountInterface
@@ -120,6 +132,8 @@ class AccountBinance extends BaseBinance implements AccountInterface
      *
      * */
     function get(array $data){
+        $data=$this->redata($data);
+
         switch ($this->checkType()){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
@@ -153,6 +167,8 @@ class TraderBinance extends BaseBinance implements TraderInterface
      *
      * */
     function sell(array $data){
+        $data=$this->redata($data);
+
         switch ($this->checkType()){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
@@ -173,6 +189,8 @@ class TraderBinance extends BaseBinance implements TraderInterface
      *
      * */
     function buy(array $data){
+        $data=$this->redata($data);
+
         switch ($this->checkType()){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
@@ -193,6 +211,8 @@ class TraderBinance extends BaseBinance implements TraderInterface
      *
      * */
     function cancel(array $data){
+        $data=$this->redata($data);
+
         switch ($this->checkType()){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
