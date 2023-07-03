@@ -20,6 +20,8 @@ class Map
     protected $platform='';
     protected $version='';
 
+    public $order_type='';
+
     function __construct(string $exchange,string $key,string $secret,string $extra,string $host){
         $this->exchange=$exchange;
         $this->key=$key;
@@ -43,6 +45,8 @@ class Map
     function requestTrader(){
         $RequestTraderMap = new RequestTraderMap($this->exchange,$this->key,$this->secret,$this->extra,$this->host);
         $RequestTraderMap->setPlatform($this->platform)->setVersion($this->version);
+
+        $this->order_type=$RequestTraderMap->order_type;
         return $RequestTraderMap;
     }
 

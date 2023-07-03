@@ -60,7 +60,7 @@ class Trader extends Base implements TraderInterface
             if(empty($trader['_order_id'])) throw new \Exception('Buy Failed');
 
             //交易所是撮合交易，所以查询需要间隔时间    市价交易不需要等待查询
-            if($this->map->requestTrader()->order_type!='market'){
+            if($this->map->order_type!='market'){
                 sleep(Exchanges::$TRADER_SHOW_TIME);
             }
 
@@ -125,7 +125,7 @@ class Trader extends Base implements TraderInterface
             if(empty($trader['_order_id'])) throw new \Exception('Sell Failed');
 
             //交易所是撮合交易，所以查询需要间隔时间   市价交易不需要等待查询
-            if($this->map->requestTrader()->order_type!='market'){
+            if($this->map->order_type!='market'){
                 sleep(Exchanges::$TRADER_SHOW_TIME);
             }
 
