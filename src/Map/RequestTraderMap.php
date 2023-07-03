@@ -196,6 +196,8 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                     }
                 }
+
+                $this->checkOrderType($map['ordType']);
                 break;
             }
             case 'binance':{
@@ -258,6 +260,7 @@ class RequestTraderMap extends Base implements TraderInterface
                 //支持原生参数
                 $data['side']=$map['side'];
 
+                $this->checkOrderType($map['type']);
                 break;
             }
             case 'kucoin':{
@@ -490,6 +493,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                 }
 
+                $this->checkOrderType($map['ordType']);
                 break;
             }
             case 'binance':{
@@ -539,6 +543,7 @@ class RequestTraderMap extends Base implements TraderInterface
                 //支持原生参数
                 $data['side']=$map['side'];
 
+                $this->checkOrderType($map['type']);
                 break;
             }
             case 'kucoin':{

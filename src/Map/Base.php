@@ -19,6 +19,8 @@ class Base
     protected $platform='';
     protected $version='';
 
+    public $order_type='';
+
     function __construct(string $exchange,string $key,string $secret,string $extra,string $host){
         $this->exchange=$exchange;
         $this->key=$key;
@@ -103,6 +105,16 @@ class Base
     public function setVersion(string $version=''){
         $this->version=$version;
         return $this;
+    }
+
+    public function checkOrderType(string $type=''){
+        //limit market
+        $type=strtolower($type);
+        if(in_array($type,['limit','market'])){
+            $this->order_type=$type;
+        }else{
+            $this->order_type='';
+        }
     }
 }
 
