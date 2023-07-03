@@ -41,7 +41,9 @@ class Trader extends Base implements TraderInterface
     function buy(array $data,bool $show=true){
         try {
             //print_r($data);
-            $map=$this->map->requestTrader()->buy($data);
+            $requestTrader=$this->map->requestTrader();
+
+            $map=$requestTrader->buy($data);
             //print_r($map);//die;
             $result=$this->exchange->trader()->buy($map);
             //print_r($result);
@@ -60,7 +62,7 @@ class Trader extends Base implements TraderInterface
             if(empty($trader['_order_id'])) throw new \Exception('Buy Failed');
 
             //交易所是撮合交易，所以查询需要间隔时间    市价交易不需要等待查询
-            if($this->map->order_type!='market'){
+            if($requestTrader->order_type!='market'){
                 sleep(Exchanges::$TRADER_SHOW_TIME);
             }
 
@@ -105,7 +107,9 @@ class Trader extends Base implements TraderInterface
      * */
     function sell(array $data,bool $show=true){
         try {
-            $map=$this->map->requestTrader()->sell($data);
+            $requestTrader=$this->map->requestTrader();
+
+            $map=$requestTrader->sell($data);
             //print_r($map);
             $result=$this->exchange->trader()->sell($map);
             //print_r($result);
@@ -125,7 +129,7 @@ class Trader extends Base implements TraderInterface
             if(empty($trader['_order_id'])) throw new \Exception('Sell Failed');
 
             //交易所是撮合交易，所以查询需要间隔时间   市价交易不需要等待查询
-            if($this->map->order_type!='market'){
+            if($requestTrader->order_type!='market'){
                 sleep(Exchanges::$TRADER_SHOW_TIME);
             }
 
