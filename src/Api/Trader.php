@@ -146,7 +146,7 @@ class Trader extends Base implements TraderInterface
     }
 
     /**
-      * 删除订单 即撤单
+     * 删除订单 即撤单
      * 请求参数
      * @param $data
      * '_order_id'   与  _client_id 必须有一个存在
@@ -172,7 +172,9 @@ class Trader extends Base implements TraderInterface
      * */
     function cancel(array $data,bool $show=true){
         try {
-            $map=$this->map->requestTrader()->cancel($data);
+            $requestTrader=$this->map->requestTrader();
+
+            $map=$requestTrader->cancel($data);
             //print_r($map);
             $result=$this->exchange->trader()->cancel($map);
             //print_r($result);
@@ -229,10 +231,12 @@ class Trader extends Base implements TraderInterface
      * */
     function show(array $data){
         try {
-            $map=$this->map->requestTrader()->show($data);
+            $requestTrader=$this->map->requestTrader();
+            $map=$requestTrader->show($data);
             //print_r($map);
-            $result=$this->exchange->trader()->show($map);
-            //print_r($result);
+            $ex_trader=$this->exchange->trader();
+            $result=$ex_trader->show($map);
+
             $trader=$this->map->responseTrader()->show(['result'=>$result,'request'=>$data]);
             //print_r($trader);
             if(isset($trader['_status'])) {

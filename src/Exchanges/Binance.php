@@ -240,6 +240,8 @@ class TraderBinance extends BaseBinance implements TraderInterface
      *
      * */
     function show(array $data){
+        $data=$this->redata($data);
+
         switch ($this->checkType()){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
