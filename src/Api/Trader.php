@@ -40,7 +40,6 @@ class Trader extends Base implements TraderInterface
      * */
     function buy(array $data,bool $show=true){
         try {
-            //print_r($data);
             $requestTrader=$this->map->requestTrader();
 
             $map=$requestTrader->buy($data);
@@ -72,6 +71,7 @@ class Trader extends Base implements TraderInterface
 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
+                '_trader_result'=>$result
             ]);
         }catch (\Exception $e){
             return $this->error($e->getMessage());
@@ -139,6 +139,7 @@ class Trader extends Base implements TraderInterface
 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
+                '_trader_result'=>$result
             ]);
         }catch (\Exception $e){
             return $this->error($e->getMessage());
@@ -198,6 +199,7 @@ class Trader extends Base implements TraderInterface
 
                 '_order_id'=>$trader['_order_id'] ?? '',
                 '_client_id'=>$trader['_client_id'] ?? '',
+                '_trader_result'=>$result
             ]);
         }catch (\Exception $e){
             return $this->error($e->getMessage());
@@ -245,7 +247,7 @@ class Trader extends Base implements TraderInterface
 
             return $trader;
         }catch (\Exception $e){
-            return $this->error($e->getMessage(),'system error');
+            return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
         }
     }
 
