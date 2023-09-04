@@ -74,7 +74,7 @@ class Trader extends Base implements TraderInterface
                 '_trader_result'=>$result
             ]);
         }catch (\Exception $e){
-            return $this->error($e->getMessage());
+            return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
         }
     }
 
@@ -142,7 +142,7 @@ class Trader extends Base implements TraderInterface
                 '_trader_result'=>$result
             ]);
         }catch (\Exception $e){
-            return $this->error($e->getMessage());
+            return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
         }
     }
 
@@ -202,7 +202,7 @@ class Trader extends Base implements TraderInterface
                 '_trader_result'=>$result
             ]);
         }catch (\Exception $e){
-            return $this->error($e->getMessage());
+            return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
         }
     }
 
