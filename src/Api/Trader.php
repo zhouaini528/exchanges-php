@@ -60,22 +60,23 @@ class Trader extends Base implements TraderInterface
             //如果交易所返回订单不存在抛出异常
             if(empty($trader['_order_id'])) throw new \Exception('Buy Failed');
 
-            //交易所是撮合交易，所以查询需要间隔时间    市价交易不需要等待查询
-            if($requestTrader->order_type!='market'){
-                sleep(Exchanges::$TRADER_SHOW_TIME);
-            }
-
-            //再次查询结果
-            return $this->show([
-                '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
-
-                '_order_id'=>$trader['_order_id'] ?? '',
-                '_client_id'=>$trader['_client_id'] ?? '',
-                '_trader_result'=>$result
-            ]);
         }catch (\Exception $e){
-            return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
+            return $this->error($e->getMessage());
         }
+
+        //交易所是撮合交易，所以查询需要间隔时间    市价交易不需要等待查询
+        if($requestTrader->order_type!='market'){
+            sleep(Exchanges::$TRADER_SHOW_TIME);
+        }
+
+        //再次查询结果
+        return $this->show([
+            '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
+
+            '_order_id'=>$trader['_order_id'] ?? '',
+            '_client_id'=>$trader['_client_id'] ?? '',
+            '_trader_result'=>$result
+        ]);
     }
 
     /**
@@ -128,22 +129,23 @@ class Trader extends Base implements TraderInterface
             //如果交易所返回订单不存在抛出异常
             if(empty($trader['_order_id'])) throw new \Exception('Sell Failed');
 
-            //交易所是撮合交易，所以查询需要间隔时间   市价交易不需要等待查询
-            if($requestTrader->order_type!='market'){
-                sleep(Exchanges::$TRADER_SHOW_TIME);
-            }
-
-            //再次查询结果
-            return $this->show([
-                '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
-
-                '_order_id'=>$trader['_order_id'] ?? '',
-                '_client_id'=>$trader['_client_id'] ?? '',
-                '_trader_result'=>$result
-            ]);
         }catch (\Exception $e){
-            return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
+            return $this->error($e->getMessage());
         }
+
+        //交易所是撮合交易，所以查询需要间隔时间   市价交易不需要等待查询
+        if($requestTrader->order_type!='market'){
+            sleep(Exchanges::$TRADER_SHOW_TIME);
+        }
+
+        //再次查询结果
+        return $this->show([
+            '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
+
+            '_order_id'=>$trader['_order_id'] ?? '',
+            '_client_id'=>$trader['_client_id'] ?? '',
+            '_trader_result'=>$result
+        ]);
     }
 
     /**
@@ -190,20 +192,21 @@ class Trader extends Base implements TraderInterface
 
             if(!$show) return $trader;
 
-            //交易所是撮合交易，所以查询需要间隔时间
-            sleep(Exchanges::$TRADER_SHOW_TIME);
-
-            //再次查询结果
-            return $this->show([
-                '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
-
-                '_order_id'=>$trader['_order_id'] ?? '',
-                '_client_id'=>$trader['_client_id'] ?? '',
-                '_trader_result'=>$result
-            ]);
         }catch (\Exception $e){
             return $this->error(json_encode(array_merge($data,['_msg'=>$e->getMessage()])));
         }
+
+        //交易所是撮合交易，所以查询需要间隔时间
+        sleep(Exchanges::$TRADER_SHOW_TIME);
+
+        //再次查询结果
+        return $this->show([
+            '_symbol'=>$data['_symbol'] ?? ($trader['_symbol'] ?? ''),
+
+            '_order_id'=>$trader['_order_id'] ?? '',
+            '_client_id'=>$trader['_client_id'] ?? '',
+            '_trader_result'=>$result
+        ]);
     }
 
     /**
