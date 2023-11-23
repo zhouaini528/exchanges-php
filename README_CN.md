@@ -33,9 +33,7 @@ QQ交流群：668421169
 
 [Gate](https://github.com/zhouaini528/gate-php)   
 
-[Bigone](https://github.com/zhouaini528/bigone-php)   
-
-[Crex24](https://github.com/zhouaini528/crex24-php)   
+[Bigone](https://github.com/zhouaini528/bigone-php)
 
 [Bybit](https://github.com/zhouaini528/bybit-php)
 
