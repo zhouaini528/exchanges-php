@@ -37,9 +37,7 @@ QQ交流群：668421169
 
 [Crex24](https://github.com/zhouaini528/crex24-php)   
 
-[Bybit](https://github.com/zhouaini528/bybit-php)  
-
-[Coinbene](https://github.com/zhouaini528/coinbene-php)   
+[Bybit](https://github.com/zhouaini528/bybit-php)
 
 [Bitget](https://github.com/zhouaini528/bitget-php)   
 
