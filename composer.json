@@ -35,7 +35,6 @@
         "linwj/coinbene":"*",
         "linwj/bitget":"*",
         "linwj/poloniex":"*",
-        "linwj/coinex":"*",
-        "linwj/ftx":"*"
+        "linwj/coinex":"*"
     }
 }
