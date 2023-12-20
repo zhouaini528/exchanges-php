@@ -231,18 +231,7 @@ class Kucoin
      * Support for more request Settings
      * */
     function setOptions(array $options=[]){
-
-        switch ($this->type){
-            case 'spot':{
-                $this->platform_spot->setOptions($options);
-                break;
-            }
-            case 'future':{
-                $this->platform_future->setOptions($options);
-                break;
-            }
-        }
-
+        $this->options=$options;
         return $this;
     }
 }
