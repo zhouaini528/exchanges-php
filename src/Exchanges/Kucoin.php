@@ -33,7 +33,7 @@ class Base
     }
 }
 
-class Account extends Base implements AccountInterface
+class AccountKucoin extends Base implements AccountInterface
 {
     /**
      *
@@ -52,7 +52,7 @@ class Account extends Base implements AccountInterface
     }
 }
 
-class Market extends Base implements MarketInterface
+class MarketKucoin extends Base implements MarketInterface
 {
     /**
      *
@@ -69,7 +69,7 @@ class Market extends Base implements MarketInterface
     }
 }
 
-class Trader extends Base implements TraderInterface
+class TraderKucoin extends Base implements TraderInterface
 {
     /**
      *
@@ -178,15 +178,15 @@ class Kucoin
     }
 
     function account(){
-        return new Account($this->platform_future,$this->platform_spot,$this->host);
+        return new AccountKucoin($this->platform_future,$this->platform_spot,$this->host);
     }
 
     function market(){
-        return new Market($this->platform_future,$this->platform_spot,$this->host);
+        return new MarketKucoin($this->platform_future,$this->platform_spot,$this->host);
     }
 
     function trader(){
-        return new Trader($this->platform_future,$this->platform_spot,$this->host);
+        return new TraderKucoin($this->platform_future,$this->platform_spot,$this->host);
     }
 
     function getPlatform(string $type=''){
