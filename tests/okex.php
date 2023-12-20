@@ -749,11 +749,20 @@ switch ($action){
             'headers'=>['x-simulated-trading'=>1]
         ]);
         $exchanges->setPlatform('spot')->setVersion('v5');
-        $exchanges->trader()->show([
+        /*$result=$exchanges->trader()->show([
             '_symbol'=>'BTC-USDT',
-            '_order_id'=>'375607157957472256',
-            '_client_id'=>'xxxxx72673',
+            '_order_id'=>'639489182880067584',
+            '_client_id'=>'xxxxx68193',
+        ]);*/
+        //$result=$exchanges->getPlatform()->account()->getBalance();
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTC-USDT',
+            '_number'=>'1',
+            //'_price'=>'80000',
+            //'_price'=>'100',
+            '_client_id'=>'xxxxx'.rand(10000,99999),
         ]);
+
         break;
     }
 

@@ -17,15 +17,14 @@ include 'key_secret.php';
 $key=$keysecret['ku']['kucoin']['key'];
 $secret=$keysecret['ku']['kucoin']['secret'];
 $passphrase=$keysecret['ku']['kucoin']['passphrase'];
-$host=$keysecret['ku']['kucoin']['host'];
-$kucoin=new Exchanges('kucoin',$key,$secret,$passphrase,$host);
+$kucoin=new Exchanges('kucoin',$key,$secret,$passphrase);
 
 //kumex
-$key=$keysecret['ku']['kumex']['key'];
+/*$key=$keysecret['ku']['kumex']['key'];
 $secret=$keysecret['ku']['kumex']['secret'];
 $passphrase=$keysecret['ku']['kumex']['passphrase'];
 $host=$keysecret['ku']['kumex']['host'];
-$kumex=new Exchanges('kumex',$key,$secret,$passphrase,$host);
+$kumex=new Exchanges('kumex',$key,$secret,$passphrase,$host);*/
 
 
 //Support for more request Settings
@@ -42,11 +41,6 @@ $kucoin->setOptions([
      'no'    =>  ['.cn']
      ], */
     //Close the certificate
-    //'verify'=>false,
-]);
-
-$kumex->setOptions([
-    //'proxy'=>true,
     //'verify'=>false,
 ]);
 
@@ -363,6 +357,18 @@ switch ($action){
         $result=$kumex->account()->get([
             '_symbol'=>'XBTUSDM',
         ]);
+
+        break;
+    }
+
+    case 703:{
+        $result=$kucoin->getPlatform()->account()->getAll();
+
+        break;
+    }
+
+    case 704:{
+        $result=$kucoin->getPlatform('future')->position()->getAll();
 
         break;
     }

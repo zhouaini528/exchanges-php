@@ -13,7 +13,7 @@ use Lin\Exchange\Exchanges\Bitmex;
 use Lin\Exchange\Exchanges\Okex;
 use Lin\Exchange\Exchanges\Binance;
 use Lin\Exchange\Exceptions\Exception;
-use Lin\Exchange\Exchanges\Ku;
+use Lin\Exchange\Exchanges\Kucoin;
 use Lin\Exchange\Exchanges\Bitfinex;
 use Lin\Exchange\Exchanges\Mxc;
 use Lin\Exchange\Exchanges\Coinbase;
@@ -56,9 +56,8 @@ class Base
                 $this->exchange=new Binance($key,$secret,$host);
                 break;
             }
-            case 'kumex':{}
             case 'kucoin':{
-                $this->exchange=new Ku($key,$secret,$extra,$host);
+                $this->exchange=new Kucoin($key,$secret,$extra,$host);
                 break;
             }
             case 'bitfinex':{
