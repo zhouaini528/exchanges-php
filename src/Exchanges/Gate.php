@@ -126,6 +126,10 @@ class Gate
     protected $platform_margin;
     protected $platform_wallet;
 
+    protected $platform;
+
+    protected $version;
+
     function __construct($key,$secret,$host){
         $this->key=$key;
         $this->secret=$secret;
@@ -164,27 +168,25 @@ class Gate
         $this->type=strtolower($type);
 
         switch ($this->type){
-            case 'spot':{
-                return $this->platform_spot=new GateSpot($this->key,$this->secret,$this->host);;
-            }
             case 'spot_v2':{
                 $this->host='https://api.gateio.la';
-                return $this->platform_spot_v2=new GateSpotV2($this->key,$this->secret,$this->host);;
+                return $this->platform_spot_v2=new GateSpotV2($this->key,$this->secret,$this->host);
             }
             case 'future':{
-                return $this->platform_future=new GateFuture($this->key,$this->secret,$this->host);;
+                return $this->platform_future=new GateFuture($this->key,$this->secret,$this->host);
             }
             case 'margin':{
-                return $this->platform_margin=new GateMargin($this->key,$this->secret,$this->host);;
+                return $this->platform_margin=new GateMargin($this->key,$this->secret,$this->host);
             }
             case 'delivery':{
-                return $this->platform_delivery=new GateDelivery($this->key,$this->secret,$this->host);;
+                return $this->platform_delivery=new GateDelivery($this->key,$this->secret,$this->host);
             }
             case 'wallet':{
-                return $this->platform_wallet=new GateWallet($this->key,$this->secret,$this->host);;
+                return $this->platform_wallet=new GateWallet($this->key,$this->secret,$this->host);
             }
+            case 'spot':
             default:{
-                return null;
+                return $this->platform_spot=new GateSpot($this->key,$this->secret,$this->host);
             }
         }
     }
@@ -222,5 +224,32 @@ class Gate
 
             }
         }
+
+        return $this;
     }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform ?? 'spot';
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
+    }
+
+
+    /**
+     * Support for more request Settings
+     * */
+    /*function setOptions(array $options=[]){
+        $this->options=$options;
+        return $this;
+    }*/
 }
