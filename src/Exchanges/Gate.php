@@ -133,7 +133,7 @@ class Gate
     function __construct($key,$secret,$host){
         $this->key=$key;
         $this->secret=$secret;
-        $this->host=empty($host) ? 'https://api.gateio.ws' : '';
+        $this->host=empty($host) ? 'https://api.gateio.ws' : $host;
     }
 
     function account(){
