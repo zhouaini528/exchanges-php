@@ -5,6 +5,7 @@
 
 namespace Lin\Exchange\Api;
 
+use Lin\Exchange\Exchanges\Bitget;
 use Lin\Exchange\Exchanges\Bybit;
 use Lin\Exchange\Exchanges\Crex;
 use Lin\Exchange\Map\Map;
@@ -46,6 +47,10 @@ class Base
             }
             case 'bitmex':{
                 $this->exchange=new Bitmex($key,$secret,$host);
+                break;
+            }
+            case 'bitget':{
+                $this->exchange=new Bitget($key,$secret,$extra,$host);
                 break;
             }
             case 'okex':{
