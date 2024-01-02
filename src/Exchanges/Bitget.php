@@ -15,11 +15,6 @@ class BaseBitget
 {
     protected $platform_future=null;
     protected $platform_spot=null;
-    protected $platform_swap=null;
-
-    protected $platform_account=null;
-    protected $platform_margin=null;
-    protected $platform_option=null;
 
     protected $platform='';
     protected $version='';
@@ -41,30 +36,6 @@ class BaseBitget
         return '';
     }
 
-    /**
-    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
-     */
-    public function setPlatform(string $platform=''){
-        $this->platform=$platform;
-        return $this;
-    }
-
-    /**
-    Set exchange API interface version. for example "v1" "v3" "v5"
-     */
-    public function setVersion(string $version=''){
-        $this->version=$version;
-        return $this;
-    }
-
-    /**
-     * Support for more request Settings
-     * */
-    function setOptions(array $options=[]){
-        $this->options=$options;
-        return $this;
-    }
-
     /***
      *Initialize exchange
      */
@@ -84,6 +55,31 @@ class BaseBitget
             }
         }
         return null;
+    }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform ?? 'spot';
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
+    }
+
+
+    /**
+     * Support for more request Settings
+     * */
+    function setOptions(array $options=[]){
+        $this->options=$options;
+        return $this;
     }
 }
 
