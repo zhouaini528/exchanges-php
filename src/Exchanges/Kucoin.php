@@ -168,6 +168,10 @@ class Kucoin
     protected $platform_spot;
     protected $platform_future;
 
+    protected $platform='';
+    protected $version='';
+    protected $options=[];
+
     function __construct($key,$secret,$passphrase,$host=''){
         $this->key=$key;
         $this->secret=$secret;
@@ -193,20 +197,18 @@ class Kucoin
         $this->type=strtolower($type);
 
         switch ($this->type){
-            case 'spot':{
-                return $this->platform_spot=new KucoinSpot($this->key,$this->secret,$this->passphrase,$this->host);
-            }
             case 'future':{
                 $this->host='https://api-futures.kucoin.com';
-                return $this->platform_future=new KucoinFuture($this->key,$this->secret,$this->passphrase,$this->host);
+                $this->platform_future=new KucoinFuture($this->key,$this->secret,$this->passphrase,$this->host);
+                $this->platform_future->setOptions($this->options);
+                return $this->platform_future;
             }
+            case 'spot':
             default:{
-                if(stripos($this->host,'future')!==false){
-                    $this->type='future';
-                    return $this->platform_future=new KucoinFuture($this->key,$this->secret,$this->passphrase,$this->host);
-                }
                 $this->type='spot';
-                return $this->platform_spot=new KucoinSpot($this->key,$this->secret,$this->passphrase,$this->host);
+                $this->platform_spot=new KucoinSpot($this->key,$this->secret,$this->passphrase,$this->host);
+                $this->platform_spot->setOptions($this->options);
+                return $this->platform_spot;
             }
         }
     }
