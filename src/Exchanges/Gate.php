@@ -126,9 +126,9 @@ class Gate
     protected $platform_margin;
     protected $platform_wallet;
 
-    protected $platform;
-
-    protected $version;
+    protected $platform='';
+    protected $version='';
+    protected $options=[];
 
     function __construct($key,$secret,$host){
         $this->key=$key;
@@ -170,62 +170,37 @@ class Gate
         switch ($this->type){
             case 'spot_v2':{
                 $this->host='https://api.gateio.la';
-                return $this->platform_spot_v2=new GateSpotV2($this->key,$this->secret,$this->host);
+                $this->platform_spot_v2=new GateSpotV2($this->key,$this->secret,$this->host);
+                $this->platform_spot_v2->setOptions($this->options);
+                return $this->platform_spot_v2;
             }
             case 'future':{
-                return $this->platform_future=new GateFuture($this->key,$this->secret,$this->host);
+                $this->platform_future=new GateFuture($this->key,$this->secret,$this->host);
+                $this->platform_future->setOptions($this->options);
+                return $this->platform_future;
             }
             case 'margin':{
-                return $this->platform_margin=new GateMargin($this->key,$this->secret,$this->host);
+                $this->platform_margin=new GateMargin($this->key,$this->secret,$this->host);
+                $this->platform_margin->setOptions($this->options);
+                return $this->platform_margin;
             }
             case 'delivery':{
-                return $this->platform_delivery=new GateDelivery($this->key,$this->secret,$this->host);
+                $this->platform_delivery=new GateDelivery($this->key,$this->secret,$this->host);
+                $this->platform_delivery->setOptions($this->options);
+                return $this->platform_delivery;
             }
             case 'wallet':{
-                return $this->platform_wallet=new GateWallet($this->key,$this->secret,$this->host);
+                $this->platform_wallet=new GateWallet($this->key,$this->secret,$this->host);
+                $this->platform_wallet->setOptions($this->options);
+                return $this->platform_wallet;
             }
             case 'spot':
             default:{
-                return $this->platform_spot=new GateSpot($this->key,$this->secret,$this->host);
+                $this->platform_spot=new GateSpot($this->key,$this->secret,$this->host);
+                $this->platform_spot->setOptions($this->options);
+                return $this->platform_spot;
             }
         }
-    }
-
-    /**
-     * Support for more request Settings
-     * */
-    function setOptions(array $options=[]){
-        switch ($this->type){
-            case 'spot':{
-                $this->platform_spot->setOptions($options);
-                break;
-            }
-            case 'spot_v2':{
-                $this->platform_spot_v2->setOptions($options);
-                break;
-            }
-            case 'future':{
-                $this->platform_future->setOptions($options);
-                break;
-            }
-            case 'margin':{
-                $this->platform_margin->setOptions($options);
-                break;
-            }
-            case 'delivery':{
-                $this->platform_delivery->setOptions($options);
-                break;
-            }
-            case 'wallet':{
-                $this->platform_wallet->setOptions($options);
-                break;
-            }
-            default:{
-
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -248,8 +223,8 @@ class Gate
     /**
      * Support for more request Settings
      * */
-    /*function setOptions(array $options=[]){
+    function setOptions(array $options=[]){
         $this->options=$options;
         return $this;
-    }*/
+    }
 }
