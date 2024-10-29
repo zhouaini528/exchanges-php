@@ -84,6 +84,11 @@ class Base
                 if(!empty($symbol)){
                     return 'future';
                 }
+
+                if(empty($this->platform)) {
+                    return $this->platform;
+                }
+
                 /*if(empty($this->platform)) {
                     if(stristr($this->host,"fapi")!==false) return 'future';
                     if(stristr($this->host,"dapi")!==false) return 'delivery';

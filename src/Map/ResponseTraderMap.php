@@ -504,7 +504,13 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_filled_qty']=$data['result']['executedQty'];
                 $map['_status']=$this->binance_status[$data['result']['status']];
 
-                switch ($this->checkType()){
+                switch ($this->checkType($data['result']['symbol'])){
+                    case 'swap':
+                    case 'delivery':
+                    case 'future':{
+                        $map['_price_avg']=isset($data['result']['avgPrice']) ? $data['result']['avgPrice'] : 0;
+                        break;
+                    }
                     case 'spot':{
                         $map['_price_avg']=$data['result']['executedQty']==0 ? 0 : bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
                         $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];

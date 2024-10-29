@@ -35,6 +35,18 @@ class BaseBinance
         $this->host=$host;
     }
 
+    private function checkSymbol($symbol){
+        $temp=explode('_',$symbol);
+
+        //通过币安币对分隔符来区分币本位  还是U本位
+        if(count($temp)>1){
+            //币本位
+            return 'delivery';
+        }
+        //uU本位
+        return 'future';
+    }
+
     /**
      * 币安的按照U本位  币本位来分类  且API地址不一样，为了最小改动所以需要根据币对判断API地址
      */
@@ -50,15 +62,16 @@ class BaseBinance
 
         // 现货与期货区分可以用 positionSide   账户必须开启持仓双向模式
         if(!empty($data['positionSide'])){
-            $temp=explode('_',$data['symbol']);
+            return $this->checkSymbol($data['symbol']);
+        }
 
-            //通过币安币对分隔符来区分币本位  还是U本位
-            if(count($temp)>1){
-                //币本位
-                return 'delivery';
+        if(!empty($this->platform)){
+            switch ($this->platform){
+                case 'swap':
+                case 'future':
+                case 'delivery':return $this->checkSymbol($data['symbol']);
             }
-            //uU本位
-            return 'future';
+            return $this->platform;
         }
 
         return 'spot';
