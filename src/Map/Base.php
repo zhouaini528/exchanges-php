@@ -80,12 +80,17 @@ class Base
                 }
             }
             case 'binance':{
-                if(empty($this->platform)) {
+                // 现货与期货区分可以用 positionSide    账户必须开启持仓双向模式
+                if(!empty($symbol)){
+                    return 'future';
+                }
+                /*if(empty($this->platform)) {
                     if(stristr($this->host,"fapi")!==false) return 'future';
-                    if(stristr($this->host,"dapi")!==false) return 'swap';
+                    if(stristr($this->host,"dapi")!==false) return 'delivery';
                     return 'spot';
                 }
                 return $this->platform;
+                */
             }
             case 'kucoin':{
                 if(stripos($this->host,'kumex')!==false){

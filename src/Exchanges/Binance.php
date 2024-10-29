@@ -35,11 +35,32 @@ class BaseBinance
         $this->host=$host;
     }
 
-    protected function checkType(){
-        if(!empty($this->platform)) return $this->platform;
+    /**
+     * 币安的按照U本位  币本位来分类  且API地址不一样，为了最小改动所以需要根据币对判断API地址
+     */
+    protected function checkType($data){
+        //现货
+        //BTCUSDT
 
-        if(stristr($this->host,"fapi")!==false) return 'future';
-        if(stristr($this->host,"dapi")!==false) return 'delivery';
+        //合约
+        //BTCUSDT_PERP   u本位 永续
+
+        //BTCUSD_PERP  币本位 永续
+        //BTCUSD_241227  币本位  交割
+
+        // 现货与期货区分可以用 positionSide   账户必须开启持仓双向模式
+        if(!empty($data['positionSide'])){
+            $temp=explode('_',$data['symbol']);
+
+            //通过币安币对分隔符来区分币本位  还是U本位
+            if(count($temp)>1){
+                //币本位
+                return 'delivery';
+            }
+            //uU本位
+            return 'future';
+        }
+
         return 'spot';
     }
 
@@ -79,22 +100,20 @@ class BaseBinance
                 $this->host='';
                 return $this->platform_spot;
             }
-            case 'future':{
+            case 'future':{//定义为交割合约
                 $this->host('https://fapi.binance.com');
                 if($this->platform_future == null) $this->platform_future=new BinanceFuture($this->key,$this->secret,$this->host);
                 $this->platform_future->setOptions($this->options);
                 $this->host='';
                 return $this->platform_future;
             }
-            case 'delivery':{
+            case 'swap':
+            case 'delivery':{//定义为永续合约
                 $this->host('https://dapi.binance.com');
                 if($this->platform_delivery == null) $this->platform_delivery=new BinanceDelivery($this->key,$this->secret,$this->host);
                 $this->platform_delivery->setOptions($this->options);
                 $this->host='';
                 return $this->platform_delivery;
-            }
-            case 'swap':{
-                return null;
             }
             case 'linear':{
                 return null;
@@ -134,7 +153,7 @@ class AccountBinance extends BaseBinance implements AccountInterface
     function get(array $data){
         $data=$this->redata($data);
 
-        switch ($this->checkType()){
+        switch ($this->checkType($data)){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->user()->getAccount($data);
@@ -169,7 +188,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
     function sell(array $data){
         $data=$this->redata($data);
 
-        switch ($this->checkType()){
+        switch ($this->checkType($data)){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->trade()->postOrder($data);
@@ -191,7 +210,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
     function buy(array $data){
         $data=$this->redata($data);
 
-        switch ($this->checkType()){
+        switch ($this->checkType($data)){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->trade()->postOrder($data);
@@ -242,7 +261,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
     function show(array $data){
         $data=$this->redata($data);
 
-        switch ($this->checkType()){
+        switch ($this->checkType($data)){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->user()->getOrder($data);

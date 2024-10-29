@@ -18,7 +18,7 @@ $secret=$keysecret['binance']['secret'];
 $spot_host='https://api.binance.com';
 $future_host='https://fapi.binance.com';
 
-$exchanges=new Exchanges('binance',$key,$secret,$spot_host);
+$exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
 
 //Support for more request Settings
 $exchanges->setOptions([
@@ -387,17 +387,21 @@ switch ($action){
     }
 
     case 4002:{
+        //币本位  永续测试
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
         $_client_id=md5(rand(1,999999999));//custom ID
         $exchanges->setPlatform('future')->setVersion('v1');
         $result=$exchanges->trader()->buy([
-            '_symbol'=>'ETHUSDT',
-            '_number'=>'0.01',
-            '_price'=>'1000',
+            '_symbol'=>'BTCUSD_PERP',
+            '_number'=>'1',
+            '_price'=>'60000',
+            '_entry'=>true,
             '_client_id'=>$_client_id,
         ]);
 
         print_r($result);
-
+        die;
         $result=$exchanges->trader()->cancel([
             '_symbol'=>'ETHUSDT',
             //'_order_id'=>$result['orderId'],

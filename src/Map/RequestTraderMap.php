@@ -213,6 +213,27 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                     $map['price']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
                     $map['type']='LIMIT';
+
+                    /*$data['_entry']=null;
+                    print_r($data);
+                    var_dump($data['_entry'] ?? '');die;*/
+
+                    switch ($this->checkType($data['_entry'] ?? '')){
+                        case 'swap':
+                        case 'delivery':
+                        case 'future':{
+                            //LONG多     SHORT空
+                            //开多 buy long     平多 sell long
+                            //开空 buy short     开空 sell short
+                            if($data['_entry']) $map['side']='BUY';
+                            else $map['side']='SELL';
+
+                            $map['positionSide']='LONG';
+                            break;
+                        }
+                        default:{
+                        }
+                    }
                 }else{
                     //quantity 的市价单
                     //MARKET 明确的是用户想用市价单买入或卖出的数量。
@@ -228,15 +249,26 @@ class RequestTraderMap extends Base implements TraderInterface
 
                     //可以理解为以BTCUSDT  quantity处理BTC(交易币)   quoteOrderQty处理USDT(计价币)
                     //TODO
-                    switch ($this->checkType()){
-                        case 'spot':{
-                            if(isset($data['_price'])){
-                                $map['quoteOrderQty']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
-                            }
 
-                            if(isset($data['_number'])){
-                                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
-                            }
+                    if(isset($data['_price'])){
+                        $map['quoteOrderQty']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
+                    }
+
+                    if(isset($data['_number'])){
+                        $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                    }
+
+                    switch ($this->checkType($data['_entry'] ?? '')){
+                        case 'swap':
+                        case 'delivery':
+                        case 'future':{
+                            //LONG多     SHORT空
+                            //开多 buy long     平多 sell long
+                            //开空 buy short     开空 sell short
+                            if($data['_entry']) $map['side']='BUY';
+                            else $map['side']='SELL';
+
+                            $map['positionSide']='LONG';
                             break;
                         }
                         default:{
