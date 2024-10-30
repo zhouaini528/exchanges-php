@@ -130,6 +130,7 @@ switch ($action){
         break;
     }
     case 151:{
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binance.vision');
         //The original parameters
         $_client_id=md5(rand(1,999999999));//custom ID
         $result=$exchanges->trader()->buy([
@@ -137,7 +138,7 @@ switch ($action){
             'symbol'=>'BTCUSDT',
             'type'=>'LIMIT',
             'quantity'=>'0.01',
-            'price'=>'2000',
+            'price'=>'50000',
             'timeInForce'=>'GTC',
         ]);
         break;
@@ -152,6 +153,7 @@ switch ($action){
         break;
     }
     case 153:{
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binance.vision');
         //The original parameters
         $_client_id=md5(rand(1,999999999));//custom ID
         $result=$exchanges->trader()->sell([
@@ -159,7 +161,7 @@ switch ($action){
             'symbol'=>'BTCUSDT',
             'type'=>'LIMIT',
             'quantity'=>'0.01',
-            'price'=>'9000',
+            'price'=>'90000',
             'timeInForce'=>'GTC',
         ]);
         break;
