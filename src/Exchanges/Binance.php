@@ -245,7 +245,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
     function cancel(array $data){
         $data=$this->redata($data);
 
-        switch ($this->checkType()){
+        switch ($this->checkType($data)){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
                 return $this->platform_future->trade()->deleteOrder($data);

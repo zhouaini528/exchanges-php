@@ -23,6 +23,11 @@ $exchanges->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
 
+    'curl'=>[
+        CURLOPT_PROXY => 'proxy.local',
+        CURLOPT_PROXYPORT => '10808',
+        CURLOPT_PROXYTYPE => CURLPROXY_SOCKS5,
+    ]
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern

@@ -388,10 +388,14 @@ switch ($action){
 
     case 4002:{
         //币本位  永续测试
+        //BTCUSD_PERP  币本位 永续
+        //现价交易
         $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
 
+        $exchanges->setPlatform('swap');
+
         $_client_id=md5(rand(1,999999999));//custom ID
-        $exchanges->setPlatform('future')->setVersion('v1');
+
         $result=$exchanges->trader()->buy([
             '_symbol'=>'BTCUSD_PERP',
             '_number'=>'1',
@@ -399,23 +403,198 @@ switch ($action){
             '_entry'=>true,
             '_client_id'=>$_client_id,
         ]);
-
         print_r($result);
-        die;
+
         $result=$exchanges->trader()->cancel([
-            '_symbol'=>'ETHUSDT',
+            '_symbol'=>'BTCUSD_PERP',
             //'_order_id'=>$result['orderId'],
             '_client_id'=>$_client_id,
-            //'_client_id'=>'cd0986e64b3faca04724b82a3ca279f2'
+            //'_client_id'=>'dab73aca1b7d2550b8cc0d60e9f3dca5'
+
+        ]);
+
+        break;
+    }
+
+    case 4003:{
+        //币本位  永续测试
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
+        $exchanges->setPlatform('swap');
+
+        $result=$exchanges->trader()->show([
+            '_symbol'=>'BTCUSD_PERP',
+            //'_order_id'=>$result['orderId'],
+            //'_client_id'=>$_client_id,
+            '_client_id'=>'c059bd2a219c9e482e4987073621b476'
+
+        ]);
+
+        break;
+    }
+
+    case 4004:{
+        //币本位  永续测试
+        //BTCUSD_PERP  币本位 永续
+        //市价交易
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
+        $exchanges->setPlatform('swap');
+
+        $_client_id=md5(rand(1,999999999));//custom ID
+
+        //市价  开多
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSD_PERP',
+            '_number'=>'1',
+            '_entry'=>true,
+            '_client_id'=>$_client_id,
+        ]);
+
+        print_r($result);
+
+        sleep(5);
+
+        //市价  平多
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSD_PERP',
+            '_number'=>'1',
+            '_entry'=>false,
+            '_client_id'=>$_client_id,
         ]);
 
         break;
     }
 
 
+    case 5002:{
+        //BTCUSD_241227  币本位  交割
+        //现价交易
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
+        $exchanges->setPlatform('future');
+
+        $_client_id=md5(rand(1,999999999));//custom ID
+
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSD_241227',
+            '_number'=>'1',
+            '_price'=>'50000',
+            '_entry'=>true,
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        sleep(5);
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTCUSD_241227',
+            //'_order_id'=>$result['orderId'],
+            '_client_id'=>$_client_id,
+            //'_client_id'=>'dab73aca1b7d2550b8cc0d60e9f3dca5'
+
+        ]);
+
+        break;
+    }
+
+    case 5003:{
+        //BTCUSD_241227  币本位  交割
+        //市价交易
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
+        $exchanges->setPlatform('future');
+
+        $_client_id=md5(rand(1,999999999));//custom ID
+
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSD_241227',
+            '_number'=>'1',
+            '_entry'=>true,
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        sleep(5);
+
+        //市价  平多
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSD_241227',
+            '_number'=>'1',
+            '_entry'=>false,
+            '_client_id'=>$_client_id,
+        ]);
+
+        break;
+    }
+
+
+
+    case 6002:{
+        //BTCUSDT   u本位 永续
+        //现价交易
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
+        $exchanges->setPlatform('swap');
+
+        $_client_id=md5(rand(1,999999999));//custom ID
+
+        $result=$exchanges->trader()->sell([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'1',
+            '_price'=>'90000',
+            '_entry'=>true,
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+        sleep(5);
+        $result=$exchanges->trader()->cancel([
+            '_symbol'=>'BTCUSDT',
+            //'_order_id'=>$result['orderId'],
+            '_client_id'=>$_client_id,
+            //'_client_id'=>'dab73aca1b7d2550b8cc0d60e9f3dca5'
+
+        ]);
+
+        break;
+    }
+
+    case 6003:{
+        //BTCUSDT  u本位 永续
+        //市价交易
+        $exchanges=new Exchanges('binance',$key,$secret,'https://testnet.binancefuture.com');
+
+        $exchanges->setPlatform('swap');
+
+        $_client_id=md5(rand(1,999999999));//custom ID
+
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'0.01',
+            '_entry'=>true,
+            '_client_id'=>$_client_id,
+        ]);
+        print_r($result);
+
+        sleep(5);
+
+        //市价  平多
+        $result=$exchanges->trader()->buy([
+            '_symbol'=>'BTCUSDT',
+            '_number'=>'0.01',
+            '_entry'=>false,
+            '_client_id'=>$_client_id,
+        ]);
+
+        break;
+    }
+
+
+
     default:{
         echo 'nothing';
         exit;
     }
+
+
+
+
 }
 print_r($result);

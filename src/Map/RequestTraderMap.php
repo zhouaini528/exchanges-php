@@ -218,13 +218,13 @@ class RequestTraderMap extends Base implements TraderInterface
                     print_r($data);
                     var_dump($data['_entry'] ?? '');die;*/
 
-                    switch ($this->checkType($data['_entry'] ?? '')){
+                    switch ($this->checkType(isset($data['_entry']) ?? '')){
                         case 'swap':
                         case 'delivery':
                         case 'future':{
                             //LONG多     SHORT空
                             //开多 buy long     平多 sell long
-                            //开空 buy short     开空 sell short
+                            //平空 buy short     开空 sell short
                             if($data['_entry']) $map['side']='BUY';
                             else $map['side']='SELL';
 
@@ -258,17 +258,21 @@ class RequestTraderMap extends Base implements TraderInterface
                         $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                     }
 
-                    switch ($this->checkType($data['_entry'] ?? '')){
+                    switch ($this->checkType(isset($data['_entry']) ?? '')){
                         case 'swap':
                         case 'delivery':
                         case 'future':{
                             //LONG多     SHORT空
                             //开多 buy long     平多 sell long
-                            //开空 buy short     开空 sell short
+                            //平空 buy short     开空 sell short
                             if($data['_entry']) $map['side']='BUY';
                             else $map['side']='SELL';
 
                             $map['positionSide']='LONG';
+                            break;
+                        }
+                        case 'spot':{
+                            $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                             break;
                         }
                         default:{
@@ -276,17 +280,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                     }
                     $map['type']='MARKET';
-                }
-
-                switch ($this->checkType()){
-                    case 'spot':{
-                        $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
-                        break;
-                    }
-                    default:{
-                        $map['positionSide']='LONG';
-                        $map['side'] = $data['_entry'] ? 'BUY' : 'SELL';
-                    }
                 }
 
                 //支持原生参数
@@ -541,16 +534,43 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
                     $map['price']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
                     $map['type']='LIMIT';
-                }else{
-                    switch ($this->checkType()){
-                        case 'spot':{
-                            if(isset($data['_price'])){
-                                $map['quoteOrderQty']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
-                            }
 
-                            if(isset($data['_number'])){
-                                $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
-                            }
+                    switch ($this->checkType(isset($data['_entry']) ?? '')){
+                        case 'swap':
+                        case 'delivery':
+                        case 'future':{
+                            //LONG多     SHORT空
+                            //开多 buy long     平多 sell long
+                            //平空 buy short     开空 sell short
+                            if($data['_entry']) $map['side']='SELL';
+                            else $map['side']='BUY';
+
+                            $map['positionSide']='SHORT';
+                            break;
+                        }
+                        default:{
+                        }
+                    }
+                }else{
+                    if(isset($data['_price'])){
+                        $map['quoteOrderQty']=$data['_price'] ?? ($data['quoteOrderQty'] ?? '');
+                    }
+
+                    if(isset($data['_number'])){
+                        $map['quantity']=$data['_number'] ?? ($data['quantity'] ?? '');
+                    }
+
+                    switch ($this->checkType(isset($data['_entry']) ?? '')){
+                        case 'swap':
+                        case 'delivery':
+                        case 'future':{
+                            if($data['_entry']) $map['side']='SELL';
+                            else $map['side']='BUY';
+
+                            $map['positionSide']='SHORT';
+                            break;
+                        }
+                        case 'spot':{
                             $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
                             break;
                         }
@@ -559,17 +579,6 @@ class RequestTraderMap extends Base implements TraderInterface
                         }
                     }
                     $map['type']='MARKET';
-                }
-
-                switch ($this->checkType()){
-                    case 'spot':{
-                        $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
-                        break;
-                    }
-                    default:{
-                        $map['positionSide']='SHORT';
-                        $map['side'] = $data['_entry'] ? 'BUY' : 'SELL';
-                    }
                 }
 
                 //支持原生参数

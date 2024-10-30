@@ -15,13 +15,18 @@ include 'key_secret.php';
 $key=$keysecret['gate']['key'];
 $secret=$keysecret['gate']['secret'];
 
-$exchanges=new Exchanges('gate',$key,$secret);
+$exchanges=new Exchanges('gate',$key,$secret,'','https://api.gateio.ws/a/');
+
 
 //Support for more request Settings
 $exchanges->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
-
+    'curl'=>[
+        CURLOPT_PROXY => 'proxy.local',
+        CURLOPT_PROXYPORT => '10808',
+        CURLOPT_PROXYTYPE => CURLPROXY_SOCKS5,
+    ]
 ]);
 
 $action=intval($_GET['action'] ?? 0);//http pattern
@@ -269,7 +274,7 @@ switch ($action){
 
     case 1001:{
         try {
-            $result=$exchanges->getPlatform('spot')->account()->get();
+            $result=$exchanges->getPlatform()->account()->get();
             print_r($result);
         }catch (\Exception $e){
             print_r(json_decode($e->getMessage(),true));
