@@ -81,12 +81,20 @@ class Base
             }
             case 'binance':{
                 // 现货与期货区分可以用 positionSide    账户必须开启持仓双向模式
-                if(!empty($symbol)){
-                    return 'future';
+                if(empty($this->platform)) {
+                    return 'spot';
                 }
 
-                if(empty($this->platform)) {
-                    return $this->platform;
+                if(!empty($symbol)){
+                    $temp=explode('_',$symbol);
+
+                    //通过币安币对分隔符来区分币本位  还是U本位
+                    if(count($temp)>1){
+                        //币本位
+                        return 'delivery';
+                    }
+                    //uU本位
+                    return 'future';
                 }
 
                 /*if(empty($this->platform)) {
