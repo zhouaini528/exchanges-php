@@ -117,6 +117,29 @@ class ResponseTraderMap extends Base implements TraderInterface
         'EXPIRED'=>'FAILURE',
     ];
 
+    protected $bybit_status=[
+        /*
+            活動態
+            New 訂單成功下達
+            PartiallyFilled 部分成交
+            Untriggered 條件單未觸發
+            終態
+
+            Rejected 訂單被拒絕
+            PartiallyFilledCanceled 僅現貨存在該枚舉值, 訂單部分成交且已取消
+            Filled 完全成交
+            Cancelled 期貨交易，當訂單是該狀態時，是可能存在部分成交的; 經典帳戶的現貨盈止損單、條件單、OCO訂單觸發前取消
+            Triggered 已觸發, 條件單從未觸發到變成New的一個中間態
+            Deactivated 統一帳戶下期貨、現貨的盈止損單、條件單、OCO訂單觸發前取消
+        */
+        'New'=>'NEW',
+        'PartiallyFilled'=>'PART_FILLED',
+        'Cancelled'=>'CANCELLED',
+        'Rejected'=>'Rejected',
+
+        'Filled'=>'FILLED',
+    ];
+
     /**
      *
      * @return [
@@ -199,6 +222,17 @@ class ResponseTraderMap extends Base implements TraderInterface
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
                 break;
             }
+            case 'bybit':{
+                if(!isset($data['result']['retCode']) || $data['result']['retCode']!='0') {
+                    $map['_status']='FAILURE';
+                    $map=array_merge($map,$data);
+                    break;
+                }
+
+                $map['_order_id']=$data['result']['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['result']['orderLinkId'] ?? '';
+                break;
+            }
         }
 
         return array_merge($data['result'],$map);
@@ -278,6 +312,17 @@ class ResponseTraderMap extends Base implements TraderInterface
             case 'kucoin':{
                 $map['_order_id']=$data['result']['data']['orderId'] ?? '';
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
+                break;
+            }
+            case 'bybit':{
+                if(!isset($data['result']['retCode']) || $data['result']['retCode']!='0') {
+                    $map['_status']='FAILURE';
+                    $map=array_merge($map,$data);
+                    break;
+                }
+
+                $map['_order_id']=$data['result']['result']['orderId'] ?? '';
+                $map['_client_id']=$data['result']['result']['orderLinkId'] ?? '';
                 break;
             }
         }
@@ -363,6 +408,12 @@ class ResponseTraderMap extends Base implements TraderInterface
 
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
                 if(isset($data['result']['data']['totalNum'])) $map['_status']='FAILURE';
+                break;
+            }
+            case 'bybit':{
+                $map['_order_id']=$data['result']['result']['order_id'] ?? '';
+                $map['_client_id']=$data['result']['result']['orderLinkId'] ?? '';
+                $map['_symbol']=$data['request']['_symbol'];
                 break;
             }
         }
@@ -529,6 +580,21 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_client_id']=$data['result']['data']['clientOid'] ?? '';
                 if(isset($data['result']['code']) && $data['result']['code']!=200000) $map['_status']='FAILURE';
                 if(isset($data['result']['data']['totalNum'])) $map['_status']='FAILURE';
+                break;
+            }
+            case 'bybit':{
+                $map['_order_id']=$data['result']['result']['list'][0]['orderId'] ?? '';
+                $map['_client_id']=$data['result']['result']['list'][0]['orderLinkId'] ?? '';
+                $map['_symbol']=$data['result']['result']['list'][0]['symbol'] ?? '';
+
+                /*cumExecQty string 訂單累計成交數量
+                > cumExecValue string 訂單累計成交價值. 經典帳戶現貨交易不支持
+                > cumExecFee string 已棄用. 訂單累計成交的手續費. 經典帳戶現貨交易不支持*/
+                $map['_filled_qty']=$data['result']['result']['list'][0]['cumExecQty'];
+                $map['_price_avg']=$data['result']['result']['list'][0]['avgPrice'];
+                $map['_filed_amount']=$data['result']['result']['list'][0]['cumExecValue'];
+
+                $map['_status']=$this->bybit_status[$data['result']['result']['list'][0]['orderStatus']];
                 break;
             }
         }

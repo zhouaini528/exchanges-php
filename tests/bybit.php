@@ -35,12 +35,74 @@ switch ($action){
             $exchanges->setPlatform('spot')->setVersion('v5');
             $result=$exchanges->trader()->buy([
                 '_symbol'=>'BTCUSDT',
-                '_number'=>'0.0001',
+                //'_number'=>'0.0001',
                 //'_price'=>'100000',
-                //'_price'=>'100',
+                '_price'=>'20',
                 '_client_id'=>'xxxxx'.rand(10000,99999),
             ]);
             print_r($result);
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+        break;
+    }
+
+    case 2:{
+        try {
+            //spot inverse linear
+            $exchanges->setPlatform('spot')->setVersion('v5');
+            $cid='xxxxx'.rand(10000,99999);
+            $result=$exchanges->trader()->sell([
+                '_symbol'=>'BTCUSDT',
+                '_number'=>'0.0001',
+                '_price'=>'150000',
+                //'_price'=>'20',
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+
+            echo '22222333333';
+            sleep(2);
+
+            $result=$exchanges->trader()->cancel([
+                '_symbol'=>'BTCUSDT',
+                //'_price'=>'20',
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+
+
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+        break;
+    }
+
+    case 3:{
+        try {
+            //spot inverse linear
+            $exchanges->setPlatform('spot')->setVersion('v5');
+            $cid='xxxxx'.rand(10000,99999);
+            $result=$exchanges->trader()->buy([
+                '_symbol'=>'BTCUSDT',
+                '_number'=>'0.0001',
+                '_price'=>'100000',
+                //'_price'=>'20',
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+            //die;
+            echo '22222333333';
+            sleep(2);
+
+            $result=$exchanges->trader()->cancel([
+                '_symbol'=>'BTCUSDT',
+                //'_price'=>'20',
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+
+
         }catch (\Exception $e){
             print_r($e->getMessage());
         }
