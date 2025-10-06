@@ -12,9 +12,6 @@ use Lin\Exchange\Interfaces\TraderInterface;
 
 class BaseBybit
 {
-    protected $platform_linear;
-    protected $platform_inverse;
-
     protected $platform_v5;
 
     protected $host;
@@ -48,18 +45,21 @@ class TraderBybit extends BaseBybit implements TraderInterface
      *
      * */
     function sell(array $data){
+        return $this->platform_v5->order()->postCreate($data);
     }
 
     /**
      *
      * */
     function buy(array $data){
+        return $this->platform_v5->order()->postCreate($data);
     }
 
     /**
      *
      * */
     function cancel(array $data){
+        return $this->platform_v5->order()->postCancel($data);
     }
 
     /**
@@ -72,6 +72,7 @@ class TraderBybit extends BaseBybit implements TraderInterface
      *
      * */
     function show(array $data){
+        return $this->platform_v5->order()->getRealTime($data);
     }
 
     /**
