@@ -327,6 +327,53 @@ class RequestTraderMap extends Base implements TraderInterface
                 $data['side']=$map['side'];
                 break;
             }
+            case 'bybit':{
+                $map['orderLinkId']=$data['_client_id'] ?? ($data['orderLinkId'] ?? '');
+                $map['symbol']=$data['_symbol'] ?? $data['symbol'];
+                $map['category']=$this->platform;
+                $map['side']='buy';
+
+                switch ($this->platform){
+                    case 'linear':
+                    case 'inverse':{
+
+                        break;
+                    }
+                    case 'spot':
+                    default:{//spot
+
+
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['orderType']='limit';
+                            $map['qty']=$data['_number'];
+                            $map['price']=$data['_price'];
+                        }else{
+                            $map['orderType']='market';
+                            //市价买卖qty 对应单位不一样
+                            /*
+                             * 統一帳戶
+                            現貨: 可以通過設置marketUnit來表示市價單qty的單位, 市價買單默認是quoteCoin, 市價賣單默認是baseCoin
+                            期貨和期權: 總是以base coin作為qty的單位
+
+                            marketUnit false string 統一帳戶現貨交易創建市價單時給入參qty指定的單位, 支持orderFilter=Order, tpslOrder 和 StopOrder
+                            baseCoin: 比如, 買BTCUSDT, 則"qty"的單位是BTC
+                            quoteCoin: 比如, 賣BTCUSDT, 則"qty"的單位是USDT
+                            */
+                            if(isset($data['_number'])){
+                                $map['qty']=$data['_number'];
+                                $map['marketUnit']='baseCoin';
+                            }
+
+                            if(isset($data['_price'])){
+                                $map['qty']=$data['_price'];
+                                $map['marketUnit']='quoteCoin';
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
 
         //检测是否原生参数
