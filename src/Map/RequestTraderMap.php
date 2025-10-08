@@ -331,18 +331,26 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['orderLinkId']=$data['_client_id'] ?? ($data['orderLinkId'] ?? '');
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 $map['category']=$this->platform;
-                $map['side']='buy';
+                $map['side']='Buy';
 
                 switch ($this->platform){
                     case 'linear':
                     case 'inverse':{
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['orderType']='Limit';
+                            $map['qty']=$data['_number'];
+                            $map['price']=$data['_price'];
+                        }else{
+                            $map['orderType']='Market';
+                            $map['qty']=$data['_number'];
+                        }
 
+                        $map['reduceOnly']=!$data['_entry'] ?? true;
                         break;
                     }
                     case 'spot':
                     default:{//spot
-
-
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
                             $map['orderType']='limit';
@@ -350,6 +358,7 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['price']=$data['_price'];
                         }else{
                             $map['orderType']='market';
+
                             //市价买卖qty 对应单位不一样
                             /*
                              * 統一帳戶
@@ -658,12 +667,22 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['orderLinkId']=$data['_client_id'] ?? ($data['orderLinkId'] ?? '');
                 $map['symbol']=$data['_symbol'] ?? $data['symbol'];
                 $map['category']=$this->platform;
-                $map['side']='sell';
+                $map['side']='Sell';
 
                 switch ($this->platform){
                     case 'linear':
                     case 'inverse':{
+                        //市价单与限价单的参数映射
+                        if(isset($data['_number']) && isset($data['_price'])){
+                            $map['orderType']='Limit';
+                            $map['qty']=$data['_number'];
+                            $map['price']=$data['_price'];
+                        }else{
+                            $map['orderType']='Market';
+                            $map['qty']=$data['_number'];
+                        }
 
+                        $map['reduceOnly']=!$data['_entry'] ?? true;
                         break;
                     }
                     case 'spot':

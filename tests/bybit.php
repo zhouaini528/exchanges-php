@@ -35,9 +35,9 @@ switch ($action){
             $exchanges->setPlatform('spot')->setVersion('v5');
             $result=$exchanges->trader()->buy([
                 '_symbol'=>'BTCUSDT',
-                //'_number'=>'0.0001',
+                '_number'=>'0.0001',
                 //'_price'=>'100000',
-                '_price'=>'20',
+                '_price'=>'100000',
                 '_client_id'=>'xxxxx'.rand(10000,99999),
             ]);
             print_r($result);
@@ -108,6 +108,82 @@ switch ($action){
         }
         break;
     }
+
+
+    case 88:{
+        try {
+            //spot inverse linear
+            $exchanges->setPlatform('inverse');
+            $cid='xxxxx'.rand(10000,99999);
+            $result=$exchanges->trader()->sell([
+                '_symbol'=>'BTCUSD',
+                '_number'=>'5',
+                '_price'=>'150000',
+                '_entry'=>true,
+
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+            //die;
+            echo '22222333333';
+            sleep(2);
+
+            $result=$exchanges->trader()->cancel([
+                '_symbol'=>'BTCUSD',
+                //'_price'=>'20',
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+
+
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+        break;
+    }
+
+
+    case 89:{
+        try {
+            //spot inverse linear
+            $exchanges->setPlatform('inverse');
+            $cid='xxxxx'.rand(10000,99999);
+            $result=$exchanges->trader()->sell([
+                '_symbol'=>'BTCUSD',
+                '_number'=>'5',
+                //'_price'=>'150000',
+                '_entry'=>true,
+
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+            //die;
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+
+
+        sleep(3);
+        try {
+            //spot inverse linear
+            $exchanges->setPlatform('inverse');
+            $cid='xxxxx'.rand(10000,99999);
+            $result=$exchanges->trader()->buy([
+                '_symbol'=>'BTCUSD',
+                '_number'=>'5',
+                //'_price'=>'150000',
+                '_entry'=>false,
+
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+            //die;
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+        break;
+    }
+
 
 
     case 2001:{
