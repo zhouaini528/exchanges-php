@@ -91,6 +91,8 @@ class Bybit
     protected $type;
 
     protected $platform='';
+    protected $version='';
+    protected $options='';
 
     protected $platform_v5;
 
@@ -128,7 +130,7 @@ class Bybit
     Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
      */
     public function setPlatform(string $platform=''){
-        $this->platform=$platform ?? 'spot';
+        $this->platform_v5=$platform ?? 'spot';
         return $this;
     }
 
