@@ -121,7 +121,9 @@ class Bybit
 
         switch ($this->type){
             default:{
-                return $this->platform_v5=new BybitV5($this->key,$this->secret,$this->host);
+                $this->platform_v5=new BybitV5($this->key,$this->secret,$this->host);
+                $this->platform_v5->setOptions($this->options);
+                return $this->platform_v5;
             }
         }
     }
