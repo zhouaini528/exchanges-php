@@ -351,6 +351,8 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':
                     default:{//spot
+                        $map['category']=$this->platform='spot';
+
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
                             $map['orderType']='limit';
@@ -687,7 +689,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':
                     default:{//spot
-
+                    $map['category']=$this->platform='spot';
 
                         //市价单与限价单的参数映射
                         if(isset($data['_number']) && isset($data['_price'])){
@@ -831,7 +833,7 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     case 'spot':
                     default:{//spot
-
+                        $map['category']=$this->platform='spot';
                     }
                 }
                 break;
@@ -954,6 +956,18 @@ class RequestTraderMap extends Base implements TraderInterface
                 $map['category']=$this->platform;
                 $map['orderId']=$data['_order_id'] ??  '';
                 $map['orderLinkId']=$data['_client_id'] ?? '';
+
+                switch ($this->platform){
+                    case 'linear':
+                    case 'inverse':{
+
+                        break;
+                    }
+                    case 'spot':
+                    default:{//spot
+                        $map['category']=$this->platform='spot';
+                    }
+                }
                 break;
             }
         }
