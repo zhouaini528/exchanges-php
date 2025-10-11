@@ -92,7 +92,7 @@ class Bybit
 
     protected $platform='';
     protected $version='';
-    protected $options='';
+    protected $options=[];
 
     protected $platform_v5;
 
