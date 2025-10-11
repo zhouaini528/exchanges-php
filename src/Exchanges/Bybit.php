@@ -189,9 +189,6 @@ class Bybit
      *Initialize exchange
      */
     function getPlatform(string $type=''){
-        if($this->exchange==null) {
-            return $this->exchange=$this->trader()->getPlatform();
-        }
-        return null;
+        return $this->exchange=$this->trader()->getPlatform();
     }
 }
