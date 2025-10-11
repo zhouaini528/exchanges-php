@@ -346,7 +346,13 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['qty']=$data['_number'];
                         }
 
-                        $map['reduceOnly']=!$data['_entry'] ?? true;
+                        if($data['_entry']){
+                            $map['reduceOnly']=false;
+                        }else{
+                            $map['reduceOnly']=true;
+                            $map['side']='Sell';
+                        }
+
                         break;
                     }
                     case 'spot':
@@ -684,7 +690,13 @@ class RequestTraderMap extends Base implements TraderInterface
                             $map['qty']=$data['_number'];
                         }
 
-                        $map['reduceOnly']=!$data['_entry'] ?? true;
+                        if($data['_entry']){
+                            $map['reduceOnly']=false;
+                        }else{
+                            $map['reduceOnly']=true;
+                            $map['side']='Buy';
+                        }
+
                         break;
                     }
                     case 'spot':
