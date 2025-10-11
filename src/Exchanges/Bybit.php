@@ -184,4 +184,14 @@ class Bybit
         $this->options=$options;
         return $this;
     }
+
+    /***
+     *Initialize exchange
+     */
+    function getPlatform(string $type=''){
+        if($this->exchange==null) {
+            return $this->exchange=$this->trader()->getPlatform();
+        }
+        return null;
+    }
 }

@@ -32,12 +32,13 @@ switch ($action){
     case 1:{
         try {
             //spot inverse linear
-            $exchanges->setPlatform('spot')->setVersion('v5');
+
+            //$exchanges->setPlatform('spot')->setVersion('v5');
             $result=$exchanges->trader()->buy([
                 '_symbol'=>'BTCUSDT',
                 '_number'=>'0.0001',
                 //'_price'=>'100000',
-                '_price'=>'100000',
+                '_price'=>'60000',
                 '_client_id'=>'xxxxx'.rand(10000,99999),
             ]);
             print_r($result);
@@ -83,6 +84,18 @@ switch ($action){
             //spot inverse linear
             $exchanges->setPlatform('spot')->setVersion('v5');
             $cid='xxxxx'.rand(10000,99999);
+
+            $exchanges->setOptions([
+                'headers'=>[
+                    //X-Referer or Referer - 經紀商用戶專用的頭參數
+                    //X-BAPI-RECV-WINDOW 默認值為5000
+                    //cdn-request-id
+                    'X-BAPI-RECV-WINDOW'=>'6000',
+                ],
+                //'debug'=>true,
+                //'host'=>'https://api-demo.bybit.com',
+                //'aaa'=>'1',
+            ]);
             $result=$exchanges->trader()->buy([
                 '_symbol'=>'BTCUSDT',
                 '_number'=>'0.0001',
@@ -106,6 +119,12 @@ switch ($action){
         }catch (\Exception $e){
             print_r($e->getMessage());
         }
+        break;
+    }
+
+    case 33:{
+        $result=$exchanges->getPlatform()->account()->getInfo();
+        print_r($result);
         break;
     }
 
