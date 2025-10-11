@@ -15,7 +15,7 @@ include 'key_secret.php';
 $key=$keysecret['bybit']['key'];
 $secret=$keysecret['bybit']['secret'];
 
-$exchanges=new Exchanges('bybit',$key,$secret);
+$exchanges=new Exchanges('bybit',$key,$secret,'https://api-testnet.bybit.com');
 
 //Support for more request Settings
 $exchanges->setOptions([
@@ -136,14 +136,15 @@ switch ($action){
             $cid='xxxxx'.rand(10000,99999);
             $result=$exchanges->trader()->sell([
                 '_symbol'=>'BTCUSD',
-                '_number'=>'5',
-                '_price'=>'150000',
-                '_entry'=>true,
+                '_number'=>'100',
+                //'_price'=>'150000',
+                '_entry'=>false,
 
                 '_client_id'=>$cid
             ]);
             print_r($result);
-            //die;
+
+            die;
             echo '22222333333';
             sleep(2);
 
@@ -193,6 +194,23 @@ switch ($action){
                 //'_price'=>'150000',
                 '_entry'=>false,
 
+                '_client_id'=>$cid
+            ]);
+            print_r($result);
+            //die;
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+        break;
+    }
+
+    case 899:{
+        try {
+            //spot inverse linear
+            $exchanges->setPlatform('inverse');
+            $cid='xxxxx'.rand(10000,99999);
+            $result=$exchanges->trader()->show([
+                '_symbol'=>'BTCUSD',
                 '_client_id'=>$cid
             ]);
             print_r($result);

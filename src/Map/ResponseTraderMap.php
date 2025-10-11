@@ -583,6 +583,11 @@ class ResponseTraderMap extends Base implements TraderInterface
                 break;
             }
             case 'bybit':{
+                if(empty($data['result']['result']['list'])){
+                    $map['_status']=$this->bybit_status['Filled'];
+                    break;
+                }
+
                 $map['_order_id']=$data['result']['result']['list'][0]['orderId'] ?? '';
                 $map['_client_id']=$data['result']['result']['list'][0]['orderLinkId'] ?? '';
                 $map['_symbol']=$data['result']['result']['list'][0]['symbol'] ?? '';
