@@ -12,13 +12,53 @@ use Lin\Exchange\Interfaces\TraderInterface;
 
 class BaseBybit
 {
-    protected $platform_v5;
+    protected $platform='';
+    protected $version='';
+    protected $options='';
 
+    protected $key;
+    protected $secret;
     protected $host;
 
-    function __construct(BybitV5 $platform_v5,$host){
-        $this->platform_v5=$platform_v5;
+    protected $exchange=null;
+
+    function __construct($key,$secret,$host=''){
+        $this->key=$key;
+        $this->secret=$secret;
         $this->host=$host;
+    }
+
+    /**
+    Set exchange transaction category, default "spot" transaction. Other options "spot" "margin" "future" "swap"
+     */
+    public function setPlatform(string $platform=''){
+        $this->platform=$platform;
+        return $this;
+    }
+
+    /**
+    Set exchange API interface version. for example "v1" "v3" "v5"
+     */
+    public function setVersion(string $version=''){
+        $this->version=$version;
+        return $this;
+    }
+
+    /**
+     * Support for more request Settings
+     * */
+    function setOptions(array $options=[]){
+        $this->options=$options;
+        return $this;
+    }
+
+    /***
+     *Initialize exchange
+     */
+    function getPlatform(string $type=''){
+        $this->exchange=new BybitV5($this->key,$this->secret,$this->host);
+        $this->exchange->setOptions($this->options);
+        return $this->exchange;
     }
 }
 
@@ -45,21 +85,21 @@ class TraderBybit extends BaseBybit implements TraderInterface
      *
      * */
     function sell(array $data){
-        return $this->platform_v5->order()->postCreate($data);
+        return $this->getPlatform()->order()->postCreate($data);
     }
 
     /**
      *
      * */
     function buy(array $data){
-        return $this->platform_v5->order()->postCreate($data);
+        return $this->getPlatform()->order()->postCreate($data);
     }
 
     /**
      *
      * */
     function cancel(array $data){
-        return $this->platform_v5->order()->postCancel($data);
+        return $this->getPlatform()->order()->postCancel($data);
     }
 
     /**
@@ -72,7 +112,7 @@ class TraderBybit extends BaseBybit implements TraderInterface
      *
      * */
     function show(array $data){
-        return $this->platform_v5->order()->getRealTime($data);
+        return $this->getPlatform()->order()->getRealTime($data);
     }
 
     /**
@@ -90,42 +130,34 @@ class Bybit
 
     protected $type;
 
-    protected $platform='';
+    protected $platform=null;
     protected $version='';
     protected $options=[];
 
-    protected $platform_v5;
+    protected $exchange=null;
 
     function __construct($key,$secret,$host=''){
         $this->key=$key;
         $this->secret=$secret;
         $this->host=empty($host) ? 'https://api.bybit.com' : $host ;
-
-        $this->getPlatform();
     }
 
     function account(){
-        return new AccountBybit($this->platform_v5,$this->host);
+        $this->exchange=new AccountBybit($this->key,$this->secret,$this->host);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
 
     function market(){
-        return new MarketBybit($this->platform_v5,$this->host);
+        $this->exchange= new MarketBybit($this->key,$this->secret,$this->host);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
 
     function trader(){
-        return new TraderBybit($this->platform_v5,$this->host);
-    }
-
-    function getPlatform(string $type=''){
-        $this->type=strtolower($type);
-
-        switch ($this->type){
-            default:{
-                $this->platform_v5=new BybitV5($this->key,$this->secret,$this->host);
-                $this->platform_v5->setOptions($this->options);
-                return $this->platform_v5;
-            }
-        }
+        $this->exchange= new TraderBybit($this->key,$this->secret,$this->host);
+        $this->exchange->setPlatform($this->platform)->setVersion($this->version)->setOptions($this->options);
+        return $this->exchange;
     }
 
     /**
