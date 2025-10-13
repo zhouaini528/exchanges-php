@@ -132,6 +132,7 @@ class ResponseTraderMap extends Base implements TraderInterface
             Triggered 已觸發, 條件單從未觸發到變成New的一個中間態
             Deactivated 統一帳戶下期貨、現貨的盈止損單、條件單、OCO訂單觸發前取消
         */
+        'FAILURE'=>'FAILURE',
         'New'=>'NEW',
         'PartiallyFilled'=>'PART_FILLED',
         'Cancelled'=>'CANCELLED',
@@ -584,7 +585,7 @@ class ResponseTraderMap extends Base implements TraderInterface
             }
             case 'bybit':{
                 if(empty($data['result']['result']['list'])){
-                    $map['_status']=$this->bybit_status['Filled'];
+                    $map['_status']=$this->bybit_status['FAILURE'];
                     break;
                 }
 
