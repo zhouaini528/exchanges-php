@@ -123,13 +123,26 @@ class Base
             $httpcode=504;
         }
 
+        $status=[];
+
         $temp=json_decode($msg,true);
         if(!empty($temp) && is_array($temp)) {
             if(isset($httpcode)) $temp['_httpcode']=$httpcode;
-            return ['_error'=>$temp,'_status'=>$status];
+
+            $status['_error']=$temp;
+
+            //规范数据结构 _msg 提升一个数组层级
+            if(array_key_exists('_msg',$temp)){
+                unset($status['_error']['_msg']);
+                $status['_msg']=$temp['_msg'];
+            }
+        }else{
+            $status['_error']=$msg;
         }
 
-        return ['_error'=>$msg,'_status'=>$status];
+        $status['_status']=$status;
+
+        return $status;
     }
 
     /**
