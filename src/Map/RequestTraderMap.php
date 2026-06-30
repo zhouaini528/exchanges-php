@@ -282,6 +282,8 @@ class RequestTraderMap extends Base implements TraderInterface
                     $map['type']='MARKET';
                 }
 
+                $map['newOrderRespType']='FULL';
+
                 //支持原生参数
                 $data['side']=$map['side'];
 
@@ -644,6 +646,8 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     $map['type']='MARKET';
                 }
+
+                $map['newOrderRespType']='FULL';
 
                 //支持原生参数
                 $data['side']=$map['side'];

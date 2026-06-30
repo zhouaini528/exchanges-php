@@ -574,6 +574,10 @@ class ResponseTraderMap extends Base implements TraderInterface
                         break;
                     }
                 }
+
+                if(isset($data['request']['_trader_result']['fills'])){
+                    $map['fills']=$data['request']['_trader_result']['fills'];
+                }
                 break;
             }
             case 'kucoin':{
