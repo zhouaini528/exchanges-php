@@ -315,7 +315,7 @@ class TraderBinance extends BaseBinance implements TraderInterface
             case 'spot':{
                 $this->platform_spot=$this->getPlatform('spot');
                 $result=$this->platform_spot->user()->getOrder($data);
-                //$result['_fills']=$this->platform_spot->user()->getUserTrades($data);
+                $result['_fills']=$this->platform_spot->user()->getMyTrades($data);
                 return $result;
             }
             case 'delivery':{
