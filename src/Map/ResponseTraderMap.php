@@ -555,22 +555,38 @@ class ResponseTraderMap extends Base implements TraderInterface
                 $map['_client_id']=$data['result']['clientOrderId'] ?? '';
                 $map['_filled_qty']=$data['result']['executedQty'];
                 $map['_status']=$this->binance_status[$data['result']['status']];
-
+                //print_r($data);
                 switch ($this->checkType($data['result']['symbol'])){
                     case 'swap':
                     case 'delivery':
                     case 'future':{
                         $map['_price_avg']=isset($data['result']['avgPrice']) ? $data['result']['avgPrice'] : 0;
+
+                        //合约的成交均价在下单接口不返回，要查询订单才返回成交均价，那么为了减少一次查询，就在成交历史fills手动计算成交均价
+                        if(empty($map['_price_avg']) && isset($data['result']['_fills']) && !empty($data['result']['_fills'])){
+                            if(count($data['result']['_fills']) > 1){
+                                $price=0;
+                                $qty=0;
+                                foreach ($data['result']['_fills'] as $k => $v) {
+                                    $price+=bcmul($v['price'],$v['qty'],12);
+                                    $qty+=$v['qty'];
+                                }
+                                $map['_price_avg']=bcdiv($price,$qty,12);
+                            }else{
+                                $map['_price_avg']=$data['result']['_fills'][0]['price'];
+                            }
+
+                        }
                         break;
                     }
                     case 'spot':{
-                        $map['_price_avg']=$data['result']['executedQty']==0 ? 0 : bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),16);
+                        $map['_price_avg']=$data['result']['executedQty']==0 ? 0 : bcdiv(strval($data['result']['cummulativeQuoteQty']),strval($data['result']['executedQty']),12);
                         $map['_filed_amount']=$data['result']['cummulativeQuoteQty'];
                         break;
                     }
                     default:{
                         $map['_price_avg']=isset($data['result']['avgPrice']) ? $data['result']['avgPrice'] : 0;
-                        $map['_filed_amount']=bcmul(strval($data['result']['executedQty']),strval($data['result']['avgPrice']),16);
+                        $map['_filed_amount']=bcmul(strval($data['result']['executedQty']),strval($data['result']['avgPrice']),12);
                         break;
                     }
                 }
