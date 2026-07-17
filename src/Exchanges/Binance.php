@@ -148,10 +148,19 @@ class BaseBinance
     /***
      *
      */
-    function redata(array $data){
+    function redata(array $data,$underline=false){
         if(array_key_exists('exchanges_exptime',$this->options)){
             $data['recvWindow']=$this->options['exchanges_exptime'];
             unset($this->options['exchanges_exptime']);
+        }
+
+        if($underline){
+            foreach ($data as $k=>$v){
+                //判断是否是自定义字段并删除
+                if(substr($k, 0, 1)=='_'){
+                    unset($data[$k]);
+                }
+            }
         }
 
         return $data;
@@ -274,18 +283,46 @@ class TraderBinance extends BaseBinance implements TraderInterface
     function show(array $data){
         $data=$this->redata($data);
 
+        //如果存在交易结果就不用再查询了，如果是挂单客户端会自己再查询的
+        if(key_exists('_trader_result',$data)){
+            $_trader_result=$data['_trader_result'];
+
+            $data=$this->redata($data,true);
+
+            switch ($this->checkType($data)){
+                case 'future':{
+                    $this->platform_future=$this->getPlatform('future');
+                    $_trader_result['_fills']=$this->platform_future->user()->getUserTrades($data);
+                }
+                case 'delivery':{
+                    $this->platform_delivery=$this->getPlatform('delivery');
+                    $_trader_result['_fills']=$this->platform_delivery->user()->getUserTrades($data);
+                }
+            }
+
+            return $_trader_result;
+        }
+
+        $data=$this->redata($data,true);
+
         switch ($this->checkType($data)){
             case 'future':{
                 $this->platform_future=$this->getPlatform('future');
-                return $this->platform_future->user()->getOrder($data);
+                $result=$this->platform_future->user()->getOrder($data);
+                $result['_fills']=$this->platform_future->user()->getUserTrades($data);
+                return $result;
             }
             case 'spot':{
                 $this->platform_spot=$this->getPlatform('spot');
-                return $this->platform_spot->user()->getOrder($data);
+                $result=$this->platform_spot->user()->getOrder($data);
+                //$result['_fills']=$this->platform_spot->user()->getUserTrades($data);
+                return $result;
             }
             case 'delivery':{
                 $this->platform_delivery=$this->getPlatform('delivery');
-                return $this->platform_delivery->user()->getOrder($data);
+                $result=$this->platform_delivery->user()->getOrder($data);
+                $result['_fills']=$this->platform_delivery->user()->getUserTrades($data);
+                return $result;
             }
         }
     }

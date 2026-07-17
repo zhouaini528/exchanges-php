@@ -83,8 +83,10 @@ class Base
                 // 现货与期货区分可以用 positionSide    账户必须开启持仓双向模式
                 if(empty($this->platform)) {
                     return 'spot';
+                }else{
+                    return $this->platform;
                 }
-
+                /*
                 if(!empty($symbol)){
                     $temp=explode('_',$symbol);
 
@@ -96,7 +98,7 @@ class Base
                     //uU本位
                     return 'future';
                 }
-
+                */
                 /*if(empty($this->platform)) {
                     if(stristr($this->host,"fapi")!==false) return 'future';
                     if(stristr($this->host,"dapi")!==false) return 'delivery';

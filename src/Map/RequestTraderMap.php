@@ -269,10 +269,13 @@ class RequestTraderMap extends Base implements TraderInterface
                             else $map['side']='SELL';
 
                             $map['positionSide']='LONG';
+
+                            $map['newOrderRespType']='RESULT';
                             break;
                         }
                         case 'spot':{
-                            $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                            //$map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                            $map['newOrderRespType']='FULL';
                             break;
                         }
                         default:{
@@ -281,8 +284,6 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     $map['type']='MARKET';
                 }
-
-                $map['newOrderRespType']='FULL';
 
                 //支持原生参数
                 $data['side']=$map['side'];
@@ -634,10 +635,13 @@ class RequestTraderMap extends Base implements TraderInterface
                             else $map['side']='BUY';
 
                             $map['positionSide']='SHORT';
+
+                            $map['newOrderRespType']='RESULT';
                             break;
                         }
                         case 'spot':{
-                            $map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                            //$map['newOrderRespType']=$data['newOrderRespType'] ?? 'ACK';
+                            $map['newOrderRespType']='FULL';
                             break;
                         }
                         default:{
@@ -646,8 +650,6 @@ class RequestTraderMap extends Base implements TraderInterface
                     }
                     $map['type']='MARKET';
                 }
-
-                $map['newOrderRespType']='FULL';
 
                 //支持原生参数
                 $data['side']=$map['side'];
