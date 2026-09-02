@@ -118,7 +118,7 @@ class Base
      * @param string
      * @return array
      * */
-    protected function error($msg,$status='FAILURE'){
+    protected function error($msg,$_status='FAILURE'){
         if(stripos($msg,'Connection timed out after')!==false){
             $httpcode=504;
         }
@@ -140,7 +140,7 @@ class Base
             $status['_error']=$msg;
         }
 
-        $status['_status']=$status;
+        $status['_status']=$_status;
 
         return $status;
     }
